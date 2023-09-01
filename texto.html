@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Text</title>
+    <style>
+        .word {
+            cursor: pointer;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Text</h1>
+    <div id="textDiv">
+        <!-- Words will go here -->
+    </div>
+
+    <script>
+        const words = [
+            "one", "two", "three", "Four", "five", "Six", "Seven", "Eight", "eleven", "twelve"
+        ];
+        
+        const pronunciations = [
+            "uane", "tu", "tri", "Fóure", "faive", "Sixe", "sévene", "Heyte", "elévene", "tuelve"
+        ];
+
+        const textDiv = document.getElementById('textDiv');
+
+        words.forEach((word, index) => {
+            const spanElement = document.createElement('span');
+            spanElement.classList.add('word');
+            spanElement.textContent = word;
+            spanElement.addEventListener('click', function() {
+                if (spanElement.textContent === word) {
+                    spanElement.textContent = pronunciations[index];
+                } else {
+                    spanElement.textContent = word;
+                }
+            });
+
+            textDiv.appendChild(spanElement);
+        });
+    </script>
+
+</body>
+</html>
