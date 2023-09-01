@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portuguese Words and Pronunciation</title>
+    <style>
+        .word {
+            cursor: pointer;
+            border-bottom: 1px dashed;
+        }
+        .tooltip {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; 
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .word:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h2>Click on a word to see its pronunciation in Bulgarian:</h2>
+    <div id="content"></div>
+    <script>
+        const transliterations = {"mergulhar": "\u043c\u0435\u0440\u0433\u0443\u043b\u0430\u0440", "mantenha": "\u043c\u0430\u043d\u0442\u0435\u043d\u0430", "n\u00e3o": "\u043d\u0430\u043d\u043e", "at\u00e9": "\u0430\u0442\u0435", "fecha": "\u0444\u0435\u043a\u0430", "parasse": "\u043f\u0430\u0440\u0430\u0441\u0441\u0435", "n\u00f3s": "\u043d\u043e\u0441", "seu": "\u0441\u0435\u0443", "ficaria": "\u0444\u0438\u043a\u0430\u0440\u0438\u0430", "num": "\u043d\u0443\u043c", "ele": "\u0435\u043b\u0435", "considerarias": "\u043a\u043e\u043d\u0441\u0438\u0434\u0435\u0440\u0430\u0440\u0438\u0430\u0441", "dias": "\u0434\u0438\u0430\u0441", "entregue": "\u0435\u043d\u0442\u0440\u0435\u0433\u0443\u0435", "tivesse": "\u0442\u0438\u0432\u0435\u0441\u0441\u0435", "me": "\u043c\u0435", "causasse": "\u043a\u0430\u0443\u0441\u0430\u0441\u0441\u0435", "considerado": "\u043a\u043e\u043d\u0441\u0438\u0434\u0435\u0440\u0430\u0434\u043e", "corredor": "\u043a\u043e\u0440\u0440\u0435\u0434\u043e\u0440", "dissesse": "\u0434\u0438\u0441\u0441\u0435\u0441\u0441\u0435", "vida": "\u0432\u0438\u0434\u0430", "da": "\u0434\u0430", "mergulham": "\u043c\u0435\u0440\u0433\u0443\u043b\u0430\u043c", "detestariam": "\u0434\u0435\u0442\u0435\u0441\u0442\u0430\u0440\u0438\u0430\u043c", "para": "\u043f\u0430\u0440\u0430", "minha": "\u043c\u0438\u043d\u0430", "isso": "\u0438\u0441\u0441\u043e", "com": "\u043a\u043e\u043c", "lhe": "\u043b\u0435", "neve": "\u043d\u0435\u0432\u0435", "esquecer": "\u0435\u0441\u043a\u0443\u0435\u043a\u0435\u0440", "vou": "\u0432\u043e\u0443", "mudar": "\u043c\u0443\u0434\u0430\u0440", "medo": "\u043c\u0435\u0434\u043e", "natureza": "\u043d\u0430\u0442\u0443\u0440\u0435\u0437\u0430", "barcos": "\u0431\u0430\u0440\u043a\u043e\u0441", "como": "\u043a\u043e\u043c\u043e", "boca": "\u0431\u043e\u043a\u0430", "o": "\u043e", "um": "\u0443\u043c", "ainda": "\u0430\u0438\u043d\u0434\u0430", "lama": "\u043b\u0430\u043c\u0430", "do": "\u0434\u043e", "terror": "\u0442\u0435\u0440\u0440\u043e\u0440", "h\u00e1": "\u0430", "qu\u00ea": "\u043a\u0443\u0435", "ver": "\u0432\u0435\u0440", "e": "\u0435", "tu": "\u0442\u0443", "os": "\u043e\u0441", "uma": "\u0443\u043c\u0430", "nosso": "\u043d\u043e\u0441\u0441\u043e", "por": "\u043f\u043e\u0440", "ter": "\u0442\u0435\u0440", "sab\u00e3o": "\u0441\u0430\u0431\u0430\u043d\u043e", "ir\u00e1": "\u0438\u0440\u0430", "bater": "\u0431\u0430\u0442\u0435\u0440", "terra": "\u0442\u0435\u0440\u0440\u0430", "falaria": "\u0444\u0430\u043b\u0430\u0440\u0438\u0430", "desespero": "\u0434\u0435\u0441\u0435\u0441\u043f\u0435\u0440\u043e", "deixasse": "\u0434\u0435\u0438\u0448\u0430\u0441\u0441\u0435", "culpado": "\u043a\u0443\u043b\u043f\u0430\u0434\u043e", "ent\u00e3o": "\u0435\u043d\u0442\u0430\u043d\u043e", "apavorasse": "\u0430\u043f\u0430\u0432\u043e\u0440\u0430\u0441\u0441\u0435", "acontecer\u00e1": "\u0430\u043a\u043e\u043d\u0442\u0435\u043a\u0435\u0440\u0430", "responda": "\u0440\u0435\u0441\u043f\u043e\u043d\u0434\u0430", "mesmo": "\u043c\u0435\u0441\u043c\u043e", "destr\u00f3i": "\u0434\u0435\u0441\u0442\u0440\u043e\u0438", "agora": "\u0430\u0433\u043e\u0440\u0430", "de": "\u0434\u0435", "numa": "\u043d\u0443\u043c\u0430", "morte": "\u043c\u043e\u0440\u0442\u0435", "causa": "\u043a\u0430\u0443\u0441\u0430", "s\u00e3o": "\u0441\u0430\u043d\u043e", "maus": "\u043c\u0430\u0443\u0441", "quem": "\u043a\u0443\u0435\u043c", "possa": "\u043f\u043e\u0441\u0441\u0430", "diferen\u00e7a": "\u0434\u0438\u0444\u0435\u0440\u0435\u043d\u0441\u0430", "irias": "\u0438\u0440\u0438\u0430\u0441", "modo": "\u043c\u043e\u0434\u043e", "seria": "\u0441\u0435\u0440\u0438\u0430", "confrontemos": "\u043a\u043e\u043d\u0444\u0440\u043e\u043d\u0442\u0435\u043c\u043e\u0441", "bom": "\u0431\u043e\u043c", "enxurrada": "\u0435\u043d\u0448\u0443\u0440\u0440\u0430\u0434\u0430", "mais": "\u043c\u0430\u0438\u0441", "esta": "\u0435\u0441\u0442\u0430", "eu": "\u0435\u0443", "declarar": "\u0434\u0435\u043a\u043b\u0430\u0440\u0430\u0440", "que": "\u043a\u0443\u0435", "m\u00e3os": "\u043c\u0430\u043d\u043e\u0441", "velozes": "\u0432\u0435\u043b\u043e\u0437\u0435\u0441", "pois": "\u043f\u043e\u0438\u0441", "ningu\u00e9m": "\u043d\u0438\u043d\u0433\u0443\u0435\u043c", "inocente": "\u0438\u043d\u043e\u043a\u0435\u043d\u0442\u0435", "a": "\u0430", "dores": "\u0434\u043e\u0440\u0435\u0441", "lavasse": "\u043b\u0430\u0432\u0430\u0441\u0441\u0435", "semblante": "\u0441\u0435\u043c\u0431\u043b\u0430\u043d\u0442\u0435", "dos": "\u0434\u043e\u0441", "sei": "\u0441\u0435\u0438", "inocentes": "\u0438\u043d\u043e\u043a\u0435\u043d\u0442\u0435\u0441", "ju\u00edzes": "\u0436\u0443\u0438\u0437\u0435\u0441", "presa": "\u043f\u0440\u0435\u0441\u0430", "roupas": "\u0440\u043e\u0443\u043f\u0430\u0441", "rir": "\u0440\u0438\u0440", "purificasse": "\u043f\u0443\u0440\u0438\u0444\u0438\u043a\u0430\u0441\u0441\u0435", "fogem": "\u0444\u043e\u0433\u0435\u043c", "todas": "\u0442\u043e\u0434\u0430\u0441", "juiz": "\u0436\u0443\u0438\u0437", "\u00e9": "\u0435", "integridade": "\u0438\u043d\u0442\u0435\u0433\u0440\u0438\u0434\u0430\u0434\u0435", "queixa": "\u043a\u0443\u0435\u0438\u0448\u0430", "aos": "\u0430\u043e\u0441", "ou": "\u043e\u0443", "olhos": "\u043e\u043b\u043e\u0441", "pr\u00f3pria": "\u043f\u0440\u043e\u043f\u0440\u0438\u0430", "sem": "\u0441\u0435\u043c", "decidir": "\u0434\u0435\u043a\u0438\u0434\u0438\u0440", "meu": "\u043c\u0435\u0443", "ficar": "\u0444\u0438\u043a\u0430\u0440", "se": "\u0441\u0435", "foi": "\u0444\u043e\u0438", "minhas": "\u043c\u0438\u043d\u0430\u0441", "tribunal": "\u0442\u0440\u0438\u0431\u0443\u043d\u0430\u043b", "animado": "\u0430\u043d\u0438\u043c\u0430\u0434\u043e", "digo": "\u0434\u0438\u0433\u043e", "derretida": "\u0434\u0435\u0440\u0440\u0435\u0442\u0438\u0434\u0430", "\u00e1gua": "\u0430\u0433\u0443\u0430", "\u00e1guias": "\u0430\u0433\u0443\u0438\u0430\u0441", "as": "\u0430\u0441", "sobre": "\u0441\u043e\u0431\u0440\u0435", "servir": "\u0441\u0435\u0440\u0432\u0438\u0440", "rejeito": "\u0440\u0435\u0436\u0435\u0438\u0442\u043e", "meus": "\u043c\u0435\u0443\u0441", "falar": "\u0444\u0430\u043b\u0430\u0440", "iria": "\u0438\u0440\u0438\u0430", "homem": "\u043e\u043c\u0435\u043c", "nos": "\u043d\u043e\u0441", "po\u00e7a": "\u043f\u043e\u0441\u0430", "condenar": "\u043a\u043e\u043d\u0434\u0435\u043d\u0430\u0440", "em": "\u0435\u043c", "lutar": "\u043b\u0443\u0442\u0430\u0440", "raz\u00e3o": "\u0440\u0430\u0437\u0430\u043d\u043e", "entre": "\u0435\u043d\u0442\u0440\u0435", "tanto": "\u0442\u0430\u043d\u0442\u043e", "repentina": "\u0440\u0435\u043f\u0435\u043d\u0442\u0438\u043d\u0430", "junco": "\u0436\u0443\u043d\u043a\u043e", "v\u00e3o": "\u0432\u0430\u043d\u043e", "deslizam": "\u0434\u0435\u0441\u043b\u0438\u0437\u0430\u043c"};
+        
+        fetch('pt.txt')
+            .then(response => response.text())
+            .then(data => {
+                const contentDiv = document.getElementById('content');
+                const words = data.split(/\s+/);
+                words.forEach(word => {
+                    const wordSpan = document.createElement('span');
+                    wordSpan.classList.add('word');
+                    wordSpan.textContent = word + ' ';
+                    const tooltipSpan = document.createElement('span');
+                    tooltipSpan.classList.add('tooltip');
+                    tooltipSpan.textContent = transliterations[word.toLowerCase()] || 'Not available';
+                    wordSpan.appendChild(tooltipSpan);
+                    contentDiv.appendChild(wordSpan);
+                });
+            });
+    </script>
+</body>
+</html>
