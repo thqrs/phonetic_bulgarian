@@ -1,47 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Text</title>
     <style>
         .word {
             cursor: pointer;
             margin-right: 5px;
+            position: relative;
+        }
+        
+        .tooltip {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 4px;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .word:hover .tooltip {
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <h1>Text</h1>
-    <div id="textDiv">
-        <!-- Words will go here -->
-    </div>
+<div id="content">
+    <!-- Words will go here -->
+</div>
 
-    <script>
-        const words = [
-            "one", "two", "three", "Four", "biscoito", "Six", "Seven", "Eight", "eleven", "twelve"
-        ];
-        
-        const pronunciations = [
-            "uane", "tu", "tri", "Fóure", "faive", "Sixe", "sévene", "Heyte", "elévene", "tuelve"
-        ];
+<script>
+    async function fetchText(file) {
+        const response = await fetch(file);
+        return response.text();
+    }
 
-        const textDiv = document.getElementById('textDiv');
+    async function init() {
+        const ptWords = (await fetchText('pt.txt')).split(' ');
+        const bgWords = (await fetchText('bg.txt')).split(' ');
 
-        words.forEach((word, index) => {
-            const spanElement = document.createElement('span');
-            spanElement.classList.add('word');
-            spanElement.textContent = word;
-            spanElement.addEventListener('click', function() {
-                if (spanElement.textContent === word) {
-                    spanElement.textContent = pronunciations[index];
-                } else {
-                    spanElement.textContent = word;
-                }
+        const contentDiv = document.getElementById('content');
+
+        let isBg = false;
+
+        function displayWords(words, translations) {
+            contentDiv.innerHTML = '';
+            words.forEach((word, index) => {
+                const spanElement = document.createElement('span');
+                spanElement.classList.add('word');
+                spanElement.textContent = word;
+
+                const tooltip = document.createElement('span');
+                tooltip.classList.add('tooltip');
+                tooltip.textContent = translations[index];
+
+                spanElement.appendChild(tooltip);
+                contentDiv.appendChild(spanElement);
             });
+        }
 
-            textDiv.appendChild(spanElement);
+        displayWords(ptWords, bgWords);
+
+        contentDiv.addEventListener('dblclick', function() {
+            if (isBg) {
+                displayWords(ptWords, bgWords);
+            } else {
+                displayWords(bgWords, ptWords);
+            }
+            isBg = !isBg;
         });
-    </script>
+    }
+
+    init();
+</script>
 
 </body>
 </html>
