@@ -178,6 +178,8 @@
  
 // Call the function to load saved margins on page load
 loadMargins();
+
+    
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'commontransliterations.json', true);
@@ -411,6 +413,7 @@ document.addEventListener("DOMContentLoaded", function() {
     adjustMargin(10);
 });
     function adjustMargin(point) {
+        console.log("Adjusting vertical margin...");
     let wordBoxes = document.querySelectorAll('[class^="word-box"]');
     let newMargin;
     wordBoxes.forEach(box => {
@@ -420,9 +423,12 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     document.getElementById('verticalMarginDisplay').textContent = newMargin;
         localStorage.setItem('verticalMargin', newMargin);
+        console.log("Vertical margin adjusted.");
 }
 
 function adjustHorizontalMargin(point) {
+        console.log("Adjusting horizontal margin...");
+
     let wordBoxes = document.querySelectorAll('[class^="word-box"]');
     let newMarginRight;
     wordBoxes.forEach(box => {
@@ -432,8 +438,10 @@ function adjustHorizontalMargin(point) {
     });
     document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
         localStorage.setItem('horizontalMargin', newMarginRight);
+    console.log("Horizontal margin adjusted.");
 }
     function loadMargins() {
+        console.log("Loading margins...");
     let savedVerticalMargin = localStorage.getItem('verticalMargin');
     let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
 
@@ -452,35 +460,12 @@ function adjustHorizontalMargin(point) {
         });
         document.getElementById('horizontalMarginDisplay').textContent = savedHorizontalMargin;
     }
+        console.log("Margins loaded.");
 }
 
 
 
-       /*
-    adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
-
-    adjustMargin(10);
-   function adjustMargin(point) {
-    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
-    wordBoxes.forEach(box => {
-        let currentMargin = window.getComputedStyle(box, null).getPropertyValue('margin-bottom');
-        let newMargin = (parseFloat(currentMargin) + point) + 'px';
-        box.style.marginBottom = newMargin;
-    });
-    document.getElementById('verticalMarginDisplay').textContent = newMargin;
-}
-
-
-   function adjustHorizontalMargin(point) {
-    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
-    wordBoxes.forEach(box => {
-        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
-        let newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
-        box.style.marginRight = newMarginRight;
-    });
-    document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
-}
-*/
+    
 </script>
 
 </body>
