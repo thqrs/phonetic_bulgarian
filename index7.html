@@ -418,6 +418,7 @@ document.addEventListener("DOMContentLoaded", function() {
         box.style.marginBottom = newMargin;
     });
     document.getElementById('verticalMarginDisplay').textContent = newMargin;
+        localStorage.setItem('verticalMargin', newMargin);
 }
 
 function adjustHorizontalMargin(point) {
@@ -429,7 +430,31 @@ function adjustHorizontalMargin(point) {
         box.style.marginRight = newMarginRight;
     });
     document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
+        localStorage.setItem('horizontalMargin', newMarginRight);
 }
+    function loadMargins() {
+    let savedVerticalMargin = localStorage.getItem('verticalMargin');
+    let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
+
+    if (savedVerticalMargin) {
+        let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+        wordBoxes.forEach(box => {
+            box.style.marginBottom = savedVerticalMargin;
+        });
+        document.getElementById('verticalMarginDisplay').textContent = savedVerticalMargin;
+    }
+
+    if (savedHorizontalMargin) {
+        let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+        wordBoxes.forEach(box => {
+            box.style.marginRight = savedHorizontalMargin;
+        });
+        document.getElementById('horizontalMarginDisplay').textContent = savedHorizontalMargin;
+    }
+}
+
+// Call the function to load saved margins on page load
+loadMargins();
 
        /*
     adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
