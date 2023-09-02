@@ -77,8 +77,8 @@
                     return;
                 }
 
-                let htmlContent = text.split(/(\s+|[.,!?;()])/).map(segment => {
-                    let cleanSegment = segment.toLowerCase().replace(/[.,!?;()\-]/g, ''); // Remove punctuation for matching
+                let htmlContent = text.split(/(\s+|[.,!?;()]|\d+)/).map(segment => {
+                    let cleanSegment = segment.toLowerCase().replace(/[.‘’,!?;()\-]/g, ''); // Remove punctuation for matching
                     if (transliterations[cleanSegment]) {
                         return `<span class="word-box" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;
                     } else {
