@@ -29,6 +29,7 @@
 <body>
 
 <button id="loadAllTransliterations" onclick="showAllTransliterations()">Load All Transliterations</button>
+<button id="clearAllTransliterations" onclick="clearAllTransliterations()">Clear All Transliterations</button>
 <div id="content"></div>
 
 <script>
@@ -99,6 +100,14 @@ function toggleTransliteration(element) {
             }
         });
     }
+
+    function clearAllTransliterations() {
+    let translitElements = document.querySelectorAll('.transliteration');
+    translitElements.forEach(elem => {
+        elem.style.display = 'none';
+    });
+}
+
 
     // Display the text and make words clickable
     function displayText() {
