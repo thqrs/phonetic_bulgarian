@@ -28,11 +28,25 @@
 </head>
 <body>
 
-<button id="loadAllTransliterations" onclick="showAllTransliterations()">Load All Transliterations</button>
-<button id="clearAllTransliterations" onclick="clearAllTransliterations()">Clear All Transliterations</button>
+<button id="loadAllTransliterations" onclick="showAllTransliterations()">Mostrar</button>
+<button id="clearAllTransliterations" onclick="clearAllTransliterations()">Limpar</button>
+<button id="increaseFontSize" onclick="adjustFontSize(1.1)"> + </button>
+<button id="decreaseFontSize" onclick="adjustFontSize(0.9)"> - </button>
+
+
+
+    
 <div id="content"></div>
 
 <script>
+    function adjustFontSize(multiplier) {
+    let contentDiv = document.getElementById('content');
+    // Get the current font size of the content
+    let currentSize = window.getComputedStyle(contentDiv, null).getPropertyValue('font-size');
+    let newSize = parseFloat(currentSize) * multiplier;  // Adjust the font size
+    contentDiv.style.fontSize = `${newSize}px`;  // Set the new font size
+}
+    
     // Load the text from pt.txt
     function loadText(callback) {
         var xhr = new XMLHttpRequest();
