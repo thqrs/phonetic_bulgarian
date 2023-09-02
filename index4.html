@@ -1,5 +1,3 @@
-# Corrected HTML code
-corrected_html = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +27,8 @@ corrected_html = """
     </style>
 </head>
 <body>
-<button id="loadAllTransliterations">Load All Transliterations</button>
+
+<button id="loadAllTransliterations" onclick="showAllTransliterations()">Load All Transliterations</button>
 <div id="content"></div>
 
 <script>
@@ -65,6 +64,35 @@ corrected_html = """
         xhr.send();
     }
 
+    function toggleTransliteration(element) {
+        let translitElem = element.querySelector('.transliteration');
+        if (translitElem) {
+            if (translitElem.style.display !== 'none') {
+                translitElem.style.display = 'none';
+            } else {
+                translitElem.style.display = 'block';
+            }
+        }
+    }
+
+    function showAllTransliterations() {
+        let wordBoxes = document.querySelectorAll('.word-box');
+        wordBoxes.forEach(box => {
+            let transliteration = box.getAttribute('data-transliteration');
+            if (transliteration) {
+                let translitElem = box.querySelector('.transliteration');
+                if (!translitElem) {
+                    translitElem = document.createElement('div');
+                    translitElem.className = 'transliteration';
+                    translitElem.textContent = transliteration;
+                    box.appendChild(translitElem);
+                } else {
+                    translitElem.style.display = 'block';
+                }
+            }
+        });
+    }
+
     // Display the text and make words clickable
     function displayText() {
         loadText(function(text) {
@@ -79,44 +107,25 @@ corrected_html = """
                     return;
                 }
 
-    let htmlContent = text.split(/(\\s+|\\n)/).map(segment => {
-    if (segment === '\\n') {
-        return segment;  // Preserve newlines
-    }
-    let cleanSegment = segment.toLowerCase().replace(/[\\n,.\\d:;?‘’]/g, ''); // Clean specified punctuation
-    if (transliterations[cleanSegment]) {
-        return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
-    }
-    return segment;
-}).join('');  // Join without any spaces to restore original text structure
+                let htmlContent = text.split(/(\s+|\n)/).map(segment => {
+                    if (segment === '\n') {
+                        return segment;  // Preserve newlines
+                    }
+                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?‘’]/g, ''); // Clean specified punctuation
+                    if (transliterations[cleanSegment]) {
+                        return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    } else {
+                        return segment;
+                    }
+                }).join('');
 
                 document.getElementById('content').innerHTML = htmlContent;
             });
         });
     }
-    
-    function showAllTransliterations() {
-        let wordBoxes = document.querySelectorAll('.word-box');
-        wordBoxes.forEach(box => {
-            let transliteration = box.getAttribute('data-transliteration');
-            if (transliteration) {
-                let translitElem = box.querySelector('.transliteration');
-                if (!translitElem) {
-                    translitElem = document.createElement('div');
-                    translitElem.className = 'transliteration';
-                    translitElem.textContent = transliteration;
-                    box.appendChild(translitElem);
-                } else {
-                    translitElem.style.display = 'block'; // Ensure it's visible
-                }
-            }
-        });
-    }
 
-    document.getElementById('loadAllTransliterations').addEventListener('click', showAllTransliterations);
+    displayText();
+</script>
 
-    function toggleTransliteration(element) {
-        let translitElem = element.querySelector('.transliteration');
-        if (translitElem) {
-            // If the transliteration element exists and is visible, hide it
-            if (translitElem
+</body>
+</html>
