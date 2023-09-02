@@ -64,13 +64,12 @@
 
                 let words = text.split(' ');
  
-
-                let htmlContent = text.split(/\b/).map(word => {
-    let cleanWord = word.replace(/[.,!?;()]/g, ''); // Remove punctuation for matching
-    if (transliterations[cleanWord]) {
-        return `<span class="clickable" onclick="alert('${transliterations[cleanWord]}')">${word}</span>`;
+let htmlContent = text.split(/(\s+|\b)/).map(segment => {
+    let cleanSegment = segment.toLowerCase().replace(/[.,!?;()\-]/g, ''); // Remove punctuation for matching
+    if (transliterations[cleanSegment]) {
+        return `<span class="clickable" onclick="alert('${transliterations[cleanSegment]}')">${segment}</span>`;
     } else {
-        return word;
+        return segment;
     }
 }).join('');
 
