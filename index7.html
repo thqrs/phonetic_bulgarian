@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transliterations</title>
+    <style>
+        #content {
+            white-space: pre-wrap;  
+            word-wrap: break-word; 
+            line-height: 2.5em; /* Adjust line spacing */
+        }
+        .word-box {
+            background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
+        .word-box2 {
+            background-color: rgba(144,238,144, 0.5); /* Translucent green color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
+         .word-box3 {
+            background-color: rgba(144,0,0, 0.5); /* Translucent red color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
+        .transliteration {
+            position: absolute;
+            bottom: -1em;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+        }
+        .button-container {
+        position: sticky;
+        top: 0;  /* This ensures the container sticks to the top */
+        background-color: white;  /* This ensures the text behind doesn't overlap when scrolling */
+        z-index: 1000;  /* This ensures the container is above other elements */
+        padding: 10px;  /* Optional: for some spacing */
+        margin-bottom: 20px;  /* Adjust as needed */
+        }
+        button {
+        font-size: 18px;      /* Increase font size to make the button text bigger */
+        padding: 10px 20px;  /* Adjust padding for bigger buttons */
+        border-radius: 25px; /* Add border-radius to make the buttons rounder */
+        border: none;        /* Remove default browser styling for borders */
+        cursor: pointer;     /* Change the cursor to a hand when hovering over the button */
+        margin-right: 10px;  /* Add some spacing between the buttons */
+        transition: background-color 0.3s;  /* Smooth transition for hover effect */
+        }
+    
+        button:hover {
+        background-color: #e0e0e0;  /* Slight grey background when hovering */
+        }
+        body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#content {
+    flex: 1;
+}
+        .file-selector-container {
+    /*position: sticky;*/
+    bottom: 0;
+    background-color: white;  /* To ensure the content behind doesn't show through when scrolling */
+    padding: 10px;            /* Some spacing around the dropdown */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  /* Optional: to give a slight shadow for aesthetics */
+    z-index: 1000;            /* To ensure it's above other content */
+}
+    </style>
+</head>
+<body>
+
+<div class="button-container">
+    <button id="loadAllTransliterations" onclick="showAllTransliterations()">👓</button>
+    <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
+    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
+    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+</div>
+
+
+
+    
+<div id="content"></div>
+
+    <div>
+    <h3>Palavras em falta:</h3>
+    <textarea id="missingTransliterationsBox" rows="10" cols="50"></textarea>
+    <button onclick="copyMissingTransliterations()">Copiar</button>
+</div>
+
+
+<!-- Dropdown for file selection -->
+<div class="file-selector-container">
+    <select id="fileSelector" onchange="loadSelectedFile()">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+</div>
+    
+
+
+<script>
+function loadNewTransliterations(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'commontransliterations.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(JSON.parse(xhr.responseText));
+            } else {
+                console.error("Error loading commontransliterations.json:", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+    
+    function adjustFontSize(multiplier) {
+    let contentDiv = document.getElementById('content');
+    // Get the current font size of the content
+    let currentSize = window.getComputedStyle(contentDiv, null).getPropertyValue('font-size');
+    let newSize = parseFloat(currentSize) * multiplier;  // Adjust the font size
+    contentDiv.style.fontSize = `${newSize}px`;  // Set the new font size
+}
+    // Function to populate the dropdown
+function populateDropdown(files) {
+    const selector = document.getElementById('fileSelector');
+    files.forEach(file => {
+        let option = document.createElement('option');
+        option.value = file;
+        option.textContent = file;
+        selector.appendChild(option);
+    });
+}
+
+// Function to load the list of .txt files
+function loadFileList() {
+    fetch('files.json')
+        .then(response => response.json())
+        .then(data => {
+            populateDropdown(data.files);
+            loadSelectedFile();  // Load the default file on page load
+        })
+        .catch(error => console.error("Error loading files list:", error));
+}
+
+function loadSelectedFile() {
+    let selectedFile = document.getElementById('fileSelector').value;
+    displayText(selectedFile);  // Load the text from the selected file
+}
+
+loadFileList();  // Call the function to load the file list
+
+    
+ // Load the text from filename
+  function loadText(filename, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', filename, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(xhr.responseText);
+            } else {
+                console.error("Error loading " + filename + ":", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+    // Load the transliterations from transliterations.json
+    function loadTransliterations(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'transliterations.json', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText));
+                } else {
+                    console.error("Error loading transliterations.json:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+function toggleTransliteration(element) {
+    let translitElem = element.querySelector('.transliteration');
+    let transliteration = element.getAttribute('data-transliteration');
+
+    if (!translitElem && transliteration) {
+        translitElem = document.createElement('div');
+        translitElem.className = 'transliteration';
+        translitElem.textContent = transliteration;
+        element.appendChild(translitElem);
+    } else if (translitElem) {
+        if (translitElem.style.display !== 'none') {
+            translitElem.style.display = 'none';
+        } else {
+            translitElem.style.display = 'block';
+        }
+    }
+}
+
+    function showAllTransliterations() {
+    let wordBoxes = document.querySelectorAll('.word-box, .word-box2, .word-box3'); // Target both classes
+    wordBoxes.forEach(box => {
+        let transliteration = box.getAttribute('data-transliteration');
+        if (transliteration) {
+            let translitElem = box.querySelector('.transliteration');
+            if (!translitElem) {
+                translitElem = document.createElement('div');
+                translitElem.className = 'transliteration';
+                translitElem.textContent = transliteration;
+                box.appendChild(translitElem);
+            } else {
+                translitElem.style.display = 'block';
+            }
+        }
+    });
+}
+
+
+    function clearAllTransliterations() {
+    let translitElements = document.querySelectorAll('.transliteration');
+    translitElements.forEach(elem => {
+        elem.style.display = 'none';
+    });
+}
+
+
+   let missingTransliterations = [];
+
+let newTransliterations = {};
+
+function displayText(filename = 'pt.txt') {  
+    loadText(filename, function(text) {
+        if (!text) {
+            console.error("No text loaded from", filename);
+            return;
+        }
+        
+        loadTransliterations(function(transliterations) {
+            loadNewTransliterations(function(newTrans) {
+                newTransliterations = newTrans;
+                
+                if (!transliterations) {
+                    console.error("No transliterations loaded");
+                    return;
+                }
+
+                let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                    if (segment === '\n' || /^\s+$/.test(segment)) {
+                        return segment;
+                    }
+                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
+                    
+                    if (transliterations[cleanSegment]) {
+                        return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    } 
+                    else if (newTransliterations[cleanSegment]) {
+                        return `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    }
+                    else {
+                        if (cleanSegment.trim() !== '') {
+                            missingTransliterations.push(cleanSegment);
+                        }
+                        return `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    }
+                }).join('');
+
+                document.getElementById('content').innerHTML = htmlContent;
+                updateMissingTransliterations();
+            });
+        });
+    });
+}
+
+function updateMissingTransliterations() {
+    let uniqueMissing = [...new Set(missingTransliterations)];  // Remove duplicates
+    document.getElementById('missingTransliterationsBox').value = uniqueMissing.join('\n');
+}
+
+function copyMissingTransliterations() {
+    let copyText = document.getElementById("missingTransliterationsBox");
+    copyText.select();
+    document.execCommand("copy");
+}
+
+  function loadMappings(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'mappings.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(JSON.parse(xhr.responseText));
+            } else {
+                console.error("Error loading mappings.json:", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+  let phonemeMappings = {};
+
+function getDummyTransliteration(word) {
+    let transliterated = word;
+
+    // Apply the mappings
+    for (let [portuguese, bulgarian] of Object.entries(phonemeMappings)) {
+        transliterated = transliterated.replace(new RegExp(portuguese, 'g'), bulgarian);
+    }
+
+    return transliterated;
+}
+  loadMappings(function(mappings) {
+    phonemeMappings = mappings;
+});
+
+displayText();
+</script>
+
+</body>
+</html>
