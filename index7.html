@@ -67,6 +67,26 @@
     flex-direction: column;
     min-height: 100vh;
 }
+        .dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.dark-mode [class^="word-box"] {
+    background-color: rgba(255,255,255, 0.1); /* Light translucent white color */
+}
+
+.dark-mode .word-box1 {
+    background-color: rgba(255, 255, 255, 0.2); /* Light translucent white color */
+}
+
+.dark-mode .word-box2 {
+    background-color: rgba(255, 255, 255, 0.3); /* Even lighter translucent white color */
+}
+
+.dark-mode .word-box3 {
+    background-color: rgba(255, 0, 0, 0.2); /* Translucent red remains the same */
+}
 
 #content {
     flex: 1;
@@ -88,6 +108,7 @@
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+    <button id="toggleDarkMode" onclick="toggleDarkMode()">🌙</button>
 </div>
 
 
@@ -145,7 +166,15 @@ function populateDropdown(files) {
         selector.appendChild(option);
     });
 }
-
+function toggleDarkMode() {
+    let bodyElement = document.body;
+    
+    if (bodyElement.classList.contains('dark-mode')) {
+        bodyElement.classList.remove('dark-mode');
+    } else {
+        bodyElement.classList.add('dark-mode');
+    }
+}
 // Function to load the list of .txt files
 function loadFileList() {
     fetch('files.json')
