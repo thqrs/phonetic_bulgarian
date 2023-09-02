@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emoji Flappy Bird</title>
+    <title>Mini Flappy Bird</title>
     <style>
-        body {
-            font-size: 30px;
-        }
         #bird {
+            width: 40px;
+            height: 30px;
+            background-color: yellow;
             position: absolute;
             bottom: 50%;
             left: 20px;
         }
 
         #pipeTop, #pipeBottom {
+            width: 50px;
+            background-color: green;
             position: absolute;
             right: 0;
-            white-space: nowrap;
-            overflow: hidden;
+            height: 200px;
         }
 
         #pipeBottom {
@@ -27,9 +28,9 @@
     </style>
 </head>
 <body onclick="flap()">
-    <div id="bird">🐤</div>
-    <div id="pipeTop">🌳🌳🌳🌳🌳🌳🌳🌳🌳🌳</div>
-    <div id="pipeBottom">🌳🌳🌳🌳🌳🌳🌳🌳🌳🌳</div>
+    <div id="bird"></div>
+    <div id="pipeTop"></div>
+    <div id="pipeBottom"></div>
 
     <script>
         let bird = document.getElementById('bird');
@@ -53,7 +54,7 @@
             bird.style.bottom = birdY + 'px';
 
             pipeX -= 5;
-            if (pipeX < -300) {  // Adjusted for emoji width
+            if (pipeX < -50) {
                 pipeX = window.innerWidth;
                 let pipeHeight = Math.random() * (window.innerHeight - pipeGap);
                 pipeTop.style.height = pipeHeight + 'px';
