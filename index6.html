@@ -104,13 +104,13 @@
 <script>
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'new.json', true);
+    xhr.open('GET', 'commontransliterations.json', true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 callback(JSON.parse(xhr.responseText));
             } else {
-                console.error("Error loading new.json:", xhr.statusText);
+                console.error("Error loading commontransliterations.json:", xhr.statusText);
             }
         }
     };
