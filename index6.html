@@ -267,10 +267,6 @@ function copyMissingTransliterations() {
     document.execCommand("copy");
 }
 
-  function getDummyTransliteration(word) {
-    // For now, simply return "dummy". This can be modified in the future.
-    return "dummy";
-}
   function loadMappings(callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'mappings.json', true);
