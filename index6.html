@@ -102,6 +102,22 @@
 
 
 <script>
+function loadNewTransliterations(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'new.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(JSON.parse(xhr.responseText));
+            } else {
+                console.error("Error loading new.json:", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+    
     function adjustFontSize(multiplier) {
     let contentDiv = document.getElementById('content');
     // Get the current font size of the content
@@ -217,6 +233,8 @@ function toggleTransliteration(element) {
 
    let missingTransliterations = [];
 
+let newTransliterations = {};
+
 function displayText(filename = 'pt.txt') {  
     loadText(filename, function(text) {
         if (!text) {
@@ -225,34 +243,37 @@ function displayText(filename = 'pt.txt') {
         }
         
         loadTransliterations(function(transliterations) {
-            if (!transliterations) {
-                console.error("No transliterations loaded");
-                return;
-            }
-
-            let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
-                if (segment === '\n' || /^\s+$/.test(segment)) {
-                    return segment;  // Preserve newlines and spaces without processing
-                }
-
-                let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, ''); // Clean specified punctuation
+            loadNewTransliterations(function(newTrans) {
+                newTransliterations = newTrans;
                 
-                // If the word has a transliteration in the JSON file, display it
-                if (transliterations[cleanSegment]) {
-                    return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
-                } 
-                // If the word does not have a transliteration, display the result of the getDummyTransliteration function
-                else {
-                    // Add the segment to the missingTransliterations list if it's not a space or newline
-                    if (cleanSegment.trim() !== '') {
-                        missingTransliterations.push(cleanSegment);
-                    }
-                    return `<span class="word-box" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                if (!transliterations) {
+                    console.error("No transliterations loaded");
+                    return;
                 }
-            }).join('');
 
-            document.getElementById('content').innerHTML = htmlContent;
-            updateMissingTransliterations();
+                let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                    if (segment === '\n' || /^\s+$/.test(segment)) {
+                        return segment;
+                    }
+                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
+                    
+                    if (transliterations[cleanSegment]) {
+                        return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    } 
+                    else if (newTransliterations[cleanSegment]) {
+                        return `<span class="word-box" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    }
+                    else {
+                        if (cleanSegment.trim() !== '') {
+                            missingTransliterations.push(cleanSegment);
+                        }
+                        return `<span class="word-box" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    }
+                }).join('');
+
+                document.getElementById('content').innerHTML = htmlContent;
+                updateMissingTransliterations();
+            });
         });
     });
 }
