@@ -11,6 +11,13 @@
             line-height: 3em;
             /* line-height: 2.5em;  Adjust line spacing */
         }
+        #verticalMarginDisplay, #horizontalMarginDisplay {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin-right: 5px; /* spacing from the button */
+    display: inline-block;
+}
+
 [class^="word-box"] {
             background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
             padding: 0.2em 0.5em 2em 0.5em; /* top right bottom left */
@@ -20,6 +27,7 @@
             position: relative;
             line-height: 1.6; /* Adjust line height within the element */
 }
+        
 
 .word-box1 {
     background-color: rgba(135, 206, 250, 0.2); /* Translucent blue color */
@@ -133,6 +141,15 @@
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🌙</button>
+
+    <span id="verticalMarginDisplay">10px</span> <!-- This is the initial vertical margin -->
+<button id="increaseMargin" onclick="adjustMargin(1)">🔼</button>
+<button id="decreaseMargin" onclick="adjustMargin(-1)">🔽</button>
+
+<span id="horizontalMarginDisplay">5px</span> <!-- This is the initial horizontal margin -->
+<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⯈</button>
+<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⯇</button>
+
 </div>
 
 
@@ -160,23 +177,27 @@
     adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
 
     adjustMargin(10);
-    function adjustHorizontalMargin(point) {
-    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
-    wordBoxes.forEach(box => {
-        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
-        let newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
-        box.style.marginRight = newMarginRight;
-    });
-}
-
-    function adjustMargin(point) {
+   function adjustMargin(point) {
     let wordBoxes = document.querySelectorAll('[class^="word-box"]');
     wordBoxes.forEach(box => {
         let currentMargin = window.getComputedStyle(box, null).getPropertyValue('margin-bottom');
         let newMargin = (parseFloat(currentMargin) + point) + 'px';
         box.style.marginBottom = newMargin;
     });
+    document.getElementById('verticalMarginDisplay').textContent = newMargin;
 }
+
+
+   function adjustHorizontalMargin(point) {
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    wordBoxes.forEach(box => {
+        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
+        let newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
+        box.style.marginRight = newMarginRight;
+    });
+    document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
+}
+
 
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
