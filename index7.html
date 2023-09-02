@@ -127,6 +127,9 @@
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
     <button id="increaseMargin" onclick="adjustMargin(1)">🔼</button>
     <button id="decreaseMargin" onclick="adjustMargin(-1)">🔽</button>
+    <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⯈</button>
+<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⯇</button>
+
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🌙</button>
@@ -154,7 +157,18 @@
 
 
 <script>
+    adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
+
     adjustMargin(10);
+    function adjustHorizontalMargin(point) {
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    wordBoxes.forEach(box => {
+        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
+        let newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
+        box.style.marginRight = newMarginRight;
+    });
+}
+
     function adjustMargin(point) {
     let wordBoxes = document.querySelectorAll('[class^="word-box"]');
     wordBoxes.forEach(box => {
