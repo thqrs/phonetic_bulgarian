@@ -402,6 +402,32 @@ function getDummyTransliteration(word) {
 });
 
 displayText();
+    
+document.addEventListener("DOMContentLoaded", function() {
+    adjustHorizontalMargin(5);
+    adjustMargin(10);
+});
+    function adjustMargin(point) {
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    let newMargin;
+    wordBoxes.forEach(box => {
+        let currentMargin = window.getComputedStyle(box, null).getPropertyValue('margin-bottom');
+        newMargin = (parseFloat(currentMargin) + point) + 'px';
+        box.style.marginBottom = newMargin;
+    });
+    document.getElementById('verticalMarginDisplay').textContent = newMargin;
+}
+
+function adjustHorizontalMargin(point) {
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    let newMarginRight;
+    wordBoxes.forEach(box => {
+        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
+        newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
+        box.style.marginRight = newMarginRight;
+    });
+    document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
+}
 
        /*
     adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
