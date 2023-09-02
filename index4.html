@@ -1,0 +1,122 @@
+# Corrected HTML code
+corrected_html = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transliterations</title>
+    <style>
+        #content {
+            white-space: pre-wrap;  
+            word-wrap: break-word; 
+            line-height: 2.5em; /* Adjust line spacing */
+        }
+        .word-box {
+            background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
+        .transliteration {
+            position: absolute;
+            bottom: -1em;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+<button id="loadAllTransliterations">Load All Transliterations</button>
+<div id="content"></div>
+
+<script>
+    // Load the text from pt.txt
+    function loadText(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'pt.txt', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(xhr.responseText);
+                } else {
+                    console.error("Error loading pt.txt:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // Load the transliterations from transliterations.json
+    function loadTransliterations(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'transliterations.json', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText));
+                } else {
+                    console.error("Error loading transliterations.json:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // Display the text and make words clickable
+    function displayText() {
+        loadText(function(text) {
+            if (!text) {
+                console.error("No text loaded from pt.txt");
+                return;
+            }
+            
+            loadTransliterations(function(transliterations) {
+                if (!transliterations) {
+                    console.error("No transliterations loaded");
+                    return;
+                }
+
+    let htmlContent = text.split(/(\\s+|\\n)/).map(segment => {
+    if (segment === '\\n') {
+        return segment;  // Preserve newlines
+    }
+    let cleanSegment = segment.toLowerCase().replace(/[\\n,.\\d:;?‘’]/g, ''); // Clean specified punctuation
+    if (transliterations[cleanSegment]) {
+        return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+    }
+    return segment;
+}).join('');  // Join without any spaces to restore original text structure
+
+                document.getElementById('content').innerHTML = htmlContent;
+            });
+        });
+    }
+    
+    function showAllTransliterations() {
+        let wordBoxes = document.querySelectorAll('.word-box');
+        wordBoxes.forEach(box => {
+            let transliteration = box.getAttribute('data-transliteration');
+            if (transliteration) {
+                let translitElem = box.querySelector('.transliteration');
+                if (!translitElem) {
+                    translitElem = document.createElement('div');
+                    translitElem.className = 'transliteration';
+                    translitElem.textContent = transliteration;
+                    box.appendChild(translitElem);
+                } else {
+                    translitElem.style.display = 'block'; // Ensure it's visible
+                }
+            }
+        });
+    }
+
+    document.getElementById('loadAllTransliterations').addEventListener('click', showAllTransliterations);
+
+    function toggleTransliteration(element) {
+        let translitElem = element.querySelector('.transliteration');
+        if (translitElem) {
+            // If the transliteration element exists and is visible, hide it
+            if (translitElem
