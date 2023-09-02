@@ -20,14 +20,45 @@ const platform = {
     height: 40
 };
 
+let movingLeft = false;
+let movingRight = false;
+
+document.getElementById('left').addEventListener('touchstart', function() {
+    movingLeft = true;
+});
+
+document.getElementById('left').addEventListener('touchend', function() {
+    movingLeft = false;
+});
+
+document.getElementById('right').addEventListener('touchstart', function() {
+    movingRight = true;
+});
+
+document.getElementById('right').addEventListener('touchend', function() {
+    movingRight = false;
+});
+
+document.getElementById('jump').addEventListener('touchstart', function() {
+    if (!mario.jumping) {
+        mario.velocityY = mario.jumpStrength;
+        mario.jumping = true;
+    }
+});
+
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Gravity
+    if (movingLeft) {
+        mario.x -= mario.speed;
+    }
+    if (movingRight) {
+        mario.x += mario.speed;
+    }
+
     mario.velocityY += mario.gravity;
     mario.y += mario.velocityY;
 
-    // Platform collision
     if (mario.y + mario.height > platform.y) {
         mario.y = platform.y - mario.height;
         mario.jumping = false;
@@ -38,22 +69,5 @@ function update() {
 
     requestAnimationFrame(update);
 }
-
-document.addEventListener('keydown', function(event) {
-    switch (event.keyCode) {
-        case 37: // left arrow
-            mario.x -= mario.speed;
-            break;
-        case 39: // right arrow
-            mario.x += mario.speed;
-            break;
-        case 32: // spacebar
-            if (!mario.jumping) {
-                mario.velocityY = mario.jumpStrength;
-                mario.jumping = true;
-            }
-            break;
-    }
-});
 
 update();
