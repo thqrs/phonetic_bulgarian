@@ -6,8 +6,23 @@
     <title>Transliterations</title>
     <style>
         #content {
-            white-space: pre-wrap;  /* Preserves whitespace and lines */
-            word-wrap: break-word; /* Breaks long words */
+            white-space: pre-wrap;  
+            word-wrap: break-word; 
+            line-height: 2.5em; /* Adjust line spacing */
+        }
+        .word-box {
+            background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
+        .transliteration {
+            position: absolute;
+            bottom: -1em;
+            left: 0;
+            font-size: 0.8em;
+            color: red; /* You can adjust this color */
         }
     </style>
 </head>
@@ -17,33 +32,72 @@
 
 <script>
     // Load the text from pt.txt
-    async function loadText() {
-        let response = await fetch('pt.txt');
-        return await response.text();
+    function loadText(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'pt.txt', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(xhr.responseText);
+                } else {
+                    console.error("Error loading pt.txt:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
     }
 
     // Load the transliterations from transliterations.json
-    async function loadTransliterations() {
-        let response = await fetch('transliterations.json');
-        return await response.json();
+    function loadTransliterations(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'transliterations.json', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText));
+                } else {
+                    console.error("Error loading transliterations.json:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
     }
 
     // Display the text and make words clickable
-    async function displayText() {
-        let text = await loadText();
-        let transliterations = await loadTransliterations();
-
-        let words = text.split(/\b/);
-        let htmlContent = words.map(word => {
-            let cleanWord = word.replace(/[.,!?;()]/g, ''); // Remove punctuation for matching
-            if (transliterations[cleanWord]) {
-                return `<span class="clickable" onclick="alert('${transliterations[cleanWord]}')">${word}</span>`;
-            } else {
-                return word;
+    function displayText() {
+        loadText(function(text) {
+            if (!text) {
+                console.error("No text loaded from pt.txt");
+                return;
             }
-        }).join('');
+            
+            loadTransliterations(function(transliterations) {
+                if (!transliterations) {
+                    console.error("No transliterations loaded");
+                    return;
+                }
 
-        document.getElementById('content').innerHTML = htmlContent;
+                let htmlContent = text.split(/(\s+|\b)/).map(segment => {
+                    let cleanSegment = segment.toLowerCase().replace(/[.,!?;()\-]/g, ''); // Remove punctuation for matching
+                    if (transliterations[cleanSegment]) {
+                        return `<span class="word-box" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;
+                    } else {
+                        return segment;
+                    }
+                }).join('');
+
+                document.getElementById('content').innerHTML = htmlContent;
+            });
+        });
+    }
+
+    function showTransliteration(element, transliteration) {
+        if (!element.querySelector('.transliteration')) {
+            let translitElem = document.createElement('div');
+            translitElem.className = 'transliteration';
+            translitElem.textContent = transliteration;
+            element.appendChild(translitElem);
+        }
     }
 
     displayText();
