@@ -78,12 +78,20 @@
     
 <div id="content"></div>
 
+    <div>
+    <h3>Palavras em falta:</h3>
+    <textarea id="missingTransliterationsBox" rows="10" cols="50"></textarea>
+    <button onclick="copyMissingTransliterations()">Copiar</button>
+</div>
+
+
 <!-- Dropdown for file selection -->
 <div class="file-selector-container">
     <select id="fileSelector" onchange="loadSelectedFile()">
         <!-- Options will be populated by JavaScript -->
     </select>
 </div>
+    
 
 
 <script>
@@ -200,7 +208,9 @@ function toggleTransliteration(element) {
 }
 
 
-    function displayText(filename = 'pt.txt') {  // Default to 'pt.txt'
+   let missingTransliterations = [];
+
+function displayText(filename = 'pt.txt') {  
     loadText(filename, function(text) {
         if (!text) {
             console.error("No text loaded from", filename);
@@ -221,16 +231,32 @@ function toggleTransliteration(element) {
                 if (transliterations[cleanSegment]) {
                     return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
                 } else {
+                    // Add the segment to the missingTransliterations list if it's not a space or newline
+                    if (cleanSegment.trim() !== '') {
+                        missingTransliterations.push(cleanSegment);
+                    }
                     return segment;
                 }
             }).join('');
 
             document.getElementById('content').innerHTML = htmlContent;
+            updateMissingTransliterations();
         });
     });
 }
 
-displayText();  // Load the default 'pt.txt' on page load
+function updateMissingTransliterations() {
+    let uniqueMissing = [...new Set(missingTransliterations)];  // Remove duplicates
+    document.getElementById('missingTransliterationsBox').value = uniqueMissing.join('\n');
+}
+
+function copyMissingTransliterations() {
+    let copyText = document.getElementById("missingTransliterationsBox");
+    copyText.select();
+    document.execCommand("copy");
+}
+
+displayText();
 </script>
 
 </body>
