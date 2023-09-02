@@ -18,7 +18,14 @@
             position: relative; /* Make the word-box position relative to position the transliteration */
         }
         .word-box2 {
-            background-color: rgba(144,238,144, 0.5); /* Translucent blue color */
+            background-color: rgba(144,238,144, 0.5); /* Translucent green color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
+         .word-box3 {
+            background-color: rgba(144,0,0, 0.5); /* Translucent red color */
             padding: 0.2em 0.5em;
             border-radius: 4px;
             display: inline-block;
@@ -206,7 +213,7 @@ function toggleTransliteration(element) {
 }
 
     function showAllTransliterations() {
-    let wordBoxes = document.querySelectorAll('.word-box, .word-box2'); // Target both classes
+    let wordBoxes = document.querySelectorAll('.word-box, .word-box2, .word-box3'); // Target both classes
     wordBoxes.forEach(box => {
         let transliteration = box.getAttribute('data-transliteration');
         if (transliteration) {
@@ -268,7 +275,7 @@ function displayText(filename = 'pt.txt') {
                         if (cleanSegment.trim() !== '') {
                             missingTransliterations.push(cleanSegment);
                         }
-                        return `<span class="word-box" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                        return `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
                     }
                 }).join('');
 
