@@ -231,9 +231,10 @@ function displayText(filename = 'pt.txt') {
             }
 
             let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
-                if (segment === '\n') {
-                    return segment;  // Preserve newlines
+                if (segment === '\n' || /^\s+$/.test(segment)) {
+                    return segment;  // Preserve newlines and spaces without processing
                 }
+
                 let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, ''); // Clean specified punctuation
                 
                 // If the word has a transliteration in the JSON file, display it
@@ -246,7 +247,7 @@ function displayText(filename = 'pt.txt') {
                     if (cleanSegment.trim() !== '') {
                         missingTransliterations.push(cleanSegment);
                     }
-                    return `<span class="word-box2" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    return `<span class="word-box" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
                 }
             }).join('');
 
