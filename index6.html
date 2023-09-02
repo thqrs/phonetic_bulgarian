@@ -17,6 +17,13 @@
             display: inline-block;
             position: relative; /* Make the word-box position relative to position the transliteration */
         }
+        .word-box2 {
+            background-color: rgba(144,238,144, 0.5); /* Translucent blue color */
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            display: inline-block;
+            position: relative; /* Make the word-box position relative to position the transliteration */
+        }
         .transliteration {
             position: absolute;
             bottom: -1em;
@@ -239,7 +246,7 @@ function displayText(filename = 'pt.txt') {
                     if (cleanSegment.trim() !== '') {
                         missingTransliterations.push(cleanSegment);
                     }
-                    return `<span class="word-box" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    return `<span class="word-box2" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
                 }
             }).join('');
 
