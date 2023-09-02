@@ -218,7 +218,7 @@ function toggleTransliteration(element) {
                     if (segment === '\n') {
                         return segment;  // Preserve newlines
                     }
-                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?‘’]/g, ''); // Clean specified punctuation
+                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, ''); // Clean specified punctuation
                     if (transliterations[cleanSegment]) {
                         return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
                     } else {
