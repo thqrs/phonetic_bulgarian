@@ -85,6 +85,35 @@
     let newSize = parseFloat(currentSize) * multiplier;  // Adjust the font size
     contentDiv.style.fontSize = `${newSize}px`;  // Set the new font size
 }
+    // Function to populate the dropdown
+function populateDropdown(files) {
+    const selector = document.getElementById('fileSelector');
+    files.forEach(file => {
+        let option = document.createElement('option');
+        option.value = file;
+        option.textContent = file;
+        selector.appendChild(option);
+    });
+}
+
+// Function to load the list of .txt files
+function loadFileList() {
+    fetch('files.json')
+        .then(response => response.json())
+        .then(data => {
+            populateDropdown(data.files);
+            loadSelectedFile();  // Load the default file on page load
+        })
+        .catch(error => console.error("Error loading files list:", error));
+}
+
+function loadSelectedFile() {
+    let selectedFile = document.getElementById('fileSelector').value;
+    loadText(selectedFile, displayText); // Pass the selected file to the loadText function
+}
+
+// Call the function to load the file list
+loadFileList();
     
     // Load the text from pt.txt
     function loadText(callback) {
