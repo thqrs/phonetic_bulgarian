@@ -176,7 +176,8 @@
 
 <script>
  
-
+// Call the function to load saved margins on page load
+loadMargins();
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'commontransliterations.json', true);
@@ -453,8 +454,7 @@ function adjustHorizontalMargin(point) {
     }
 }
 
-// Call the function to load saved margins on page load
-loadMargins();
+
 
        /*
     adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
