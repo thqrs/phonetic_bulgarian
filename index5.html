@@ -24,14 +24,24 @@
             transform: translateX(-50%);
             font-size: 0.8em;
         }
+        .button-container {
+        position: sticky;
+        top: 0;  /* This ensures the container sticks to the top */
+        background-color: white;  /* This ensures the text behind doesn't overlap when scrolling */
+        z-index: 1000;  /* This ensures the container is above other elements */
+        padding: 10px;  /* Optional: for some spacing */
+        margin-bottom: 20px;  /* Adjust as needed */
+        }
     </style>
 </head>
 <body>
 
-<button id="loadAllTransliterations" onclick="showAllTransliterations()">Mostrar</button>
-<button id="clearAllTransliterations" onclick="clearAllTransliterations()">Limpar</button>
-<button id="increaseFontSize" onclick="adjustFontSize(1.1)"> + </button>
-<button id="decreaseFontSize" onclick="adjustFontSize(0.9)"> - </button>
+<div class="button-container">
+    <button id="loadAllTransliterations" onclick="showAllTransliterations()">Load All Transliterations</button>
+    <button id="clearAllTransliterations" onclick="clearAllTransliterations()">Clear All Transliterations</button>
+    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">Increase Font Size</button>
+    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">Decrease Font Size</button>
+</div>
 
 
 
