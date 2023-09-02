@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transliterations</title>
+    <style>
+        #content {
+            white-space: pre-wrap;  /* Preserves whitespace and lines */
+            word-wrap: break-word; /* Breaks long words */
+        }
+    </style>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+    // Load the text from pt.txt
+    async function loadText() {
+        let response = await fetch('pt.txt');
+        return await response.text();
+    }
+
+    // Load the transliterations from transliterations.json
+    async function loadTransliterations() {
+        let response = await fetch('transliterations.json');
+        return await response.json();
+    }
+
+    // Display the text and make words clickable
+    async function displayText() {
+        let text = await loadText();
+        let transliterations = await loadTransliterations();
+
+        let words = text.split(/\b/);
+        let htmlContent = words.map(word => {
+            let cleanWord = word.replace(/[.,!?;()]/g, ''); // Remove punctuation for matching
+            if (transliterations[cleanWord]) {
+                return `<span class="clickable" onclick="alert('${transliterations[cleanWord]}')">${word}</span>`;
+            } else {
+                return word;
+            }
+        }).join('');
+
+        document.getElementById('content').innerHTML = htmlContent;
+    }
+
+    displayText();
+</script>
+
+</body>
+</html>
