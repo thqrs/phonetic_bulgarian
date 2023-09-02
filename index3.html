@@ -28,7 +28,7 @@
     </style>
 </head>
 <body>
-
+<button id="loadAllTransliterations">Load All Transliterations</button>
 <div id="content"></div>
 
 <script>
@@ -84,8 +84,7 @@
     }
     let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?‘’]/g, ''); // Clean specified punctuation
     if (transliterations[cleanSegment]) {
-        return `<span class="word-box" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;
-    } else {
+return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;    } else {
         return segment;
     }
 }).join('');  // Join without any spaces to restore original text structure
@@ -96,6 +95,19 @@
             });
         });
     }
+    
+    function loadAllTransliterations() {
+    let wordBoxes = document.querySelectorAll('.word-box');
+    wordBoxes.forEach(box => {
+        let transliteration = box.getAttribute('data-transliteration');
+        if (transliteration) {
+            showTransliteration(box, transliteration);
+        }
+    });
+}
+
+document.getElementById('loadAllTransliterations').addEventListener('click', loadAllTransliterations);
+
 
     function showTransliteration(element, transliteration) {
         if (!element.querySelector('.transliteration')) {
