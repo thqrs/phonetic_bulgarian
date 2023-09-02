@@ -124,21 +124,21 @@ function loadSelectedFile() {
 // Call the function to load the file list
 loadFileList();
     
-    // Load the text from pt.txt
-    function loadText(callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'pt.txt', true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 200) {
-                    callback(xhr.responseText);
-                } else {
-                    console.error("Error loading pt.txt:", xhr.statusText);
-                }
+ // Load the text from filename
+  function loadText(filename, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', filename, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(xhr.responseText);
+            } else {
+                console.error("Error loading " + filename + ":", xhr.statusText);
             }
-        };
-        xhr.send();
-    }
+        }
+    };
+    xhr.send();
+}
 
     // Load the transliterations from transliterations.json
     function loadTransliterations(callback) {
