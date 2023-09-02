@@ -45,6 +45,14 @@
         button:hover {
         background-color: #e0e0e0;  /* Slight grey background when hovering */
         }
+        .file-selector-container {
+    position: sticky;
+    bottom: 0;
+    background-color: white;  /* To ensure the content behind doesn't show through when scrolling */
+    padding: 10px;            /* Some spacing around the dropdown */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  /* Optional: to give a slight shadow for aesthetics */
+    z-index: 1000;            /* To ensure it's above other content */
+}
     </style>
 </head>
 <body>
@@ -60,6 +68,14 @@
 
     
 <div id="content"></div>
+
+<!-- Dropdown for file selection -->
+<div class="file-selector-container">
+    <select id="fileSelector" onchange="loadSelectedFile()">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+</div>
+
 
 <script>
     function adjustFontSize(multiplier) {
