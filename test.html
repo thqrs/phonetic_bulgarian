@@ -3,17 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Mario Movement</title>
+    <title>Simple Mario Movement with Touch Controls</title>
     <style>
         canvas {
             border: 1px solid black;
             display: block;
             margin: 0 auto;
         }
+        #controls {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+        }
+        #controls button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div id="controls">
+        <button id="left">←</button>
+        <button id="right">→</button>
+        <button id="jump">Jump</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
