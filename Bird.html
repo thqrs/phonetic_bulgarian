@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Flappy Bird</title>
+    <style>
+        body {
+            font-size: 30px;
+        }
+        #bird {
+            position: absolute;
+            bottom: 50%;
+            left: 20px;
+        }
+
+        #pipeTop, #pipeBottom {
+            position: absolute;
+            right: 0;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #pipeBottom {
+            bottom: 0;
+        }
+    </style>
+</head>
+<body onclick="flap()">
+    <div id="bird">🐤</div>
+    <div id="pipeTop">🌳🌳🌳🌳🌳🌳🌳🌳🌳🌳</div>
+    <div id="pipeBottom">🌳🌳🌳🌳🌳🌳🌳🌳🌳🌳</div>
+
+    <script>
+        let bird = document.getElementById('bird');
+        let pipeTop = document.getElementById('pipeTop');
+        let pipeBottom = document.getElementById('pipeBottom');
+        
+        let birdY = window.innerHeight / 2;
+        let birdVelocity = 0;
+        let gravity = 0.5;
+        let isGameOver = false;
+        let pipeX = window.innerWidth;
+        let pipeGap = 200;
+        
+        function flap() {
+            if (!isGameOver) birdVelocity = -10;
+        }
+
+        function gameLoop() {
+            birdVelocity += gravity;
+            birdY += birdVelocity;
+            bird.style.bottom = birdY + 'px';
+
+            pipeX -= 5;
+            if (pipeX < -300) {  // Adjusted for emoji width
+                pipeX = window.innerWidth;
+                let pipeHeight = Math.random() * (window.innerHeight - pipeGap);
+                pipeTop.style.height = pipeHeight + 'px';
+                pipeBottom.style.height = (window.innerHeight - pipeHeight - pipeGap) + 'px';
+            }
+            pipeTop.style.right = pipeX + 'px';
+            pipeBottom.style.right = pipeX + 'px';
+
+            if (birdY < 0 || birdY > window.innerHeight || 
+                (pipeX < 60 && pipeX > 10 && (birdY < parseInt(pipeTop.style.height) || birdY > window.innerHeight - parseInt(pipeBottom.style.height)))) {
+                isGameOver = true;
+                alert('Game Over!');
+            }
+
+            if (!isGameOver) requestAnimationFrame(gameLoop);
+        }
+
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>
