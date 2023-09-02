@@ -77,15 +77,15 @@
                     return;
                 }
 
-                let htmlContent = text.split(/(\s+|(?<=[.,!?;()])\s+|\s+(?=[.,!?;()])|\d+\s+|(?<=\s)-|-(?=\s))/)
-.map(segment => {
-                    let cleanSegment = segment.toLowerCase().replace(/[.‘’,!?;()\-]/g, ''); // Remove punctuation for matching
-                    if (transliterations[cleanSegment]) {
-                        return `<span class="word-box" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;
-                    } else {
-                        return segment;
-                    }
-                }).join('');
+                let htmlContent = text.split(/\s+/).map(segment => {
+    let cleanSegment = segment.toLowerCase().replace(/[.,!?;()]/g, ''); // Clean all punctuation except hyphen
+    if (transliterations[cleanSegment]) {
+        return `<span class="word-box" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;
+    } else {
+        return segment;
+    }
+}).join(' ');  // Join with a space to restore original spacing
+
 
                 document.getElementById('content').innerHTML = htmlContent;
             });
