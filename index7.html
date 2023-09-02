@@ -12,16 +12,13 @@
             /* line-height: 2.5em;  Adjust line spacing */
         }
 [class^="word-box"] {
-    /* padding: 0.5em 0.2em 0.7em 0.2em; */ /* top right bottom left */
-    padding: 0.5em 0.4em 2.1em 0.4em;
-    /* padding: 0.5em 0.2em */
-    border-radius: 4px;
-    margin-bottom: 10px;
-    display: inline-block;
-    position: relative;
-    vertical-align: top; /* Align the word box to the top */
-    line-height: 1.2;
-    /* text-align: top; */
+            background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
+            padding: 0.2em 0.5em 2em 0.5em; /* top right bottom left */
+            border-radius: 4px;
+            margin: 0 5px 10px 0; /* Space between boxes and below boxes */
+            display: inline-block;
+            position: relative;
+            line-height: 1.3; /* Adjust line height within the element */
 }
 
 .word-box1 {
@@ -37,7 +34,7 @@
 }
         .transliteration {
             position: absolute;
-           bottom: -0.03em;
+            bottom: 0.3em;
             left: 50%;
             transform: translateX(-50%);
             font-size: 1em;
