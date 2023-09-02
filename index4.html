@@ -64,16 +64,23 @@
         xhr.send();
     }
 
-    function toggleTransliteration(element) {
-        let translitElem = element.querySelector('.transliteration');
-        if (translitElem) {
-            if (translitElem.style.display !== 'none') {
-                translitElem.style.display = 'none';
-            } else {
-                translitElem.style.display = 'block';
-            }
+function toggleTransliteration(element) {
+    let translitElem = element.querySelector('.transliteration');
+    let transliteration = element.getAttribute('data-transliteration');
+
+    if (!translitElem && transliteration) {
+        translitElem = document.createElement('div');
+        translitElem.className = 'transliteration';
+        translitElem.textContent = transliteration;
+        element.appendChild(translitElem);
+    } else if (translitElem) {
+        if (translitElem.style.display !== 'none') {
+            translitElem.style.display = 'none';
+        } else {
+            translitElem.style.display = 'block';
         }
     }
+}
 
     function showAllTransliterations() {
         let wordBoxes = document.querySelectorAll('.word-box');
