@@ -112,6 +112,53 @@
 
 
 <script>
+
+    // ... rest of your code ...
+
+let translations = {}; // This will store the translations
+
+// Load translations when the page loads
+window.onload = function() {
+    fetch('translations.json')
+        .then(response => response.json())
+        .then(data => {
+            translations = data;
+        })
+        .catch(error => console.error("Error loading translations.json:", error));
+}
+
+function showTranslation(element) {
+    let word = element.textContent.trim().toLowerCase(); // get the word from the clicked element
+    let translation = translations[word]; // lookup the translation
+    
+    if (translation) {
+        element.innerHTML = translation;
+        element.style.backgroundColor = 'yellow';
+    }
+}
+
+// For mobile long press detection
+let pressTimer;
+
+function startPress(event) {
+    event.preventDefault();
+    pressTimer = setTimeout(function() {
+        showTranslation(event.target);
+    }, 1000); // 1 second (1000 milliseconds)
+}
+
+function stopPress() {
+    clearTimeout(pressTimer);
+}
+
+// Attach the event listeners to each word box
+document.querySelectorAll('.word-box').forEach(wordBox => {
+    wordBox.addEventListener('dblclick', (event) => showTranslation(event.target)); // Double click event
+    wordBox.addEventListener('touchstart', startPress); // Start of touch (press)
+    wordBox.addEventListener('touchend', stopPress); // End of touch (release)
+});
+
+    
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'commontransliterations.json', true);
