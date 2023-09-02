@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transliterations</title>
+    <style>
+        #content {
+            white-space: pre-wrap;  /* Preserves whitespace and lines */
+            word-wrap: break-word; /* Breaks long words */
+        }
+    </style>
+</head>
+<body>
+
+<div id="content"></div>
+
+<script>
+    // Load the text from pt.txt
+    function loadText(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'pt.txt', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(xhr.responseText);
+                } else {
+                    console.error("Error loading pt.txt:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // Load the transliterations from transliterations.json
+    function loadTransliterations(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'transliterations.json', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText));
+                } else {
+                    console.error("Error loading transliterations.json:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // Display the text and make words clickable
+    function displayText() {
+        loadText(function(text) {
+            if (!text) {
+                console.error("No text loaded from pt.txt");
+                return;
+            }
+            
+            loadTransliterations(function(transliterations) {
+                if (!transliterations) {
+                    console.error("No transliterations loaded");
+                    return;
+                }
+
+                let words = text.split(' ');
+                let htmlContent = words.map(word => {
+                    let cleanWord = word.replace(/[.,!?;()]/g, ''); // Remove punctuation for matching
+                    if (transliterations[cleanWord]) {
+                        return `<span class="clickable" onclick="alert('${transliterations[cleanWord]}')">${word}</span>`;
+                    } else {
+                        return word;
+                    }
+                }).join(' ');
+
+                document.getElementById('content').innerHTML = htmlContent;
+            });
+        });
+    }
+
+    displayText();
+</script>
+
+</body>
+</html>
