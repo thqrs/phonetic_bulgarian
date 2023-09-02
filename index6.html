@@ -206,22 +206,23 @@ function toggleTransliteration(element) {
 }
 
     function showAllTransliterations() {
-        let wordBoxes = document.querySelectorAll('.word-box');
-        wordBoxes.forEach(box => {
-            let transliteration = box.getAttribute('data-transliteration');
-            if (transliteration) {
-                let translitElem = box.querySelector('.transliteration');
-                if (!translitElem) {
-                    translitElem = document.createElement('div');
-                    translitElem.className = 'transliteration';
-                    translitElem.textContent = transliteration;
-                    box.appendChild(translitElem);
-                } else {
-                    translitElem.style.display = 'block';
-                }
+    let wordBoxes = document.querySelectorAll('.word-box, .word-box2'); // Target both classes
+    wordBoxes.forEach(box => {
+        let transliteration = box.getAttribute('data-transliteration');
+        if (transliteration) {
+            let translitElem = box.querySelector('.transliteration');
+            if (!translitElem) {
+                translitElem = document.createElement('div');
+                translitElem.className = 'transliteration';
+                translitElem.textContent = transliteration;
+                box.appendChild(translitElem);
+            } else {
+                translitElem.style.display = 'block';
             }
-        });
-    }
+        }
+    });
+}
+
 
     function clearAllTransliterations() {
     let translitElements = document.querySelectorAll('.transliteration');
@@ -261,7 +262,7 @@ function displayText(filename = 'pt.txt') {
                         return `<span class="word-box" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
                     } 
                     else if (newTransliterations[cleanSegment]) {
-                        return `<span class="word-box" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                        return `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
                     }
                     else {
                         if (cleanSegment.trim() !== '') {
