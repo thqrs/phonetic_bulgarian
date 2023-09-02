@@ -63,14 +63,22 @@
                 }
 
                 let words = text.split(' ');
-                let htmlContent = words.map(word => {
-                    let cleanWord = word.replace(/[.,!?;()]/g, ''); // Remove punctuation for matching
-                    if (transliterations[cleanWord]) {
-                        return `<span class="clickable" onclick="alert('${transliterations[cleanWord]}')">${word}</span>`;
-                    } else {
-                        return word;
-                    }
-                }).join(' ');
+ 
+
+                let htmlContent = text.split(/\b/).map(word => {
+    let cleanWord = word.replace(/[.,!?;()]/g, ''); // Remove punctuation for matching
+    if (transliterations[cleanWord]) {
+        return `<span class="clickable" onclick="alert('${transliterations[cleanWord]}')">${word}</span>`;
+    } else {
+        return word;
+    }
+}).join('');
+
+
+
+
+
+                
                 document.getElementById('content').innerHTML = htmlContent;
             });
         });
