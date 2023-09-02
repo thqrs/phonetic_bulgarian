@@ -77,14 +77,18 @@
                     return;
                 }
 
-                let htmlContent = text.split(/\s+/).map(segment => {
-    let cleanSegment = segment.toLowerCase().replace(/[.,!?;()]/g, ''); // Clean all punctuation except hyphen
+    let htmlContent = text.split(/(\s+|\n)/).map(segment => {
+    if (segment === '\n') {
+        return segment;  // Preserve newlines
+    }
+    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?‘’]/g, ''); // Clean specified punctuation
     if (transliterations[cleanSegment]) {
         return `<span class="word-box" onclick="showTransliteration(this, '${transliterations[cleanSegment]}')">${segment}</span>`;
     } else {
         return segment;
     }
-}).join(' ');  // Join with a space to restore original spacing
+}).join('');  // Join without any spaces to restore original text structure
+
 
 
                 document.getElementById('content').innerHTML = htmlContent;
