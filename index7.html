@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transliterações</title>
     <style>
+        
         #content {
             white-space: pre-wrap;  
             word-wrap: break-word; 
             line-height: 3em;
             /* line-height: 2.5em;  Adjust line spacing */
         }
+        
         #verticalMarginDisplay, #horizontalMarginDisplay {
     padding: 5px 10px;
     border: 1px solid #ccc;
@@ -133,22 +135,19 @@
 <div class="button-container">
     <button id="loadAllTransliterations" onclick="showAllTransliterations()">👓</button>
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-    <button id="increaseMargin" onclick="adjustMargin(1)">🔼</button>
-    <button id="decreaseMargin" onclick="adjustMargin(-1)">🔽</button>
-    <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⯈</button>
+    <span id="verticalMarginDisplay">10px</span> <!-- This is the initial vertical margin -->
+<button id="increaseMargin" onclick="adjustMargin(1)">🔼</button>
+<button id="decreaseMargin" onclick="adjustMargin(-1)">🔽</button>
+<span id="horizontalMarginDisplay">5px</span> <!-- This is the initial horizontal margin -->
+<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⯈</button>
 <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⯇</button>
 
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🌙</button>
 
-    <span id="verticalMarginDisplay">10px</span> <!-- This is the initial vertical margin -->
-<button id="increaseMargin" onclick="adjustMargin(1)">🔼</button>
-<button id="decreaseMargin" onclick="adjustMargin(-1)">🔽</button>
 
-<span id="horizontalMarginDisplay">5px</span> <!-- This is the initial horizontal margin -->
-<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⯈</button>
-<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⯇</button>
+
 
 </div>
 
