@@ -173,31 +173,7 @@
 
 
 <script>
-    /*
-    adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
-
-    adjustMargin(10);
-   function adjustMargin(point) {
-    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
-    wordBoxes.forEach(box => {
-        let currentMargin = window.getComputedStyle(box, null).getPropertyValue('margin-bottom');
-        let newMargin = (parseFloat(currentMargin) + point) + 'px';
-        box.style.marginBottom = newMargin;
-    });
-    document.getElementById('verticalMarginDisplay').textContent = newMargin;
-}
-
-
-   function adjustHorizontalMargin(point) {
-    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
-    wordBoxes.forEach(box => {
-        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
-        let newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
-        box.style.marginRight = newMarginRight;
-    });
-    document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
-}
-*/
+ 
 
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
@@ -426,6 +402,32 @@ function getDummyTransliteration(word) {
 });
 
 displayText();
+
+       /*
+    adjustHorizontalMargin(5); // This will set the initial margin-right to 5px
+
+    adjustMargin(10);
+   function adjustMargin(point) {
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    wordBoxes.forEach(box => {
+        let currentMargin = window.getComputedStyle(box, null).getPropertyValue('margin-bottom');
+        let newMargin = (parseFloat(currentMargin) + point) + 'px';
+        box.style.marginBottom = newMargin;
+    });
+    document.getElementById('verticalMarginDisplay').textContent = newMargin;
+}
+
+
+   function adjustHorizontalMargin(point) {
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    wordBoxes.forEach(box => {
+        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
+        let newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
+        box.style.marginRight = newMarginRight;
+    });
+    document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
+}
+*/
 </script>
 
 </body>
