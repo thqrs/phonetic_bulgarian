@@ -183,7 +183,13 @@ button:hover {
 
 
 <script>
- 
+ if (!localStorage.getItem('verticalMargin')) {
+    localStorage.setItem('verticalMargin', '10px');
+}
+
+if (!localStorage.getItem('horizontalMargin')) {
+    localStorage.setItem('horizontalMargin', '5px');
+}
 // Call the function to load saved margins on page load
 loadMargins();
 
@@ -460,15 +466,10 @@ function adjustHorizontalMargin(point) {
     console.log("Horizontal margin adjusted.");
 }
     function loadMargins() {
-        console.log("Loading margins...");
     let savedVerticalMargin = localStorage.getItem('verticalMargin');
-console.log("Loaded verticalMargin:", savedVerticalMargin);
-    
-let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
-console.log("Loaded horizontalMargin:", savedHorizontalMargin);
+    let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
 
-
-    if (savedVerticalMargin) {
+    if (savedVerticalMargin && savedVerticalMargin !== "undefined") {
         let wordBoxes = document.querySelectorAll('[class^="word-box"]');
         wordBoxes.forEach(box => {
             box.style.marginBottom = savedVerticalMargin;
@@ -476,15 +477,15 @@ console.log("Loaded horizontalMargin:", savedHorizontalMargin);
         document.getElementById('verticalMarginDisplay').textContent = savedVerticalMargin;
     }
 
-    if (savedHorizontalMargin) {
+    if (savedHorizontalMargin && savedHorizontalMargin !== "undefined") {
         let wordBoxes = document.querySelectorAll('[class^="word-box"]');
         wordBoxes.forEach(box => {
             box.style.marginRight = savedHorizontalMargin;
         });
         document.getElementById('horizontalMarginDisplay').textContent = savedHorizontalMargin;
     }
-        console.log("Margins loaded.");
 }
+
 
 
 
