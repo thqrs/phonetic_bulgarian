@@ -55,15 +55,15 @@
         top: 0;  /* This ensures the container sticks to the top */
         background-color: white;  /* This ensures the text behind doesn't overlap when scrolling */
         z-index: 1000;  /* This ensures the container is above other elements */
-        padding: 10px;  /* Optional: for some spacing */
-        margin-bottom: 20px;  /* Adjust as needed */
+        padding: 0px;  /* Optional: for some spacing */
+        margin-bottom: 0px;  /* Adjust as needed */
                 display: flex;  /* Ensures that the buttons are placed in a row */
         }
         
          button {
             flex: 1;  /* Distribute space equally among all buttons */
-            border-radius: 0;  /* Optional: remove rounded corners to make them look more like squares */
-            border: none;
+            border-radius: 1;  /* Optional: remove rounded corners to make them look more like squares */
+            border: 1;
             cursor: pointer;
             transition: background-color 0.3s;
             position: relative;
@@ -71,31 +71,7 @@
         }
 
     
-      /* Assign different colors to each button */
-/* Square aspect ratio trick using the ::before pseudo-element */
-button::before {
-    content: "";
-    display: block;
-   /* padding-top: 100%;   This creates a square aspect ratio */
-}
-
-/* Colors for each button, adjust as needed */
-#loadAllTransliterations {
-    background-color: #00008B; /* Light salmon */
-}
-
-#clearAllTransliterations {
-    background-color: #4169E1; /* Pale green */
-}
-
-#increaseFontSize {
-    background-color: #007FFF; /* Light blue */
-}
-
-#decreaseFontSize {
-    background-color: #87CEEB; /* Gold */
-}
-
+     
 button:hover {
     background-color: #e0e0e0;
 }
