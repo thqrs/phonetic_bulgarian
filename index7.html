@@ -57,21 +57,40 @@
         z-index: 1000;  /* This ensures the container is above other elements */
         padding: 10px;  /* Optional: for some spacing */
         margin-bottom: 20px;  /* Adjust as needed */
+                display: flex;  /* Ensures that the buttons are placed in a row */
         }
         
-        button {
-        font-size: 18px;      /* Increase font size to make the button text bigger */
-        padding: 10px 20px;  /* Adjust padding for bigger buttons */
-        border-radius: 25px; /* Add border-radius to make the buttons rounder */
-        border: none;        /* Remove default browser styling for borders */
-        cursor: pointer;     /* Change the cursor to a hand when hovering over the button */
-        margin-right: 10px;  /* Add some spacing between the buttons */
-        transition: background-color 0.3s;  /* Smooth transition for hover effect */
-        }
+      button {
+    font-size: 18px;
+    padding: 5px 20px;  /* Reduced padding to make the buttons thinner */
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    margin-right: 2px;  /* Reduced margin for buttons to be closer to each other */
+    transition: background-color 0.3s;
+}
+
     
-        button:hover {
-        background-color: #e0e0e0;  /* Slight grey background when hovering */
-        }
+      /* Assign different colors to each button */
+#loadAllTransliterations {
+    background-color: #FFA07A; /* Light salmon */
+}
+
+#clearAllTransliterations {
+    background-color: #98FB98; /* Pale green */
+}
+
+#increaseFontSize {
+    background-color: #ADD8E6; /* Light blue */
+}
+
+#decreaseFontSize {
+    background-color: #FFD700; /* Gold */
+}
+
+button:hover {
+    background-color: #e0e0e0;
+}
         body {
     display: flex;
     flex-direction: column;
