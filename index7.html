@@ -139,20 +139,22 @@ button:hover {
 <body>
 
 <div class="button-container">
-    <button id="loadAllTransliterations" onclick="showAllTransliterations()">👓</button>
+    <button id="loadAllTransliterations" onclick="showAllTransliterations()">✔️</button>
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-<button id="increaseMargin" onclick="adjustMargin(1)">^</button>
+<button id="increaseMargin" onclick="adjustMargin(1)">⏫</button>
+    <button id="decreaseMargin" onclick="adjustMargin(-1)">⏬</button>
         <span id="verticalMarginDisplay">10px</span> <!-- This is the initial vertical margin -->
 
-<button id="decreaseMargin" onclick="adjustMargin(-1)">_</button>
 
-<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">»</button>
+    
+<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
+<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
     <span id="horizontalMarginDisplay">5px</span> <!-- This is the initial horizontal margin -->
-<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">«</button>
 
-    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">+</button>
-    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">-</button>
-    <button id="toggleDarkMode" onclick="toggleDarkMode()">#</button>
+
+    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
+    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+    <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
 
 
 
