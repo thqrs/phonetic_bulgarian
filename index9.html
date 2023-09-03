@@ -86,13 +86,13 @@
     display: block;  /* Makes it a block-level element */
     height: 1px;  /* Height of the line */
     background-color: #ddd;  /* Color of the line */
-    margin-bottom: 10px;  /* Space between the line and the h3 element */
+    margin-bottom: 20px;  /* Space between the line and the h3 element */
 }
 button:hover {
     background-color: #555;
 }
         body {
-    background-color: #EFEFEF;       
+   /* background-color: #EFEFEF;      */ 
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -216,8 +216,11 @@ button:hover {
    <span id="horizontalMarginDisplay">5px</span>  <!-- This is the initial horizontal margin -->
 
 
+</div><div>
+    <h3>Modificar a Cor de Fundo:</h3>
+<input type="text" id="colorInput" placeholder="Introduzir cor do fundo: '#FF0000', 'rgb(255,0,0)', ou 'white'">
+<button onclick="changeBackgroundColor()">🎨</button>
 </div>
-    
 
 
 <script>
@@ -266,7 +269,10 @@ function loadNewTransliterations(callback) {
     xhr.send();
 }
 
-    
+    function changeBackgroundColor() {
+    const colorValue = document.getElementById('colorInput').value;
+    document.body.style.backgroundColor = colorValue;
+}
     function adjustFontSize(multiplier) {
     let contentDiv = document.getElementById('content');
     // Get the current font size of the content
