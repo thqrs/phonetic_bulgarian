@@ -152,14 +152,21 @@ button:hover {
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+    
 
 
 
 
 </div>
 
+    <div class="clipboard-container">
+    <textarea id="pasteBox" rows="3" cols="40" placeholder="Paste your content here..."></textarea>
+    <button id="processPastedContent" onclick="processPastedContent()">Process Pasted Text</button>
+</div>
 
-
+div id="extrabuttons"></div>
+<button id="pasteFromClipboard" onclick="processClipboardContent()">Paste and Process</button>
+</div>
     
 <div id="content"></div>
 
@@ -385,6 +392,69 @@ function displayText(filename = 'pt.txt') {
         });
     });
 }
+
+    function processClipboardContent() {
+    navigator.clipboard.readText().then(text => {
+        if (text) {
+            displayTextFromContent(text);
+        } else {
+            alert('Clipboard is empty.');
+        }
+    }).catch(err => {
+        console.error('Failed to read clipboard:', err);
+    });
+}
+
+function processPastedContent() {
+    const text = document.getElementById('pasteBox').value;
+    if (text) {
+        displayTextFromContent(text);
+    } else {
+        alert('Paste box is empty.');
+    }
+}
+
+function displayTextFromContent(text) {
+    if (!text) {
+        console.error("No text provided");
+        return;
+    }
+    
+    loadTransliterations(function(transliterations) {
+        loadNewTransliterations(function(newTrans) {
+            newTransliterations = newTrans;
+            
+            if (!transliterations) {
+                console.error("No transliterations loaded");
+                return;
+            }
+
+            let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                if (segment === '\n' || /^\s+$/.test(segment)) {
+                    return segment;
+                }
+                let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
+                
+                if (transliterations[cleanSegment]) {
+                    return `<span class="word-box1" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                } 
+                else if (newTransliterations[cleanSegment]) {
+                    return `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                }
+                else {
+                    if (cleanSegment.trim() !== '') {
+                        missingTransliterations.push(cleanSegment);
+                    }
+                    return `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                }
+            }).join('');
+
+            document.getElementById('content').innerHTML = htmlContent;
+            updateMissingTransliterations();
+        });
+    });
+}
+
 
 function updateMissingTransliterations() {
     let uniqueMissing = [...new Set(missingTransliterations)];  // Remove duplicates
