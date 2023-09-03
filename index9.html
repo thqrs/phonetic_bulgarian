@@ -166,17 +166,18 @@ button:hover {
     <div class="clipboard-container">
         <h4>Texto Para Processar:</h4>
     <textarea id="pasteBox" rows="3" cols="40" placeholder="Escrever texto aqui..."></textarea>
-    <button id="processPastedContent" onclick="processPastedContent()">✔️</button>
+    <button id="processPastedContent" onclick="processPastedContent()"> Processar! ✔️</button>
 </div>
 
 <div id="extrabuttons"></div>
-<button id="pasteFromClipboard" onclick="processClipboardContent()">Processar Texto Copiado📋⚙️</button>
+    <h4>Usar Texto que Eu Copiei:</h4>
+<button id="pasteFromClipboard" onclick="processClipboardContent()">Processar Texto Copiado 📋⚙️</button>
     <!-- <button onclick="handleClipboard()">Fetch from Clipboard</button> -->
 </div>
 
     
     <div>
-    <h4>Palavras em falta:</h4>
+    <h4>Palavras que foram transliteradas automaticamente:</h4>
     <textarea id="missingTransliterationsBox" rows="3" cols="20"></textarea>
     <button onclick="copyMissingTransliterations()">Copiar</button>
 </div>
