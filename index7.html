@@ -143,13 +143,10 @@ button:hover {
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
 <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
     <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
-      <!--  <span id="verticalMarginDisplay">10px</span>  This is the initial vertical margin -->
-
 
     
 <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
 <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
-  <!--  <span id="horizontalMarginDisplay">5px</span>  This is the initial horizontal margin -->
 
 
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
@@ -178,6 +175,10 @@ button:hover {
     <select id="fileSelector" onchange="loadSelectedFile()">
         <!-- Options will be populated by JavaScript -->
     </select>
+           <span id="verticalMarginDisplay">10px</span>   <!-- This is the initial vertical margin -->
+   <span id="horizontalMarginDisplay">5px</span>  <!-- This is the initial horizontal margin -->
+
+
 </div>
     
 
