@@ -60,18 +60,26 @@
                 display: flex;  /* Ensures that the buttons are placed in a row */
         }
         
-      button {
-    font-size: 18px;
-    padding: 5px 20px;  /* Reduced padding to make the buttons thinner */
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    margin-right: 2px;  /* Reduced margin for buttons to be closer to each other */
-    transition: background-color 0.3s;
-}
+         button {
+            flex: 1;  /* Distribute space equally among all buttons */
+            border-radius: 0;  /* Optional: remove rounded corners to make them look more like squares */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;  /* To ensure the content stays within the button */
+        }
 
     
       /* Assign different colors to each button */
+/* Square aspect ratio trick using the ::before pseudo-element */
+button::before {
+    content: "";
+    display: block;
+    padding-top: 100%;  /* This creates a square aspect ratio */
+}
+
+/* Colors for each button, adjust as needed */
 #loadAllTransliterations {
     background-color: #FFA07A; /* Light salmon */
 }
