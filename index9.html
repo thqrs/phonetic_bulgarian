@@ -178,31 +178,31 @@ button:hover {
 
 
     <div class="clipboard-container">
-        <h3>Quero Usar Um Texto Escrito Por Mim:</h3>
-    <textarea id="pasteBox" rows="3" cols="40" placeholder="Escrever o texto aqui e carregar em ''Processar!''..."></textarea>
+        <h3>Искам Да Използвам Текст, Написан От Мен: (Quero Usar Um Texto Escrito Por Mim)</h3>
+    <textarea id="pasteBox" rows="3" cols="40" placeholder="Въведете текста тук и натиснете ''Обработвай! (Escrever o texto aqui e carregar em ''Обработвай!'')"></textarea>
 </div><div>
-    <button id="processPastedContent" onclick="processPastedContent()"> Processar! ✔️</button>
+    <button id="processPastedContent" onclick="processPastedContent()"> Обработвай! ✔️</button>
 </div>
 
 <div id="extrabuttons"></div>
-    <h3>Quero Usar Um Texto Que Eu Copiei:</h3>
-<button id="pasteFromClipboard" onclick="processClipboardContent()">Processar o Texto Copiado! 📋⚙️</button>
+    <h3>Искам Да Използвам Текст, Който Съм Копирал: (Quero Usar Um Texto Que Eu Copiei)</h3>
+<button id="pasteFromClipboard" onclick="processClipboardContent()">Обработка На Копирания Текст! 📋⚙️</button>
     <!-- <button onclick="handleClipboard()">Fetch from Clipboard</button> -->
 </div>
 
     
     <div>
-    <h3>Palavras Que Foram Transliteradas Automaticamente:</h3>
+    <h3>Думи, Които Бяха Автоматично Транслитерирани: (Palavras Que Foram Transliteradas Automaticamente)</h3>
     <textarea id="missingTransliterationsBox" rows="3" cols="40">placeholder="Palavras que não estão na base de dados aparecerão aqui..."></textarea>
         </div>
         <div>
-    <button onclick="copyMissingTransliterations()">Copiar</button>
+    <button onclick="copyMissingTransliterations()">Копирай</button>
 </div>
 
 
 <!-- Dropdown for file selection -->
     <div>
-    <h3>Selecionar Texto Predefinido:</h3>
+    <h3>"Изберете Един От Предефинираните Тестови Текстове: (Selecionar Texto de Teste Predefinido)</h3>
     </div>
    
 <div class="file-selector-container">
@@ -211,13 +211,14 @@ button:hover {
     </select>
 
 </div>
-    <div><h3>Espaçamento das Margens:</h3>
+    <div><h3>Разстояние На Маржовете: (Espaçamento das Margens)</h3>
            <span id="verticalMarginDisplay">10px</span>   <!-- This is the initial vertical margin -->
    <span id="horizontalMarginDisplay">5px</span>  <!-- This is the initial horizontal margin -->
 
 
 </div><div>
-    <h3>Modificar a Cor de Fundo:</h3>
+    <h3>Промяна На Фоновата Цвят (Modificar a Cor de Fundo)</h3>
+    <p>Въведете цвета за фона на страницата в хексадецимален формат: '#FF0000', RGB (Червено, Зелено, Синьо): 'rgb(255,0,0)', или на английски: 'white'. (Introduzir a cor para o fundo da página: '#FF0000', 'rgb(255,0,0)', ou 'white')</p>
 <input type="text" id="colorInput" placeholder="Introduzir cor do fundo: '#FF0000', 'rgb(255,0,0)', ou 'white'">
 <button onclick="changeBackgroundColor()">🎨</button>
 </div>
