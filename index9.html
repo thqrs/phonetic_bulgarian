@@ -75,8 +75,19 @@
             color: black; /* Text color for the button */
         }
 
-    
-     
+    hr {
+    border: none;  /* Remove the default border */
+    height: 1px;  /* Set the height of the line */
+    background-color: #ddd;  /* Set the color of the line */
+    margin: 20px 0;  /* Add some vertical space before and after the line */
+}
+     h3::before {
+    content: "";  /* This is necessary for the pseudo-element to be generated */
+    display: block;  /* Makes it a block-level element */
+    height: 1px;  /* Height of the line */
+    background-color: #ddd;  /* Color of the line */
+    margin-bottom: 10px;  /* Space between the line and the h3 element */
+}
 button:hover {
     background-color: #555;
 }
