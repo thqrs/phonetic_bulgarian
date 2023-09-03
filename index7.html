@@ -442,7 +442,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     document.getElementById('verticalMarginDisplay').textContent = newMargin;
         localStorage.setItem('verticalMargin', newMargin);
+        console.log("Saved verticalMargin:", localStorage.getItem('verticalMargin'));
         console.log("Vertical margin adjusted.");
+        
+
 }
 
 function adjustHorizontalMargin(point) {
@@ -456,13 +459,19 @@ function adjustHorizontalMargin(point) {
         box.style.marginRight = newMarginRight;
     });
     document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
-        localStorage.setItem('horizontalMargin', newMarginRight);
+    localStorage.setItem('horizontalMargin', newMarginRight);
+    console.log("Saved horizontalMargin:", localStorage.getItem('horizontalMargin'));
+
     console.log("Horizontal margin adjusted.");
 }
     function loadMargins() {
         console.log("Loading margins...");
     let savedVerticalMargin = localStorage.getItem('verticalMargin');
-    let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
+console.log("Loaded verticalMargin:", savedVerticalMargin);
+    
+let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
+console.log("Loaded horizontalMargin:", savedHorizontalMargin);
+
 
     if (savedVerticalMargin) {
         let wordBoxes = document.querySelectorAll('[class^="word-box"]');
