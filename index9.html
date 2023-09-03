@@ -69,7 +69,7 @@
             position: relative;
             overflow: hidden;  /* To ensure the content stays within the button */
             padding: 10px;
-            background-color: #add8e6; /* A dark grey for the button background */
+            background-color: rgba(135, 206, 250, 0.4); /* A dark grey for the button background */
             color: white; /* Text color for the button */
         }
 
@@ -153,14 +153,18 @@ button:hover {
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
     
-
-
-
-
 </div>
 
+
+
+
+    
+<div id="content"></div>
+    
+
+
     <div class="clipboard-container">
-    <textarea id="pasteBox" rows="3" cols="40" placeholder="Paste your content here..."></textarea>
+    <textarea id="pasteBox" rows="3" cols="40" placeholder="Colar texto aqui..."></textarea>
     <button id="processPastedContent" onclick="processPastedContent()">Process Pasted Text</button>
 </div>
 
@@ -168,9 +172,8 @@ div id="extrabuttons"></div>
 <button id="pasteFromClipboard" onclick="processClipboardContent()">Paste and Process</button>
     <button onclick="handleClipboard()">Fetch from Clipboard</button>
 </div>
-    
-<div id="content"></div>
 
+    
     <div>
     <h3>Palavras em falta:</h3>
     <textarea id="missingTransliterationsBox" rows="10" cols="40"></textarea>
