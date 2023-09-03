@@ -166,6 +166,7 @@ button:hover {
 
 div id="extrabuttons"></div>
 <button id="pasteFromClipboard" onclick="processClipboardContent()">Paste and Process</button>
+    <button onclick="handleClipboard()">Fetch from Clipboard</button>
 </div>
     
 <div id="content"></div>
@@ -200,7 +201,26 @@ if (!localStorage.getItem('horizontalMargin')) {
 }
 // Call the function to load saved margins on page load
 loadMargins();
+    
+function handleClipboard() {
+    if (!navigator.clipboard) {
+        alert("Clipboard API not supported in this browser.");
+        return;
+    }
 
+    navigator.clipboard.readText()
+        .then(text => {
+            if (text) {
+                displayTextFromContent(text);
+            } else {
+                alert('Clipboard is empty.');
+            }
+        })
+        .catch(err => {
+            console.error('Failed to read clipboard:', err);
+            alert("Failed to access clipboard. Ensure permissions are granted.");
+        });
+}
     
 function loadNewTransliterations(callback) {
     var xhr = new XMLHttpRequest();
