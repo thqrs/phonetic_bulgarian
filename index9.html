@@ -303,6 +303,37 @@ function loadNewTransliterations(callback) {
         displayBox.textContent = newSize.toFixed(2);  // Display without 'px', rounded to two decimal places
     }
 }
+    function changeBackgroundColor() {
+    const colorInput = document.getElementById('colorInput');
+    let selectedColor;
+const shadesOfGray = [
+    "#f5f5f5",
+    "#e0e0e0",
+    "#d6d6d6",
+    "#b0b0b0",
+    "#a1a1a1",
+    "#8c8c8c",
+    "#707070",
+    "#5c5c5c",
+    "#474747",
+    "#333333"
+];
+    // If the input box is empty
+    if (!colorInput.value.trim()) {
+        // Pick a random index from the shadesOfGray array
+        const randomIndex = Math.floor(Math.random() * shadesOfGray.length);
+        selectedColor = shadesOfGray[randomIndex];
+
+        // Update the input box value with the chosen shade of gray
+        colorInput.value = selectedColor;
+    } else {
+        // Use the specified color
+        selectedColor = colorInput.value;
+    }
+
+    // Set the selected color as the background color
+    document.body.style.backgroundColor = selectedColor;
+}
     // Function to populate the dropdown
 function populateDropdown(files) {
     const selector = document.getElementById('fileSelector');
