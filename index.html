@@ -584,23 +584,26 @@ function copyMissingTransliterations() {
     };
     xhr.send();
 }
-  let phonemeMappings = {};
+let phonemeMappings = {};
 
 function getDummyTransliteration(word) {
     let transliterated = word;
 
-    // Apply the mappings
+    // Apply the mappings using regular expressions
     for (let [portuguese, bulgarian] of Object.entries(phonemeMappings)) {
-        transliterated = transliterated.replace(new RegExp(portuguese, 'g'), bulgarian);
+        let regex = new RegExp(portuguese, 'g');
+        transliterated = transliterated.replace(regex, bulgarian);
     }
 
     return transliterated;
 }
-  loadMappings(function(mappings) {
+
+loadMappings(function(mappings) {
     phonemeMappings = mappings;
 });
 
 displayText();
+
     
 document.addEventListener("DOMContentLoaded", function() {
     adjustHorizontalMargin(5);
