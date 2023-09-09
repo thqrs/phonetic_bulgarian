@@ -1,6 +1,7 @@
 {
     "a[bcçdfghjklmnpqrstvwxyz][bcçdfghjklmnpqrstvwxyz]": "ъ",
     "a[mlnrz][bcçdfghjklmnpqrstvwxyz]": "ъ",
+    "c[oe]": "ко",
     "aia": "иъ",
     "eia": "ейъ",
     "oia": "ойъ",
@@ -28,7 +29,6 @@
     "ai": "аи",
     "[aeiou]s[bcçdfghjklmnpqrstvwxyz]": "ш",
     "[aeiou]s[aeiou]": "з",
-    "c[oe]": "ко",
     "s$": "ш",
     "^s": "с",
     "ss": "сс",
