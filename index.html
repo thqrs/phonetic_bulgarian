@@ -179,7 +179,7 @@ button:hover {
 
     <!-- Audio player section starts here -->
     <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
-<button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
+<button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
     <button onclick="stopAudio()">⏹️</button>
 <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
     <!-- Audio player section ends here -->
@@ -291,8 +291,8 @@ function togglePlayPause() {
 function stopAudio() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
+    playPauseButton.textContent = '▶️'; // Reset to play symbol
 }
-
 function updateAudioTime() {
     audioPlayer.currentTime = seekBar.value;
 }
@@ -556,6 +556,10 @@ function displayText(filename = 'pt.txt') {
             });
         });
     });
+ // Update the audio player's source:
+    let audioFilename = filename.replace('.txt', '.mp3');
+    audioPlayer.src = audioFilename;
+    playPauseButton.textContent = '▶️'; // Reset to play symbol
 }
 
     function processClipboardContent() {
