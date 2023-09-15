@@ -60,6 +60,7 @@
         padding: 0px;  /* Optional: for some spacing */
         margin-bottom: 0px;  /* Adjust as needed */
                 display: flex;  /* Ensures that the buttons are placed in a row */
+            flex-direction: column;
         }
         
          button {
@@ -163,18 +164,21 @@ button:hover {
 <body>
 
 <div class="button-container">
-    <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
-    <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-    <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
-    <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
-    <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
-    <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
-    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
-    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
-    <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
-    
+
+    <div class="top-buttons">
+        <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
+        <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
+        <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
+        <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
+        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
+        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
+        <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
+        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+        <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+    </div>
+
     <!-- New container for the audio controls -->
-    <div style="margin-top: 10px;">
+    <div class="audio-controls">
         <!-- Audio player section starts here -->
         <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
         <button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
@@ -183,7 +187,9 @@ button:hover {
         <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
         <!-- Audio player section ends here -->
     </div>
+
 </div>
+
 
 
 </br>
