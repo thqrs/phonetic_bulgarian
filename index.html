@@ -62,6 +62,10 @@
                 display: flex;  /* Ensures that the buttons are placed in a row */
         }
         
+        .button-container > div {
+    display: block;
+    width: 100%;
+}
          button {
             flex: 1;  /* Distribute space equally among all buttons */
             border-radius: 15;  /* Optional: remove rounded corners to make them look more like squares */
@@ -163,30 +167,30 @@ button:hover {
 <body>
 
 <div class="button-container">
-    <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
-    <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-<button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
-    <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
 
-    
-<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
-<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
+    <!-- Original buttons -->
+    <div class="original-buttons">
+        <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
+        <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
+        <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
+        <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
+        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
+        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
+        <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
+        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+        <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+    </div>
 
+    <!-- Audio player controls -->
+    <div class="audio-controls">
+        <button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
+        <button onclick="stopAudio()">⏹️</button>
+        <input id="seekBar" type="range" min="0" max="100" value="50" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+        <span id="currentTimeDisplay">0:00</span>/<span id="totalTimeDisplay">0:00</span>
+    </div>
 
-    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
-    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
-    <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
-
-    <!-- Audio player section starts here -->
-    <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
-<button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
-    <button onclick="stopAudio()">⏹️</button>
-<input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
-    <!-- Audio player section ends here -->
-
-
-    
 </div>
+
 
 </br>
 </br>
