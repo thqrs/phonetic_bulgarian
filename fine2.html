@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transliterações</title>
+    <style>
+          h3 {
+            margin-top: 40px;
+        }
+        #content {
+            white-space: pre-wrap;  
+            word-wrap: break-word; 
+            line-height: 3em;
+            /* line-height: 2.5em;  Adjust line spacing */
+        }
+        
+        #verticalMarginDisplay, #horizontalMarginDisplay {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin-right: 5px; /* spacing from the button */
+    display: inline-block;
+}
+
+[class^="word-box"] {
+            background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
+            padding: 0.2em 0.5em 2em 0.5em; /* top right bottom left */
+            border-radius: 4px;
+            margin: 0 5px 10px 0; /* Space between boxes and below boxes */
+            display: inline-block;
+            position: relative;
+            line-height: 1.6; /* Adjust line height within the element */
+}
+        
+
+.word-box1 {
+    background-color: rgba(135, 206, 250, 0.2); /* Translucent blue color */
+}
+
+.word-box2 {
+    background-color: rgba(144, 238, 144, 0.2); /* Translucent green color */
+}
+
+.word-box3 {
+    background-color: rgba(144, 0, 0, 0.2); /* Translucent red color */
+}
+        .transliteration {
+            position: absolute;
+            bottom: 0.2em;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1em;
+        }
+        
+        .button-container {
+        position: sticky;
+        top: 0;  /* This ensures the container sticks to the top */
+        background-color: white;  /* This ensures the text behind doesn't overlap when scrolling */
+        z-index: 1000;  /* This ensures the container is above other elements */
+        padding: 0px;  /* Optional: for some spacing */
+        margin-bottom: 0px;  /* Adjust as needed */
+                display: flex;  /* Ensures that the buttons are placed in a row */
+        }
+        
+         button {
+            flex: 1;  /* Distribute space equally among all buttons */
+            border-radius: 15;  /* Optional: remove rounded corners to make them look more like squares */
+            border: 1;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;  /* To ensure the  stays within the button */
+            padding: 10px;
+            background-color: rgba(135, 206, 250, 0.4); /* A dark grey for the button background */
+            color: black; /* Text color for the button */
+        }
+
+    hr {
+    border: none;  /* Remove the default border */
+    height: 1px;  /* Set the height of the line */
+    background-color: #ddd;  /* Set the color of the line */
+    margin: 20px 0;  /* Add some vertical space before and after the line */
+}
+     h3::before {
+    : "";  /* This is necessary for the pseudo-element to be generated */
+    display: block;  /* Makes it a block-level element */
+    height: 1px;  /* Height of the line */
+    background-color: #ddd;  /* Color of the line */
+    margin-bottom: 30px;  /* Space between the line and the h3 element */
+}
+button:hover {
+    background-color: #555;
+}
+        body {
+   /* background-color: #EFEFEF;      */ 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+        .dark-mode {
+    background-color: #111;
+    color: white;
+}
+        .dark-mode button {
+    background-color: #444; /* A dark grey for the button background */
+    color: white; /* Text color for the button */
+}
+
+.dark-mode button:hover {
+    background-color: #555; /* A slightly lighter grey for the hover effect */
+}
+        .dark-mode .button-container, 
+.dark-mode .file-selector-container {
+    background-color: black;
+    color: white; /* To ensure the text color in these containers is white */
+}
+
+.dark-mode textarea {
+    background-color: #333; /* A slightly lighter color than black for contrast */
+    color: white; /* Text color inside the textarea */
+    border: 1px solid white; /* Border color for the textarea */
+}
+/*
+.dark-mode [class^="word-box"] {
+    background-color: rgba(255,255,255, 0.1); /* Light translucent white color */
+}
+
+.dark-mode .word-box1 {
+    background-color: rgba(255, 255, 255, 0.2); /* Light translucent white color */
+}
+
+.dark-mode .word-box2 {
+    background-color: rgba(255, 255, 255, 0.3); /* Even lighter translucent white color */
+}
+
+.dark-mode .word-box3 {
+    background-color: rgba(255, 0, 0, 0.2); /* Translucent red remains the same */
+}
+*/
+# {
+    flex: 1;
+}
+        .file-selector-container {
+    /*position: sticky;*/
+    bottom: 0;
+    background-color: white;  /* To ensure the  behind doesn't show through when scrolling */
+    padding: 10px;            /* Some spacing around the dropdown */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  /* Optional: to give a slight shadow for aesthetics */
+    z-index: 1000;            /* To ensure it's above other  */
+}
+        /* Styling for the audio controls */
+#seekBar {
+    flex-grow: 2;
+    margin: 0 10px;
+}
+
+/* Make sure the text content doesn't overlap with the buttons */
+.button-container {
+    overflow: hidden;
+}
+    </style>
+</head>
+<body>
+
+<div class="button-container">
+    <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
+    <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
+<button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
+    <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
+
+    
+<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
+<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
+
+
+    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
+    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+    <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+
+    <!-- Audio player section starts here -->
+    <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
+<button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
+    <button onclick="stopAudio()">⏹️</button>
+<input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+    <!-- Audio player section ends here -->
+
+
+    
+</div>
+
+</br>
+</br>
+
+    <h3>Текст На Португалски За Четене:</h3>
+    <h4>Texto Em Português Para Ler:</h4>
+<div id="content"></div>
+    
+
+
+    <div class="clipboard-container">
+        <h3>Искам Да Използвам Текст, Написан От Мен:</h3>
+        <h4>Quero Usar Um Texto Escrito Por Mim:</h4>
+    <textarea id="pasteBox" rows="3" cols="40" placeholder="Въведете текста тук и натиснете ''Обработвай! (Escrever o texto aqui e carregar em ''Обработвай!'')"></textarea>
+</div><div>
+    <button id="processPastedContent" onclick="processPastedContent()"> Обработвай! ✔️</button>
+</div>
+
+<div id="extrabuttons"></div>
+    <h3>Искам Да Използвам Текст, Който Съм Копирал:</h3>
+        <h4>Quero Usar Um Texto Que Eu Copiei:</h4>
+<button id="pasteFromClipboard" onclick="processClipboardContent()">Обработка На Копирания Текст! 📋⚙️</button>
+    <!-- <button onclick="handleClipboard()">Fetch from Clipboard</button> -->
+</div>
+
+    
+    <div>
+    <h3>Думи, Които Бяха Автоматично Транслитерирани:</h3>
+        <h4>Palavras Que Foram Transliteradas Automaticamente:</h4>
+    <textarea id="missingTransliterationsBox" rows="3" cols="40">placeholder="Palavras que não estão na base de dados aparecerão aqui..."></textarea>
+        </div>
+        <div>
+    <button onclick="copyMissingTransliterations()">Копирай</button>
+</div>
+
+
+<!-- Dropdown for file selection -->
+    <div>
+    <h3>"Изберете Един От Предефинираните Тестови Текстове:</h3>
+        <h4>Selecionar Texto de Teste Predefinido:</h4>
+    </div>
+   
+<div class="file-selector-container">
+    <select id="fileSelector" onchange="loadSelectedFile()">
+        <!-- Options will be populated by JavaScript -->
+    </select>
+
+</div>
+    <div><h3>Разстояние На Маржовете:</h3>
+        <h4>Espaçamento das Margens:</h4>
+           <span id="verticalMarginDisplay">10px</span>   <!-- This is the initial vertical margin -->
+   <span id="horizontalMarginDisplay">5px</span>  <!-- This is the initial horizontal margin -->
+
+
+</div><div>
+    <h3>Промяна На Фоновата Цвят:</h3>
+       <h4> Modificar a Cor de Fundo:</h4>
+    <p>Въведете цвета за фона на страницата в хексадецимален формат: '#FF0000', RGB (Червено, Зелено, Синьо): 'rgb(255,0,0)', или на английски: 'white'.
+        </br>
+</br>
+    Introduzir a cor para o fundo da página: '#FF0000', 'rgb(255,0,0)', ou 'white'</p>
+<input type="text" id="colorInput" placeholder="Introduzir cor do fundo: '#FF0000', 'rgb(255,0,0)', ou 'white'">
+<button onclick="changeBackgroundColor()">🎨</button>
+</div>
+
+<div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
+    <p>&copy; 2023 Tiago Henriques. Esta obra está licenciada com uma Licença <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribuição-NãoComercial 4.0 Internacional</a>.</p>
+    <p>Para perguntas, entre em contacto: resourceful.motion(at)gmail.com</p>
+    <img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="Creative Commons Atribuição-NãoComercial 4.0 Internacional">
+</div>
+
+
+<script>
+
+    let audioPlayer = document.getElementById('audioPlayer');
+let seekBar = document.getElementById('seekBar');
+let currentTimeDisplay = document.getElementById('currentTime');
+let totalTimeDisplay = document.getElementById('totalTime');
+
+audioPlayer.addEventListener('loadedmetadata', function() {
+    seekBar.max = audioPlayer.duration;
+    seekBar.value = 0;  // Ensure the seek bar starts at the beginning
+    totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+});
+
+audioPlayer.addEventListener('timeupdate', function() {
+    seekBar.value = audioPlayer.currentTime;
+    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+});
+    
+let playPauseButton = document.getElementById('playPauseButton');
+
+function togglePlayPause() {
+    if (audioPlayer.paused || audioPlayer.ended) {
+        audioPlayer.play();
+        playPauseButton.textContent = '⏸️'; // Change button to pause symbol
+    } else {
+        audioPlayer.pause();
+        playPauseButton.textContent = '▶️'; // Change button to play symbol
+    }
+}
+function stopAudio() {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+}
+
+function updateAudioTime() {
+    audioPlayer.currentTime = seekBar.value;
+}
+
+function formatTime(time) {
+    let mins = Math.floor(time / 60);
+    let secs = Math.floor(time % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+ if (!localStorage.getItem('verticalMargin')) {
+    localStorage.setItem('verticalMargin', '10px');
+}
+
+if (!localStorage.getItem('horizontalMargin')) {
+    localStorage.setItem('horizontalMargin', '5px');
+}
+// Call the function to load saved margins on page load
+loadMargins();
+    
+function handleClipboard() {
+    if (!navigator.clipboard) {
+        alert("Clipboard API not supported in this browser.");
+        return;
+    }
+
+    navigator.clipboard.readText()
+        .then(text => {
+            if (text) {
+                displayTextFromContent(text);
+            } else {
+                alert('Clipboard is empty.');
+            }
+        })
+        .catch(err => {
+            console.error('Failed to read clipboard:', err);
+            alert("Failed to access clipboard. Ensure permissions are granted.");
+        });
+}
+    
+function loadNewTransliterations(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'commontransliterations.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(JSON.parse(xhr.responseText));
+            } else {
+                console.error("Error loading commontransliterations.json:", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+    function changeBackgroundColor() {
+    const colorValue = document.getElementById('colorInput').value;
+    document.body.style.backgroundColor = colorValue;
+}
+    function adjustFontSize(multiplier) {
+    let contentDiv = document.getElementById('content');
+    // Get the current font size of the content
+    let currentSize = window.getComputedStyle(contentDiv, null).getPropertyValue('font-size');
+    let newSize = parseFloat(currentSize) * multiplier;  // Adjust the font size
+    contentDiv.style.fontSize = `${newSize}px`;  // Set the new font size
+
+    // Display the new size without 'px' (Assuming there's a display element for this, e.g., a div or span)
+    let displayBox = document.getElementById('fontSizeDisplay');  // Assuming there's an element with this ID
+    if (displayBox) {
+        displayBox.textContent = newSize.toFixed(2);  // Display without 'px', rounded to two decimal places
+    }
+}
+    function changeBackgroundColor() {
+    const colorInput = document.getElementById('colorInput');
+    let selectedColor;
+const shadesOfGray = [
+    "#f5f5f5",
+    "#e0e0e0",
+    "#d6d6d6",
+    "#b0b0b0",
+    "#a1a1a1",
+    "#8c8c8c",
+    "#707070",
+    "#5c5c5c",
+    "#474747",
+    "#333333"
+];
+    // If the input box is empty
+    if (!colorInput.value.trim()) {
+        // Pick a random index from the shadesOfGray array
+        const randomIndex = Math.floor(Math.random() * shadesOfGray.length);
+        selectedColor = shadesOfGray[randomIndex];
+
+        // Update the input box value with the chosen shade of gray
+        colorInput.value = selectedColor;
+    } else {
+        // Use the specified color
+        selectedColor = colorInput.value;
+    }
+
+    // Set the selected color as the background color
+    document.body.style.backgroundColor = selectedColor;
+}
+    // Function to populate the dropdown
+function populateDropdown(files) {
+    const selector = document.getElementById('fileSelector');
+    files.forEach(file => {
+        let option = document.createElement('option');
+        option.value = file;
+        option.textContent = file;
+        selector.appendChild(option);
+    });
+}
+function toggleDarkMode() {
+    let bodyElement = document.body;
+    
+    if (bodyElement.classList.contains('dark-mode')) {
+        bodyElement.classList.remove('dark-mode');
+    } else {
+        bodyElement.classList.add('dark-mode');
+    }
+}
+// Function to load the list of .txt files
+function loadFileList() {
+    fetch('files.json')
+        .then(response => response.json())
+        .then(data => {
+            populateDropdown(data.files);
+            loadSelectedFile();  // Load the default file on page load
+        })
+        .catch(error => console.error("Error loading files list:", error));
+}
+
+function loadSelectedFile() {
+    let selectedFile = document.getElementById('fileSelector').value;
+    displayText(selectedFile);  // Load the text from the selected file
+}
+
+loadFileList();  // Call the function to load the file list
+
+    
+ // Load the text from filename
+  function loadText(filename, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', filename, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(xhr.responseText);
+            } else {
+                console.error("Error loading " + filename + ":", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+    // Load the transliterations from transliterations.json
+    function loadTransliterations(callback) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'transliterations.json', true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    callback(JSON.parse(xhr.responseText));
+                } else {
+                    console.error("Error loading transliterations.json:", xhr.statusText);
+                }
+            }
+        };
+        xhr.send();
+    }
+
+function toggleTransliteration(element) {
+    let translitElem = element.querySelector('.transliteration');
+    let transliteration = element.getAttribute('data-transliteration');
+
+    if (!translitElem && transliteration) {
+        translitElem = document.createElement('div');
+        translitElem.className = 'transliteration';
+        translitElem.textContent = transliteration;
+        element.appendChild(translitElem);
+    } else if (translitElem) {
+        if (translitElem.style.display !== 'none') {
+            translitElem.style.display = 'none';
+        } else {
+            translitElem.style.display = 'block';
+        }
+    }
+}
+
+    function showAllTransliterations() {
+    let wordBoxes = document.querySelectorAll('.word-box1, .word-box2, .word-box3'); // Target both classes
+    wordBoxes.forEach(box => {
+        let transliteration = box.getAttribute('data-transliteration');
+        if (transliteration) {
+            let translitElem = box.querySelector('.transliteration');
+            if (!translitElem) {
+                translitElem = document.createElement('div');
+                translitElem.className = 'transliteration';
+                translitElem.textContent = transliteration;
+                box.appendChild(translitElem);
+            } else {
+                translitElem.style.display = 'block';
+            }
+        }
+    });
+}
+
+
+    function clearAllTransliterations() {
+    let translitElements = document.querySelectorAll('.transliteration');
+    translitElements.forEach(elem => {
+        elem.style.display = 'none';
+    });
+}
+
+
+   let missingTransliterations = [];
+
+let newTransliterations = {};
+
+function displayText(filename = 'pt.txt') {  
+    loadText(filename, function(text) {
+        if (!text) {
+            console.error("No text loaded from", filename);
+            return;
+        }
+        
+        loadTransliterations(function(transliterations) {
+            loadNewTransliterations(function(newTrans) {
+                newTransliterations = newTrans;
+                
+                if (!transliterations) {
+                    console.error("No transliterations loaded");
+                    return;
+                }
+
+                let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                    if (segment === '\n' || /^\s+$/.test(segment)) {
+                        return segment;
+                    }
+                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
+                    
+                    if (transliterations[cleanSegment]) {
+                        return `<span class="word-box1" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    } 
+                    else if (newTransliterations[cleanSegment]) {
+                        return `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    }
+                    else {
+                        if (cleanSegment.trim() !== '') {
+                            missingTransliterations.push(cleanSegment);
+                        }
+                        return `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                    }
+                }).join('');
+
+                document.getElementById('content').innerHTML = htmlContent;
+                updateMissingTransliterations();
+            });
+        });
+    });
+}
+
+    function processClipboardContent() {
+    navigator.clipboard.readText().then(text => {
+        if (text) {
+            displayTextFromContent(text);
+        } else {
+            alert('Clipboard is empty.');
+        }
+    }).catch(err => {
+        console.error('Failed to read clipboard:', err);
+    });
+}
+
+function processPastedContent() {
+    const text = document.getElementById('pasteBox').value;
+    if (text) {
+        displayTextFromContent(text);
+    } else {
+        alert('Paste box is empty.');
+    }
+}
+
+function displayTextFromContent(text) {
+    if (!text) {
+        console.error("No text provided");
+        return;
+    }
+    
+    loadTransliterations(function(transliterations) {
+        loadNewTransliterations(function(newTrans) {
+            newTransliterations = newTrans;
+            
+            if (!transliterations) {
+                console.error("No transliterations loaded");
+                return;
+            }
+
+            let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                if (segment === '\n' || /^\s+$/.test(segment)) {
+                    return segment;
+                }
+                let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
+                
+                if (transliterations[cleanSegment]) {
+                    return `<span class="word-box1" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                } 
+                else if (newTransliterations[cleanSegment]) {
+                    return `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                }
+                else {
+                    if (cleanSegment.trim() !== '') {
+                        missingTransliterations.push(cleanSegment);
+                    }
+                    return `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                }
+            }).join('');
+
+            document.getElementById('content').innerHTML = htmlContent;
+            updateMissingTransliterations();
+        });
+    });
+}
+
+
+function updateMissingTransliterations() {
+    let uniqueMissing = [...new Set(missingTransliterations)];  // Remove duplicates
+    document.getElementById('missingTransliterationsBox').value = uniqueMissing.join('\n');
+}
+
+function copyMissingTransliterations() {
+    let copyText = document.getElementById("missingTransliterationsBox");
+    copyText.select();
+    document.execCommand("copy");
+}
+
+  function loadMappings(callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'mappings.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                callback(JSON.parse(xhr.responseText));
+            } else {
+                console.error("Error loading mappings.json:", xhr.statusText);
+            }
+        }
+    };
+    xhr.send();
+}
+let phonemeMappings = {};
+
+function getDummyTransliteration(word) {
+    let transliterated = word;
+
+    // Apply the mappings using regular expressions
+    for (let [portuguese, bulgarian] of Object.entries(phonemeMappings)) {
+        let regex = new RegExp(portuguese, 'g');
+        transliterated = transliterated.replace(regex, bulgarian);
+    }
+
+    return transliterated;
+}
+
+loadMappings(function(mappings) {
+    phonemeMappings = mappings;
+});
+
+displayText();
+
+    
+document.addEventListener("DOMContentLoaded", function() {
+    adjustHorizontalMargin(5);
+    adjustMargin(10);
+});
+    function adjustMargin(point) {
+        console.log("Adjusting vertical margin...");
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    let newMargin;
+    wordBoxes.forEach(box => {
+        let currentMargin = window.getComputedStyle(box, null).getPropertyValue('margin-bottom');
+        newMargin = (parseFloat(currentMargin) + point) + 'px';
+        box.style.marginBottom = newMargin;
+    });
+    document.getElementById('verticalMarginDisplay').textContent = newMargin;
+        localStorage.setItem('verticalMargin', newMargin);
+        console.log("Saved verticalMargin:", localStorage.getItem('verticalMargin'));
+        console.log("Vertical margin adjusted.");
+        
+
+}
+
+function adjustHorizontalMargin(point) {
+        console.log("Adjusting horizontal margin...");
+
+    let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+    let newMarginRight;
+    wordBoxes.forEach(box => {
+        let currentMarginRight = window.getComputedStyle(box, null).getPropertyValue('margin-right');
+        newMarginRight = (parseFloat(currentMarginRight) + point) + 'px';
+        box.style.marginRight = newMarginRight;
+    });
+    document.getElementById('horizontalMarginDisplay').textContent = newMarginRight;
+    localStorage.setItem('horizontalMargin', newMarginRight);
+    console.log("Saved horizontalMargin:", localStorage.getItem('horizontalMargin'));
+
+    console.log("Horizontal margin adjusted.");
+}
+    function loadMargins() {
+    let savedVerticalMargin = localStorage.getItem('verticalMargin');
+    let savedHorizontalMargin = localStorage.getItem('horizontalMargin');
+
+    if (savedVerticalMargin && savedVerticalMargin !== "undefined") {
+        let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+        wordBoxes.forEach(box => {
+            box.style.marginBottom = savedVerticalMargin;
+        });
+        document.getElementById('verticalMarginDisplay').textContent = savedVerticalMargin;
+    }
+
+    if (savedHorizontalMargin && savedHorizontalMargin !== "undefined") {
+        let wordBoxes = document.querySelectorAll('[class^="word-box"]');
+        wordBoxes.forEach(box => {
+            box.style.marginRight = savedHorizontalMargin;
+        });
+        document.getElementById('horizontalMarginDisplay').textContent = savedHorizontalMargin;
+    }
+}
+
+
+
+
+    
+</script>
+
+</body>
+</html>
