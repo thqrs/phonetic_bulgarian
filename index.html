@@ -165,28 +165,26 @@ button:hover {
 <div class="button-container">
     <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-<button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
+    <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
     <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
-
-    
-<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
-<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
-
-
+    <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
+    <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
-
-    <!-- Audio player section starts here -->
-    <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
-<button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
-    <button onclick="stopAudio()">⏹️</button>
-<input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
-    <!-- Audio player section ends here -->
-
-
     
+    <!-- New container for the audio controls -->
+    <div style="margin-top: 10px;">
+        <!-- Audio player section starts here -->
+        <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
+        <button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
+        <button onclick="stopAudio()">⏹️</button>
+        <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+        <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+        <!-- Audio player section ends here -->
+    </div>
 </div>
+
 
 </br>
 </br>
