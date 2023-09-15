@@ -182,8 +182,7 @@ button:hover {
     <button onclick="playAudio()">▶️</button>
     <button onclick="pauseAudio()">⏸️</button>
     <button onclick="stopAudio()">⏹️</button>
-    <input id="seekBar" type="range" min="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
-    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+<input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
     <!-- Audio player section ends here -->
 
 
@@ -270,6 +269,7 @@ let totalTimeDisplay = document.getElementById('totalTime');
 
 audioPlayer.addEventListener('loadedmetadata', function() {
     seekBar.max = audioPlayer.duration;
+    seekBar.value = 0;  // Ensure the seek bar starts at the beginning
     totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
 });
 
