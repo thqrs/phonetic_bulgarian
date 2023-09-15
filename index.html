@@ -21,7 +21,6 @@
     margin-right: 5px; /* spacing from the button */
     display: inline-block;
 }
-        
 
 [class^="word-box"] {
             background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
@@ -159,50 +158,35 @@ button:hover {
 .button-container {
     overflow: hidden;
 }
-        .button-container {
-    flex-direction: column;  /* Ensures the child divs stack vertically */
-}
-
-.original-buttons, .audio-controls {
-    display: flex;  /* Makes sure the children of these divs are placed in a row */
-    justify-content: space-between;  /* Distributes the children evenly */
-}
-
-
-        .button-container > div {
-    display: block;
-    width: 100%;
-}
-
     </style>
 </head>
 <body>
 
 <div class="button-container">
+    <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
+    <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
+<button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
+    <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
 
-    <!-- Original buttons -->
-    <div class="original-buttons">
-        <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
-        <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-        <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
-        <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
-        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
-        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
-        <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
-        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
-        <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
-    </div>
+    
+<button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
+<button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
 
-    <!-- Audio player controls -->
-    <div class="audio-controls">
-        <button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
-        <button onclick="stopAudio()">⏹️</button>
-        <input id="seekBar" type="range" min="0" max="100" value="50" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
-        <span id="currentTimeDisplay">0:00</span>/<span id="totalTimeDisplay">0:00</span>
-    </div>
 
+    <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
+    <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
+    <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+
+    <!-- Audio player section starts here -->
+    <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
+<button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
+    <button onclick="stopAudio()">⏹️</button>
+<input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+    <!-- Audio player section ends here -->
+
+
+    
 </div>
-
 
 </br>
 </br>
@@ -276,7 +260,7 @@ button:hover {
 
 
 <script>
-let newTransliterations = {};
+
     let audioPlayer = document.getElementById('audioPlayer');
 let seekBar = document.getElementById('seekBar');
 let currentTimeDisplay = document.getElementById('currentTime');
@@ -307,8 +291,8 @@ function togglePlayPause() {
 function stopAudio() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
-    playPauseButton.textContent = '▶️'; // Reset to play symbol
 }
+
 function updateAudioTime() {
     audioPlayer.currentTime = seekBar.value;
 }
@@ -529,7 +513,7 @@ function toggleTransliteration(element) {
 
    let missingTransliterations = [];
 
-
+let newTransliterations = {};
 
 function displayText(filename = 'pt.txt') {  
     loadText(filename, function(text) {
@@ -572,10 +556,6 @@ function displayText(filename = 'pt.txt') {
             });
         });
     });
- // Update the audio player's source:
-    let audioFilename = filename.replace('.txt', '.mp3');
-    audioPlayer.src = audioFilename;
-    playPauseButton.textContent = '▶️'; // Reset to play symbol
 }
 
     function processClipboardContent() {
