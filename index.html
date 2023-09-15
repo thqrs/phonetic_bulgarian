@@ -291,8 +291,8 @@ function togglePlayPause() {
 function stopAudio() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
+    playPauseButton.textContent = '▶️'; // Reset to play symbol
 }
-
 function updateAudioTime() {
     audioPlayer.currentTime = seekBar.value;
 }
@@ -556,6 +556,9 @@ function displayText(filename = 'pt.txt') {
             });
         });
     });
+let audioFilename = filename.replace('.txt', '.mp3');
+    audioPlayer.src = audioFilename;
+    playPauseButton.textContent = '▶️'; // Reset to play symbol
 }
 
     function processClipboardContent() {
