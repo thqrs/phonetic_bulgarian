@@ -276,7 +276,7 @@ button:hover {
 
 
 <script>
-
+let newTransliterations = {};
     let audioPlayer = document.getElementById('audioPlayer');
 let seekBar = document.getElementById('seekBar');
 let currentTimeDisplay = document.getElementById('currentTime');
@@ -529,7 +529,7 @@ function toggleTransliteration(element) {
 
    let missingTransliterations = [];
 
-let newTransliterations = {};
+
 
 function displayText(filename = 'pt.txt') {  
     loadText(filename, function(text) {
