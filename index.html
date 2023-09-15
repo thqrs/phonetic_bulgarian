@@ -158,11 +158,16 @@ button:hover {
 .button-container {
     overflow: hidden;
 }
+        .button-container > div {
+    display: block;
+    width: 100%;
+}
     </style>
 </head>
 <body>
 
 <div class="button-container">
+     <div class="original-buttons">
     <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
     <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
 <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
@@ -177,17 +182,16 @@ button:hover {
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
 
-    <!-- Audio player section starts here -->
-    <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
-<button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
-    <button onclick="stopAudio()">⏹️</button>
-<input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
-    <!-- Audio player section ends here -->
+    </div>
 
-
-    
+    <!-- Audio player controls -->
+    <div class="audio-controls">
+        <button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
+        <button onclick="stopAudio()">⏹️</button>
+        <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+        <span id="currentTimeDisplay">0:00</span>/<span id="totalTimeDisplay">0:00</span>
+    </div>
 </div>
-
 </br>
 </br>
 
