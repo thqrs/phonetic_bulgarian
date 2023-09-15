@@ -148,6 +148,16 @@ button:hover {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  /* Optional: to give a slight shadow for aesthetics */
     z-index: 1000;            /* To ensure it's above other  */
 }
+        /* Styling for the audio controls */
+#seekBar {
+    flex-grow: 2;
+    margin: 0 10px;
+}
+
+/* Make sure the text content doesn't overlap with the buttons */
+.button-container {
+    overflow: hidden;
+}
     </style>
 </head>
 <body>
@@ -166,6 +176,17 @@ button:hover {
     <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
     <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
     <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+
+    <!-- Audio player section starts here -->
+    <audio id="audioPlayer" src="pt.mp3" preload="metadata"></audio>
+    <button onclick="playAudio()">▶️</button>
+    <button onclick="pauseAudio()">⏸️</button>
+    <button onclick="stopAudio()">⏹️</button>
+    <input id="seekBar" type="range" min="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+    <!-- Audio player section ends here -->
+
+
     
 </div>
 
@@ -241,6 +262,45 @@ button:hover {
 
 
 <script>
+
+    let audioPlayer = document.getElementById('audioPlayer');
+let seekBar = document.getElementById('seekBar');
+let currentTimeDisplay = document.getElementById('currentTime');
+let totalTimeDisplay = document.getElementById('totalTime');
+
+audioPlayer.addEventListener('loadedmetadata', function() {
+    seekBar.max = audioPlayer.duration;
+    totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+});
+
+audioPlayer.addEventListener('timeupdate', function() {
+    seekBar.value = audioPlayer.currentTime;
+    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+});
+
+function playAudio() {
+    audioPlayer.play();
+}
+
+function pauseAudio() {
+    audioPlayer.pause();
+}
+
+function stopAudio() {
+    audioPlayer.pause();
+    audioPlayer.currentTime = 0;
+}
+
+function updateAudioTime() {
+    audioPlayer.currentTime = seekBar.value;
+}
+
+function formatTime(time) {
+    let mins = Math.floor(time / 60);
+    let secs = Math.floor(time % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
  if (!localStorage.getItem('verticalMargin')) {
     localStorage.setItem('verticalMargin', '10px');
 }
