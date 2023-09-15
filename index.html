@@ -4,165 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transliterações</title>
-    <style>
-          h3 {
-            margin-top: 40px;
-        }
-        #content {
-            white-space: pre-wrap;  
-            word-wrap: break-word; 
-            line-height: 3em;
-            /* line-height: 2.5em;  Adjust line spacing */
-        }
-        
-        #verticalMarginDisplay, #horizontalMarginDisplay {
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    margin-right: 5px; /* spacing from the button */
-    display: inline-block;
-}
+<style>
+    h3 {
+        margin-top: 40px;
+    }
+    #content {
+        white-space: pre-wrap;  
+        word-wrap: break-word; 
+        line-height: 3em;
+    }
+    
+    #verticalMarginDisplay, #horizontalMarginDisplay {
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        margin-right: 5px; 
+        display: inline-block;
+    }
 
-[class^="word-box"] {
-            background-color: rgba(135,206,250, 0.5); /* Translucent blue color */
-            padding: 0.2em 0.5em 2em 0.5em; /* top right bottom left */
-            border-radius: 4px;
-            margin: 0 5px 10px 0; /* Space between boxes and below boxes */
-            display: inline-block;
-            position: relative;
-            line-height: 1.6; /* Adjust line height within the element */
-}
-        
+    [class^="word-box"] {
+        background-color: rgba(135,206,250, 0.5); 
+        padding: 0.2em 0.5em 2em 0.5em;
+        border-radius: 4px;
+        margin: 0 5px 10px 0; 
+        display: inline-block;
+        position: relative;
+        line-height: 1.6;
+    }
 
-.word-box1 {
-    background-color: rgba(135, 206, 250, 0.2); /* Translucent blue color */
-}
+    .word-box1 {
+        background-color: rgba(135, 206, 250, 0.2);
+    }
 
-.word-box2 {
-    background-color: rgba(144, 238, 144, 0.2); /* Translucent green color */
-}
+    .word-box2 {
+        background-color: rgba(144, 238, 144, 0.2);
+    }
 
-.word-box3 {
-    background-color: rgba(144, 0, 0, 0.2); /* Translucent red color */
-}
-        .transliteration {
-            position: absolute;
-            bottom: 0.2em;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 1em;
-        }
-        
-        .button-container {
+    .word-box3 {
+        background-color: rgba(144, 0, 0, 0.2);
+    }
+
+    .transliteration {
+        position: absolute;
+        bottom: 0.2em;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1em;
+    }
+
+    .button-container {
         position: sticky;
-        top: 0;  /* This ensures the container sticks to the top */
-        background-color: white;  /* This ensures the text behind doesn't overlap when scrolling */
-        z-index: 1000;  /* This ensures the container is above other elements */
-        padding: 0px;  /* Optional: for some spacing */
-        margin-bottom: 0px;  /* Adjust as needed */
-                display: flex;  /* Ensures that the buttons are placed in a row */
-        }
-        
-        .button-container > div {
-    display: block;
-    width: 100%;
-}
-         button {
-            flex: 1;  /* Distribute space equally among all buttons */
-            border-radius: 15;  /* Optional: remove rounded corners to make them look more like squares */
-            border: 1;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            position: relative;
-            overflow: hidden;  /* To ensure the  stays within the button */
-            padding: 10px;
-            background-color: rgba(135, 206, 250, 0.4); /* A dark grey for the button background */
-            color: black; /* Text color for the button */
-        }
+        top: 0;
+        background-color: white;
+        z-index: 1000;
+        padding: 0px;
+        margin-bottom: 0px;
+        display: flex;
+        flex-direction: column; 
+        overflow: hidden; 
+    }
+
+    .original-buttons, .audio-controls {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    button {
+        flex: 1;
+        border-radius: 15px;
+        border: 1px solid black;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        position: relative;
+        overflow: hidden;
+        padding: 10px;
+        background-color: rgba(135, 206, 250, 0.4);
+        color: black;
+    }
 
     hr {
-    border: none;  /* Remove the default border */
-    height: 1px;  /* Set the height of the line */
-    background-color: #ddd;  /* Set the color of the line */
-    margin: 20px 0;  /* Add some vertical space before and after the line */
-}
-     h3::before {
-    : "";  /* This is necessary for the pseudo-element to be generated */
-    display: block;  /* Makes it a block-level element */
-    height: 1px;  /* Height of the line */
-    background-color: #ddd;  /* Color of the line */
-    margin-bottom: 30px;  /* Space between the line and the h3 element */
-}
-button:hover {
-    background-color: #555;
-}
-        body {
-   /* background-color: #EFEFEF;      */ 
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-        .dark-mode {
-    background-color: #111;
-    color: white;
-}
-        .dark-mode button {
-    background-color: #444; /* A dark grey for the button background */
-    color: white; /* Text color for the button */
-}
+        border: none;
+        height: 1px;
+        background-color: #ddd;
+        margin: 20px 0;
+    }
 
-.dark-mode button:hover {
-    background-color: #555; /* A slightly lighter grey for the hover effect */
-}
-        .dark-mode .button-container, 
-.dark-mode .file-selector-container {
-    background-color: black;
-    color: white; /* To ensure the text color in these containers is white */
-}
+    h3::before {
+        content: "";
+        display: block;
+        height: 1px;
+        background-color: #ddd;
+        margin-bottom: 30px;
+    }
 
-.dark-mode textarea {
-    background-color: #333; /* A slightly lighter color than black for contrast */
-    color: white; /* Text color inside the textarea */
-    border: 1px solid white; /* Border color for the textarea */
-}
-/*
-.dark-mode [class^="word-box"] {
-    background-color: rgba(255,255,255, 0.1); /* Light translucent white color */
-}
+    button:hover {
+        background-color: #555;
+    }
 
-.dark-mode .word-box1 {
-    background-color: rgba(255, 255, 255, 0.2); /* Light translucent white color */
-}
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-.dark-mode .word-box2 {
-    background-color: rgba(255, 255, 255, 0.3); /* Even lighter translucent white color */
-}
+    .dark-mode {
+        background-color: #111;
+        color: white;
+    }
 
-.dark-mode .word-box3 {
-    background-color: rgba(255, 0, 0, 0.2); /* Translucent red remains the same */
-}
-*/
-# {
-    flex: 1;
-}
-        .file-selector-container {
-    /*position: sticky;*/
-    bottom: 0;
-    background-color: white;  /* To ensure the  behind doesn't show through when scrolling */
-    padding: 10px;            /* Some spacing around the dropdown */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);  /* Optional: to give a slight shadow for aesthetics */
-    z-index: 1000;            /* To ensure it's above other  */
-}
-        /* Styling for the audio controls */
-#seekBar {
-    flex-grow: 2;
-    margin: 0 10px;
-}
+    .dark-mode button {
+        background-color: #444;
+        color: white;
+    }
 
-/* Make sure the text content doesn't overlap with the buttons */
-.button-container {
-    overflow: hidden;
-}
-    </style>
+    .dark-mode button:hover {
+        background-color: #555;
+    }
+
+    .dark-mode .button-container, 
+    .dark-mode .file-selector-container {
+        background-color: black;
+        color: white;
+    }
+
+    .dark-mode textarea {
+        background-color: #333;
+        color: white;
+        border: 1px solid white;
+    }
+
+    .file-selector-container {
+        bottom: 0;
+        background-color: white;
+        padding: 10px;
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    #seekBar {
+        flex-grow: 2;
+        margin: 0 10px;
+    }
+</style>
+
 </head>
 <body>
 
