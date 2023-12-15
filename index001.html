@@ -551,7 +551,7 @@ function displayText(filename = 'perolas.txt') {
                     const match = segment.match(imageRegex);
                     if (match) {
                         const imageUrl = match[1]; // This is your image file name
-                        return `<img src="/path/to/images/${imageUrl}" alt="Image" style="max-width:100%; height:auto;">`; // Replace with your server path
+                        return `<img src="https://raw.githubusercontent.com/thqrs/phonetic_bulgarian/main/${imageUrl}" alt="Image" style="max-width:100%; height:auto;">`; // Replace with your server path
                     }
 
                     let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
