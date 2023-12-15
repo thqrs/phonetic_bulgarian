@@ -36,6 +36,10 @@ Qual é a lição para nós?
 Pensar na maravilhosa criação ajuda-nos a sentir humildes. 
 Faz-nos entender que a coisa mais importante é a soberania de Jeová ==]
 
+teste imagem:
 #teste.png#
+
+teste imagem 2:
+#https://raw.githubusercontent.com/thqrs/phonetic_bulgarian/main/teste.png#
 
 
