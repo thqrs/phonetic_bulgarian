@@ -549,51 +549,55 @@ function displayText(filename = 'perolas.txt') {
             console.error("No text loaded from", filename);
             return;
         }
-        
+
         loadTransliterations(function(transliterations) {
             loadNewTransliterations(function(newTrans) {
                 newTransliterations = newTrans;
-                
+
                 if (!transliterations) {
                     console.error("No transliterations loaded");
                     return;
                 }
 
-                let htmlContent = text.split(/(\$\$.*?\$\$|\s+|\n+)/).map(segment => {
-                    // Check for HTML content within $$
-                    const htmlRegex = /^\$\$(.*?)\$\$$/;
-                    const htmlMatch = segment.match(htmlRegex);
-                    if (htmlMatch) {
-                        return htmlMatch[1]; // Return raw HTML content
+                // Split the text into segments to process for $$ and other elements
+                let htmlContent = '';
+                let inHtmlBlock = false;
+                text.split(/(\$\$|\s+|\n+)/).forEach(segment => {
+                    // Toggle the inHtmlBlock flag when encountering $$
+                    if (segment === '$$') {
+                        inHtmlBlock = !inHtmlBlock;
+                        return;
                     }
 
-                    if (segment === '\n' || /^\s+$/.test(segment) || htmlRegex.test(segment)) {
-                        return segment;
-                    }
-
-                    // Check for image command
-                    const imageRegex = /#(.*?\.(png|jpg|jpeg|gif|bmp))#/;
-                    const match = segment.match(imageRegex);
-                    if (match) {
-                        const imageUrl = match[1]; // This is your image file name
-                        return `<img src="https://raw.githubusercontent.com/thqrs/phonetic_bulgarian/main/${imageUrl}" alt="Image" style="max-width:100%; height:auto;">`; // Replace with your server path
-                    }
-
-                    let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
-                    
-                    if (transliterations[cleanSegment]) {
-                        return `<span class="word-box1" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
-                    } 
-                    else if (newTransliterations[cleanSegment]) {
-                        return `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
-                    }
-                    else {
-                        if (cleanSegment.trim() !== '') {
-                            missingTransliterations.push(cleanSegment);
+                    // If inside a $$ block, append the HTML directly
+                    if (inHtmlBlock) {
+                        htmlContent += segment;
+                    } else {
+                        // Process non-HTML segments for images, transliterations, etc.
+                        if (segment.trim() === '') {
+                            htmlContent += segment;
+                        } else {
+                            const imageRegex = /#(.*?\.(png|jpg|jpeg|gif|bmp))#/;
+                            const match = segment.match(imageRegex);
+                            if (match) {
+                                const imageUrl = match[1];
+                                htmlContent += `<img src="https://raw.githubusercontent.com/thqrs/phonetic_bulgarian/main/${imageUrl}" alt="Image" style="max-width:100%; height:auto;">`;
+                            } else {
+                                let cleanSegment = segment.toLowerCase().replace(/[\n,.\d:;?!‘’]/g, '');
+                                if (transliterations[cleanSegment]) {
+                                    htmlContent += `<span class="word-box1" data-transliteration="${transliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                                } else if (newTransliterations[cleanSegment]) {
+                                    htmlContent += `<span class="word-box2" data-transliteration="${newTransliterations[cleanSegment]}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                                } else {
+                                    if (cleanSegment.trim() !== '') {
+                                        missingTransliterations.push(cleanSegment);
+                                    }
+                                    htmlContent += `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
+                                }
+                            }
                         }
-                        return `<span class="word-box3" data-transliteration="${getDummyTransliteration(cleanSegment)}" onclick="toggleTransliteration(this)">${segment}</span>`;
                     }
-                }).join('');
+                });
 
                 document.getElementById('content').innerHTML = htmlContent;
                 updateMissingTransliterations();
@@ -601,6 +605,7 @@ function displayText(filename = 'perolas.txt') {
         });
     });
 }
+
 
 
 
