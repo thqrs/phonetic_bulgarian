@@ -560,6 +560,14 @@ function displayText(filename = 'perolas.txt') {
                 }
 
                 let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                    // Check for HTML content within $$
+                    const htmlRegex = /\$\$(.*?)\$\$/;
+                    const htmlMatch = segment.match(htmlRegex);
+                    if (htmlMatch) {
+                        // Return the HTML content without $$, as raw HTML
+                        return htmlMatch[1];
+                    }
+
                     if (segment === '\n' || /^\s+$/.test(segment)) {
                         return segment;
                     }
@@ -594,6 +602,7 @@ function displayText(filename = 'perolas.txt') {
         });
     });
 }
+
 
 
     function processClipboardContent() {
