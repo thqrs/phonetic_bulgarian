@@ -431,10 +431,20 @@ function loadFileList() {
         .then(response => response.json())
         .then(data => {
             populateDropdown(data.files);
-            loadSelectedFile();  // Load the default file on page load
+
+            if (data.files.length > 0) {
+                // Set the initial text and audio file based on the first item in the list
+                let firstFile = data.files[0];
+                let baseFileName = firstFile.split('.')[0];
+                audioPlayer.src = baseFileName + '.mp3';
+
+                // Load the text from the first file
+                displayText(firstFile);
+            }
         })
         .catch(error => console.error("Error loading files list:", error));
 }
+
 
 function loadSelectedFile() {
     let selectedFile = document.getElementById('fileSelector').value;
