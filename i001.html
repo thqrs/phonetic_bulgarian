@@ -446,6 +446,7 @@ function loadSelectedFile() {
     // Update the audio player source
     audioPlayer.src = baseFileName + '.mp3';
     audioPlayer.load(); // Reload the audio player with the new source
+    stopAudio()
 }
 
 loadFileList();  // Call the function to load the file list
