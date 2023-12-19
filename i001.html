@@ -327,7 +327,7 @@ button:hover {
 
 <!-- Chronometer Section -->
 <div id="chronometer" class="chronometer">
-    <span id="timer">Общо време: 00:00</span>
+    <span id="timer" onclick="toggleTimerMode()">Общо време: 00:00</span>
     <button onclick="startTimer()">⏱️</button>
     <button onclick="stopResetTimer()">🔄</button>
 </div>
@@ -841,39 +841,45 @@ function adjustHorizontalMargin(point) {
     }
 }
 
-
-
 let timerInterval;
 let totalSeconds = 0;
+let countdown = false; // New variable to track countdown mode
 let appointedMinutes = 10;
+    
+function toggleTimerMode() {
+    countdown = !countdown; // Toggle the countdown mode
+    if (countdown) {
+        // Set a time limit for countdown (e.g., 10 minutes)
+        totalSeconds = 10 * 60;
+    }
+    updateTimerDisplay();
+}
+function updateTimerDisplay() {
+    let minutes = Math.abs(Math.floor(totalSeconds / 60));
+    let seconds = Math.abs(totalSeconds % 60);
+    seconds = seconds < 10 ? "0" + seconds : seconds; // Leading zero
 
-function startTimer() {
-    if (timerInterval) return; // Prevent multiple intervals if already running
+    let timerText = countdown && totalSeconds < 0 ? '-' : '';
+    timerText += 'Общо време: ' + minutes + ':' + seconds;
 
-    timerInterval = setInterval(function() {
-        totalSeconds++;
-        let minutes = Math.floor(totalSeconds / 60);
-        let seconds = totalSeconds % 60;
-        seconds = seconds < 10 ? "0" + seconds : seconds; // Leading zero
+    document.getElementById('timer').textContent = timerText;
 
-        document.getElementById('timer').textContent = 'Общо време: ' + minutes + ':' + seconds;
-
-        if (minutes >= appointedMinutes) {
-            document.getElementById('chronometer').classList.add('exceeded');
-        }
-    }, 1000);
+    if (!countdown && minutes >= appointedMinutes) {
+        document.getElementById('chronometer').classList.add('exceeded');
+    } else {
+        document.getElementById('chronometer').classList.remove('exceeded');
+    }
 }
 
 function stopResetTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-    totalSeconds = 0;
-    document.getElementById('timer').textContent = 'Tempo total: 00:00';
-    document.getElementById('chronometer').classList.remove('exceeded');
+    totalSeconds = countdown ? appointedMinutes * 60 : 0; // Reset to 10 minutes if in countdown mode, or 0 if not
+    updateTimerDisplay();
 }
 
-// Optional: if you want to start the timer automatically when the page loads
-// window.onload = startTimer;
+// Initial update in case the page is refreshed and the timer should be showing the countdown
+updateTimerDisplay();
     
 </script>
 
