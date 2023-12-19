@@ -2,6 +2,21 @@ Vamos começar por convidar alguém para ler Jó 38:8-10
 
 #box.png#
 
+$$
+<div style="font-family: Arial, sans-serif; color: #333; background-color: #f4f4f4; border: 1px solid #ccc; padding: 10px; width: 300px;">
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <img src="placeholder-bible.png" alt="Bible" style="width: 30px; height: 30px; margin-right: 10px;">
+        <span style="font-weight: bold;">Jó 38:8-10</span>
+    </div>
+    <div style="text-align: justify;">
+        <span style="font-weight: bold;">8</span> E quem fechou com portas o mar Quando ele saiu 
+        repentinamente do ventre,<br>
+        <span style="font-weight: bold;">9</span> Quando o vesti com nuvens E o envolvi com densas trevas,<br>
+        <span style="font-weight: bold;">10</span> Quando lhe estabeleci o meu limite E lhe coloquei portas e tranças,
+    </div>
+</div>
+$$
+
 Muito obrigado
 
 A pergunta é:
