@@ -438,7 +438,14 @@ function loadFileList() {
 
 function loadSelectedFile() {
     let selectedFile = document.getElementById('fileSelector').value;
-    displayText(selectedFile);  // Load the text from the selected file
+    displayText(selectedFile);  // Continue to load the text as before
+
+    // Extract the base file name without the extension
+    let baseFileName = selectedFile.split('.')[0];
+
+    // Update the audio player source
+    audioPlayer.src = baseFileName + '.mp3';
+    audioPlayer.load(); // Reload the audio player with the new source
 }
 
 loadFileList();  // Call the function to load the file list
