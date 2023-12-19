@@ -856,7 +856,7 @@ function startTimer() {
         let seconds = totalSeconds % 60;
         seconds = seconds < 10 ? "0" + seconds : seconds; // Leading zero
 
-        document.getElementById('timer').textContent = 'Tempo total: ' + minutes + ':' + seconds;
+        document.getElementById('timer').textContent = 'Общо време: ' + minutes + ':' + seconds;
 
         if (minutes >= appointedMinutes) {
             document.getElementById('chronometer').classList.add('exceeded');
