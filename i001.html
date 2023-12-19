@@ -878,6 +878,17 @@ function stopResetTimer() {
     updateTimerDisplay();
 }
 
+
+    function startTimer() {
+    if (timerInterval) return; // Prevent multiple intervals if already running
+
+    timerInterval = setInterval(function() {
+        totalSeconds += countdown ? -1 : 1;
+        updateTimerDisplay();
+    }, 1000);
+}
+
+
 // Initial update in case the page is refreshed and the timer should be showing the countdown
 updateTimerDisplay();
     
