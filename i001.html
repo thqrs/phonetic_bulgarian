@@ -148,6 +148,25 @@ button:hover {
 .dark-mode .word-box3 {
     background-color: rgba(255, 0, 0, 0.2); /* Translucent red remains the same */
 }
+
+.chronometer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #f0f0f0;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 10000; /* high value to ensure it's always on top */
+}
+
+.chronometer.exceeded {
+    background: #ff0000;
+    color: #ffffff;
+}
+
+        
 */
 # {
     flex: 1;
@@ -280,6 +299,15 @@ button:hover {
 </div>
 
 
+<!-- Chronometer Section -->
+<div id="chronometer" class="chronometer">
+    <span id="timer">Tempo total: 00:00</span>
+    <button onclick="startTimer()">Go</button>
+    <button onclick="stopResetTimer()">R</button>
+</div>
+
+
+    
 <script>
 
     let audioPlayer = document.getElementById('audioPlayer');
@@ -789,7 +817,36 @@ function adjustHorizontalMargin(point) {
 
 
 
+let timerInterval;
+let totalSeconds = 0;
 
+function startTimer() {
+    if (timerInterval) return; // Prevent multiple intervals if already running
+
+    timerInterval = setInterval(function() {
+        totalSeconds++;
+        let minutes = Math.floor(totalSeconds / 60);
+        let seconds = totalSeconds % 60;
+        seconds = seconds < 10 ? "0" + seconds : seconds; // Leading zero
+
+        document.getElementById('timer').textContent = 'Tempo total: ' + minutes + ':' + seconds;
+
+        if (minutes >= 10) {
+            document.getElementById('chronometer').classList.add('exceeded');
+        }
+    }, 1000);
+}
+
+function stopResetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    totalSeconds = 0;
+    document.getElementById('timer').textContent = 'Tempo total: 00:00';
+    document.getElementById('chronometer').classList.remove('exceeded');
+}
+
+// Optional: if you want to start the timer automatically when the page loads
+// window.onload = startTimer;
     
 </script>
 
