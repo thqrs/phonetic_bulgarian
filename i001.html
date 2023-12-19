@@ -559,16 +559,15 @@ function displayText(filename = 'perolas.txt') {
                     return;
                 }
 
-                let htmlContent = text.split(/(\s+|\n+)/).map(segment => {
+                let htmlContent = text.split(/(\$\$.*?\$\$|\s+|\n+)/).map(segment => {
                     // Check for HTML content within $$
-                    const htmlRegex = /\$\$(.*?)\$\$/;
+                    const htmlRegex = /^\$\$(.*?)\$\$$/;
                     const htmlMatch = segment.match(htmlRegex);
                     if (htmlMatch) {
-                        // Return the HTML content without $$, as raw HTML
-                        return htmlMatch[1];
+                        return htmlMatch[1]; // Return raw HTML content
                     }
 
-                    if (segment === '\n' || /^\s+$/.test(segment)) {
+                    if (segment === '\n' || /^\s+$/.test(segment) || htmlRegex.test(segment)) {
                         return segment;
                     }
 
