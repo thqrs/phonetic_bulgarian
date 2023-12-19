@@ -1,21 +1,5 @@
 Vamos começar por convidar alguém para ler Jó 38:8-10 
-$$<table>
-  <tr>
-    <th>Company</th>
-    <th>Contact</th>
-    <th>Country</th>
-  </tr>
-  <tr>
-    <td>Alfreds Futterkiste</td>
-    <td>Maria Anders</td>
-    <td>Germany</td>
-  </tr>
-  <tr>
-    <td>Centro comercial Moctezuma</td>
-    <td>Francisco Chang</td>
-    <td>Mexico</td>
-  </tr>
-</table>$$
+
 #box.png#
 
 Muito obrigado
@@ -39,7 +23,7 @@ Muito Obrigado a todos pelos vossos bons comentários
 
 ===============================
 
-[== Resposta ==]
+$$[== Resposta ==]
 [== Estes versículos ensinam que Jeová é o Criador de tudo, incluindo das leis da natureza.
 Ninguém pode violar essas leis. ==]
 
@@ -47,7 +31,7 @@ Ninguém pode violar essas leis. ==]
 [== Jó 37:14 diz para nós pararmos e reflirmos nas obras maravilhosas de Deus.
 Qual é a lição para nós?
 Pensar na maravilhosa criação ajuda-nos a sentir humildes. 
-Faz-nos entender que a coisa mais importante é a soberania de Jeová ==]
+Faz-nos entender que a coisa mais importante é a soberania de Jeová ==]$$
 
 teste imagem:
 #teste.png#
