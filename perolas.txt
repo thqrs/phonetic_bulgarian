@@ -1,5 +1,21 @@
 Vamos começar por convidar alguém para ler Jó 38:8-10 
-
+$$<table>
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table>$$
 #box.png#
 
 Muito obrigado
@@ -11,6 +27,7 @@ O que é que estes versículos nos ensinam sobre o papel de Jeová como Legislad
 #box.png#
 
 A próxima pergunta é:
+$$<b>teste</b> isto é um <h1>teste</h1>$$
 
 Que pérolas espirituais encontrou na leitura da Bíblia desta semana?
 
