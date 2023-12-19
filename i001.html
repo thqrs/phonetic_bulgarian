@@ -159,6 +159,32 @@ button:hover {
     box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
     text-align: center;
     z-index: 10000; /* high value to ensure it's always on top */
+    font-family: 'Arial', sans-serif; /* Specify the font you want to use */
+}
+
+.chronometer span#timer {
+    font-size: 24px; /* Make the timer text larger */
+    font-weight: bold; /* Make the timer text bold */
+}
+
+.chronometer button {
+    padding: 10px 20px;
+    font-size: 18px; /* Larger text for buttons */
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px; /* Rounded corners for buttons */
+    background-color: #007bff; /* Background color for buttons */
+    color: white; /* Text color for buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transition for button background color */
+}
+
+.chronometer button:hover {
+    background-color: #0056b3; /* Darker background color on hover */
+}
+
+.chronometer button:active {
+    background-color: #003d7a; /* Even darker background color when active/clicked */
 }
 
 .chronometer.exceeded {
@@ -301,9 +327,9 @@ button:hover {
 
 <!-- Chronometer Section -->
 <div id="chronometer" class="chronometer">
-    <span id="timer">Tempo total: 00:00</span>
-    <button onclick="startTimer()">Go</button>
-    <button onclick="stopResetTimer()">R</button>
+    <span id="timer">Общо време: 00:00</span>
+    <button onclick="startTimer()">⏱️</button>
+    <button onclick="stopResetTimer()">🔄</button>
 </div>
 
 
@@ -819,6 +845,7 @@ function adjustHorizontalMargin(point) {
 
 let timerInterval;
 let totalSeconds = 0;
+let appointedMinutes = 10;
 
 function startTimer() {
     if (timerInterval) return; // Prevent multiple intervals if already running
@@ -831,7 +858,7 @@ function startTimer() {
 
         document.getElementById('timer').textContent = 'Tempo total: ' + minutes + ':' + seconds;
 
-        if (minutes >= 10) {
+        if (minutes >= appointedMinutes) {
             document.getElementById('chronometer').classList.add('exceeded');
         }
     }, 1000);
