@@ -79,17 +79,18 @@
     }
 
     .top-buttons {
-        margin: 0
         display: flex;
         justify-content: center; /* Center-align buttons */
         flex-wrap: nowrap; /* Keep buttons in a single row */
         width: 100%; /* Full width of the container */
     }
-
+    
     .top-buttons button {
         flex: 1 1 auto; /* Allow buttons to grow and shrink */
-        padding-top: 100%; /* Padding top equal to 100% of the width */
-
+        margin: 5px; /* Space around buttons */
+        padding: 10px; /* Padding inside buttons */
+        /* Remove padding-top: 100%; to prevent large height */
+        box-sizing: border-box; /* Include padding and border in the width */
         /* Additional styling for buttons */
     }
 
