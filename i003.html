@@ -36,10 +36,20 @@
         padding: 10px;
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap; /* Allow the buttons to wrap onto the next line */
         justify-content: center;
+        align-items: center;
         gap: 10px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    
+    .button-container button {
+        flex: 1 1 auto; /* Adjust button size */
+        margin: 5px; /* Add margin to each button */
+        /* ... other button styles ... */
+    }
+
+
 
     .top-buttons, .audio-controls {
         display: flex;
