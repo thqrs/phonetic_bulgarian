@@ -852,42 +852,40 @@ let startTime; // Stores the timestamp when the timer starts
 
 function toggleTimerMode() {
     let currentTime = Date.now();
+
     if (timerInterval) {
         // Calculate the elapsed time in milliseconds
         let elapsedTime = currentTime - startTime;
 
         if (countdown) {
             // Switching from countdown to stopwatch
-            // Convert elapsed time in milliseconds to seconds and update startTime
-            startTime = currentTime;
-            // Elapsed time in stopwatch mode will start from the time left in countdown
-            elapsedTime = (appointedMinutes * 60 * 1000) - elapsedTime;
+            // Adjust startTime for stopwatch based on elapsed countdown time
+            startTime = currentTime - ((appointedMinutes * 60 * 1000) - elapsedTime);
         } else {
             // Switching from stopwatch to countdown
-            // If more time has elapsed than the countdown duration, reset countdown
-            if (elapsedTime > appointedMinutes * 60 * 1000) {
-                startTime = currentTime;
-            } else {
-                // Set startTime such that countdown starts from where stopwatch stopped
-                startTime = currentTime - elapsedTime;
-            }
+            // Adjust startTime for countdown based on elapsed stopwatch time
+            startTime = currentTime - Math.min(elapsedTime, appointedMinutes * 60 * 1000);
         }
-    } else {
-        // If the timer is not running, set startTime to now
-        startTime = currentTime;
     }
-
+    // Toggle the countdown mode
     countdown = !countdown;
     updateTimerDisplay();
 }
 
 
+
 function updateTimerDisplay() {
     let currentTime = Date.now();
-    let elapsedTime = Math.floor((currentTime - startTime) / 1000); // Convert milliseconds to seconds
+    let elapsedTime;
 
-    if (countdown) {
-        elapsedTime = (appointedMinutes * 60) - elapsedTime; // Calculate remaining time for countdown
+    if (startTime) {
+        elapsedTime = Math.floor((currentTime - startTime) / 1000); // Convert milliseconds to seconds
+        if (countdown) {
+            elapsedTime = (appointedMinutes * 60) - elapsedTime; // Calculate remaining time for countdown
+        }
+    } else {
+        // If startTime is not set, show 0 or appointed time based on mode
+        elapsedTime = countdown ? appointedMinutes * 60 : 0;
     }
 
     let minutes = Math.abs(Math.floor(elapsedTime / 60));
@@ -905,6 +903,7 @@ function updateTimerDisplay() {
 
     document.getElementById('timer').textContent = timerText;
 }
+
 
 function startTimer() {
     if (timerInterval) return;
