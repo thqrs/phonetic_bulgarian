@@ -116,29 +116,47 @@ input:checked + .slider:before {
             font-size: 1em;
         }
         
-        .button-container {
-        position: sticky;
-        top: 0;  /* This ensures the container sticks to the top */
-        background-color: white;  /* This ensures the text behind doesn't overlap when scrolling */
-        z-index: 1000;  /* This ensures the container is above other elements */
-        padding: 0px;  /* Optional: for some spacing */
-        margin-bottom: 0px;  /* Adjust as needed */
-                display: flex;  /* Ensures that the buttons are placed in a row */
-            flex-direction: column;
-        }
-        
-         button {
-            flex: 1;  /* Distribute space equally among all buttons */
-            border-radius: 15;  /* Optional: remove rounded corners to make them look more like squares */
-            border: 1;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            position: relative;
-            overflow: hidden;  /* To ensure the  stays within the button */
-            padding: 10px;
-            background-color: rgba(135, 206, 250, 0.4); /* A dark grey for the button background */
-            color: black; /* Text color for the button */
-        }
+       .button-container {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    padding: 10px; /* Added some padding for spacing */
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row; /* Changed to row for horizontal alignment */
+    justify-content: center; /* Center buttons horizontally */
+    gap: 10px; /* Space between buttons */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+button {
+    flex: 0 0 auto; /* Adjusted for better control over button sizing */
+    border-radius: 5px; /* Reduced for subtle rounded corners */
+    border: 1px solid #ccc; /* Added border color */
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Added transform to transition */
+    padding: 10px 15px; /* Adjusted padding for better spacing */
+    background-color: #4CAF50; /* Updated to a solid color for a modern look */
+    color: white; /* Text color */
+    font-size: 16px; /* Adjusted font size for better readability */
+    text-align: center; /* Center text */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+button:active {
+    transform: scale(0.95); /* Slightly shrink button on active */
+}
+
+/* Additional styling for range input and select, if needed */
+input[type="range"], select {
+    margin: 0 10px;
+    border-radius: 5px;
+}
 
     hr {
     border: none;  /* Remove the default border */
@@ -153,9 +171,7 @@ input:checked + .slider:before {
     background-color: #ddd;  /* Color of the line */
     margin-bottom: 30px;  /* Space between the line and the h3 element */
 }
-button:hover {
-    background-color: #555;
-}
+
         body {
    /* background-color: #EFEFEF;      */ 
     display: flex;
