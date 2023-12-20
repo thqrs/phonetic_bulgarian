@@ -855,12 +855,14 @@ let elapsedTime = 0; // Immutable elapsed time
 let countdown = false;
 let appointedMinutes = 10;
 let startTime;
-
+    
 function toggleTimerMode() {
-    // Just toggle the mode, don't change elapsedTime
-    countdown = !countdown;
-    updateTimerDisplay();
+    if (timerInterval) { // Only toggle the mode if the timer is running
+        countdown = !countdown;
+        updateTimerDisplay();
+    }
 }
+
 
 function updateTimerDisplay() {
     let displayTime;
@@ -880,13 +882,10 @@ function updateTimerDisplay() {
 }
 
 function startTimer() {
-    if (!timerInterval) {
-        startTime = Date.now();
+    if (!timerInterval) {  // Check if the timer is not already running
+        startTime = Date.now() - elapsedTime * 1000; // Adjust startTime based on elapsedTime
         timerInterval = setInterval(() => {
-            let currentTime = Date.now();
-            let timeDelta = Math.floor((currentTime - startTime) / 1000);
-            startTime = currentTime;
-            elapsedTime += timeDelta;
+            elapsedTime = Math.floor((Date.now() - startTime) / 1000);
             updateTimerDisplay();
         }, 1000);
     }
