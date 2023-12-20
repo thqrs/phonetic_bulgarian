@@ -43,8 +43,9 @@
     }
     
     .button-container button {
+        position: relative; /* Needed for absolute positioning of child elements */
+        padding: 10px; /* Adjust padding as needed */        
         flex: 0 0 auto; /* Prevent buttons from growing or shrinking */
-        margin: 5px;
         background-color: #007bff;
         color: white;
         border: 1px solid #ccc;
@@ -59,9 +60,11 @@
         position: relative;
     }
     
-    .button-container button span {
+   .button-container button span {
         position: absolute;
-        /* Other text styles as needed */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
 
@@ -76,6 +79,7 @@
     }
 
     .top-buttons {
+        margin: 0
         display: flex;
         justify-content: center; /* Center-align buttons */
         flex-wrap: nowrap; /* Keep buttons in a single row */
