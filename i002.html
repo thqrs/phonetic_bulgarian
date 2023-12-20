@@ -77,17 +77,7 @@ input:checked + .slider:before {
             line-height: 3em;
             /* line-height: 2.5em;  Adjust line spacing */
         }
-        #content table,
-#content p,
-#content h1,
-#content hr,        
-#content h2,
-#content h4,
-#content h5,
-#content h6 {
-    margin-top: 0;
-    margin-bottom: 0;
-}
+
         
         #verticalMarginDisplay, #horizontalMarginDisplay {
     padding: 5px 10px;
@@ -932,20 +922,25 @@ function toggleTimerMode() {
 
 function updateTimerDisplay() {
     let displayTime;
+    let timeLabel;
+
     if (countdown) {
         // Calculate the remaining time for countdown
         displayTime = Math.max(appointedMinutes * 60 - elapsedTime, 0);
+        timeLabel = "Оставащо време"; // Remaining Time in Bulgarian
     } else {
         // In stopwatch mode, display the elapsed time
         displayTime = elapsedTime;
+        timeLabel = "Общо време"; // Total Time in Bulgarian
     }
 
     let minutes = Math.floor(displayTime / 60);
     let seconds = displayTime % 60;
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    document.getElementById('timer').textContent = `време: ${minutes}:${seconds}`;
+    document.getElementById('timer').textContent = `${timeLabel}: ${minutes}:${seconds}`;
 }
+
 
 function startTimer() {
     if (!timerInterval) {  // Check if the timer is not already running
