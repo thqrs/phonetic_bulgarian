@@ -292,13 +292,22 @@ input[type="range"], select {
 
 /* Make sure the text content doesn't overlap with the buttons */
 .button-container {
-    overflow: hidden;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    padding: 10px;
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    gap: 10px; /* Space between rows */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
 }
 
-        .top-buttons, .audio-controls {
+.top-buttons, .audio-controls {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap if needed */
 }
     </style>
 </head>
