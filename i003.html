@@ -944,38 +944,35 @@ function toggleTimerMode() {
 function updateTimerDisplay() {
     let displayTime;
     let timeLabel;
-    let chronometerElement = document.getElementById('chronometer'); // Get the chronometer element
+    let chronometerElement = document.getElementById('chronometer');
 
     if (countdown) {
+        // Calculate the remaining or elapsed time for countdown
         displayTime = appointedMinutes * 60 - elapsedTime;
         timeLabel = "Оставащо време"; // Remaining Time in Bulgarian
 
-        // Check if countdown time is negative
+        // Add a class to change color if time is negative
         if (displayTime < 0) {
             chronometerElement.classList.add('negative');
-            chronometerElement.classList.remove('exceeded');
         } else {
             chronometerElement.classList.remove('negative');
         }
     } else {
+        // In stopwatch mode, display the elapsed time
         displayTime = elapsedTime;
         timeLabel = "Общо време"; // Total Time in Bulgarian
-
-        // Check if stopwatch time exceeds the appointed time
-        if (displayTime > appointedMinutes * 60) {
-            chronometerElement.classList.add('exceeded');
-            chronometerElement.classList.remove('negative');
-        } else {
-            chronometerElement.classList.remove('exceeded');
-        }
+        chronometerElement.classList.remove('negative');
     }
 
     let minutes = Math.floor(Math.abs(displayTime) / 60);
     let seconds = Math.abs(displayTime % 60);
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    document.getElementById('timer').textContent = `${timeLabel}: ${minutes}:${seconds}`;
+    let timerText = countdown && displayTime < 0 ? '-' : '';
+    timerText += `${timeLabel}: ${minutes}:${seconds}`;
+    document.getElementById('timer').textContent = timerText;
 }
+
 
 
 
