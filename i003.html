@@ -260,43 +260,43 @@
 <body>
 
 <div class="button-container">
-
     <div class="top-buttons">
-        <button id="loadAllTransliterations" onclick="showAllTransliterations()">💬</button>
-        <button id="clearAllTransliterations" onclick="clearAllTransliterations()">❌</button>
-        <button id="increaseMargin" onclick="adjustMargin(-1)">⏫</button>
-        <button id="decreaseMargin" onclick="adjustMargin(1)">⏬</button>
-        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)">⏪</button>
-        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)">⏩</button>
-        <button id="increaseFontSize" onclick="adjustFontSize(1.1)">➕</button>
-        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)">➖</button>
-        <button id="toggleDarkMode" onclick="toggleDarkMode()">🔳</button>
+        <button id="loadAllTransliterations" onclick="showAllTransliterations()"><span>💬</span></button>
+        <button id="clearAllTransliterations" onclick="clearAllTransliterations()"><span>❌</span></button>
+        <button id="increaseMargin" onclick="adjustMargin(-1)"><span>⏫</span></button>
+        <button id="decreaseMargin" onclick="adjustMargin(1)"><span>⏬</span></button>
+        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)"><span>⏪</span></button>
+        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)"><span>⏩</span></button>
+        <button id="increaseFontSize" onclick="adjustFontSize(1.1)"><span>➕</span></button>
+        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)"><span>➖</span></button>
+        <button id="toggleDarkMode" onclick="toggleDarkMode()"><span>🔳</span></button>
     </div>
 
-    <!-- New container for the audio controls -->
-<div class="audio-controls">
-    <!-- Audio player section -->
-    <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
-    <button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
-    <button onclick="stopAudio()">⏹️</button>
-    <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
-    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
-
-    <!-- Dropdown for playback speed -->
-    <label for="speedControl">🏃</label>
-    <select id="speedControl" onchange="changePlaybackSpeed()">
-        <option value="1">1x</option>
-        <option value="0.9">0.9x</option>
-        <option value="0.8">0.8x</option>
-        <option value="0.7">0.7x</option>
-        <option value="0.6">0.6x</option>
-        <option value="0.5">0.5x</option>
-        <option value="0.4">0.4x</option>
-        <option value="0.3">0.3x</option>
-        <option value="0.2">0.2x</option>
-        <option value="0.1">0.1x</option>
-    </select>
+    <div class="audio-controls">
+        <!-- Audio player section -->
+        <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
+        <button id="playPauseButton" onclick="togglePlayPause()"><span>▶️</span></button>
+        <button onclick="stopAudio()"><span>⏹️</span></button>
+        <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+        <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+        
+        <!-- Dropdown for playback speed -->
+        <label for="speedControl"><span>🏃</span></label>
+        <select id="speedControl" onchange="changePlaybackSpeed()">
+            <option value="1">1x</option>
+            <option value="0.9">0.9x</option>
+            <option value="0.8">0.8x</option>
+            <option value="0.7">0.7x</option>
+            <option value="0.6">0.6x</option>
+            <option value="0.5">0.5x</option>
+            <option value="0.4">0.4x</option>
+            <option value="0.3">0.3x</option>
+            <option value="0.2">0.2x</option>
+            <option value="0.1">0.1x</option>
+        </select>
+    </div>
 </div>
+
 
 
 </div>
