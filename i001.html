@@ -191,6 +191,10 @@ button:hover {
     background: #ff0000;
     color: #ffffff;
 }
+.chronometer.negative {
+    background: #ff0000;
+    color: #ffffff;
+}
 
         
 */
@@ -873,17 +877,18 @@ function updateTimerDisplay() {
     let seconds = Math.abs(displayTime % 60);
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    let timerText = countdown && displayTime < 0 ? '-' : '';
-    timerText += 'Общо време: ' + minutes + ':' + seconds;
+    let timerText = 'Общо време: ';
+    if (countdown && displayTime < 0) {
+        timerText += '-';
+        document.getElementById('chronometer').classList.add('negative');
+    } else {
+        document.getElementById('chronometer').classList.remove('negative');
+    }
+    timerText += minutes + ':' + seconds;
 
     document.getElementById('timer').textContent = timerText;
-
-    if (!countdown && minutes >= appointedMinutes) {
-        document.getElementById('chronometer').classList.add('exceeded');
-    } else {
-        document.getElementById('chronometer').classList.remove('exceeded');
-    }
 }
+
 
 function stopResetTimer() {
     clearInterval(timerInterval);
