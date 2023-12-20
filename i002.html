@@ -851,50 +851,51 @@ function adjustHorizontalMargin(point) {
 }
 
 let timerInterval;
-let elapsedTime = 0; // Master variable for tracking elapsed time
+let elapsedTime = 0; // Immutable elapsed time
 let countdown = false;
 let appointedMinutes = 10;
 let startTime;
 
 function toggleTimerMode() {
-    if (countdown) {
-        // Switch to stopwatch mode: remove appointed time from elapsed time
-        elapsedTime -= appointedMinutes * 60;
-    } else {
-        // Switch to countdown mode: add appointed time to elapsed time
-        elapsedTime += appointedMinutes * 60;
-    }
+    // Just toggle the mode, don't change elapsedTime
     countdown = !countdown;
     updateTimerDisplay();
 }
 
 function updateTimerDisplay() {
-    let displayTime = countdown ? (appointedMinutes * 60 - elapsedTime) : elapsedTime;
-    let minutes = Math.floor(Math.abs(displayTime) / 60);
-    let seconds = Math.abs(displayTime % 60);
+    let displayTime;
+    if (countdown) {
+        // Calculate the remaining time for countdown
+        displayTime = Math.max(appointedMinutes * 60 - elapsedTime, 0);
+    } else {
+        // In stopwatch mode, display the elapsed time
+        displayTime = elapsedTime;
+    }
+
+    let minutes = Math.floor(displayTime / 60);
+    let seconds = displayTime % 60;
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    let timerText = countdown && displayTime < 0 ? '-' : '';
-    timerText += 'Общо време: ' + minutes + ':' + seconds;
-    document.getElementById('timer').textContent = timerText;
+    document.getElementById('timer').textContent = `Общо време: ${minutes}:${seconds}`;
 }
 
 function startTimer() {
-    if (timerInterval) return;
-    startTime = Date.now();
-    timerInterval = setInterval(function() {
-        let currentTime = Date.now();
-        let timeDelta = Math.floor((currentTime - startTime) / 1000);
-        elapsedTime += timeDelta;
-        startTime = currentTime;
-        updateTimerDisplay();
-    }, 1000);
+    if (!timerInterval) {
+        startTime = Date.now();
+        timerInterval = setInterval(() => {
+            let currentTime = Date.now();
+            let timeDelta = Math.floor((currentTime - startTime) / 1000);
+            startTime = currentTime;
+            elapsedTime += timeDelta;
+            updateTimerDisplay();
+        }, 1000);
+    }
 }
 
 function stopResetTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-    elapsedTime = 0; // Reset elapsed time
+    elapsedTime = 0; // Reset the elapsed time
     updateTimerDisplay();
 }
 
