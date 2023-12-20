@@ -859,21 +859,28 @@ function toggleTimerMode() {
         if (countdown) {
             // Switching from countdown to stopwatch
             // Convert elapsed time in milliseconds to seconds and update startTime
-            startTime = currentTime - elapsedTime;
+            startTime = currentTime;
+            // Elapsed time in stopwatch mode will start from the time left in countdown
+            elapsedTime = (appointedMinutes * 60 * 1000) - elapsedTime;
         } else {
             // Switching from stopwatch to countdown
-            // Calculate the remaining time for countdown and update startTime
-            let countdownTime = appointedMinutes * 60 * 1000; // Convert minutes to milliseconds
-            startTime = currentTime - (countdownTime - elapsedTime);
+            // If more time has elapsed than the countdown duration, reset countdown
+            if (elapsedTime > appointedMinutes * 60 * 1000) {
+                startTime = currentTime;
+            } else {
+                // Set startTime such that countdown starts from where stopwatch stopped
+                startTime = currentTime - elapsedTime;
+            }
         }
     } else {
-        // If the timer is not running, reset startTime
+        // If the timer is not running, set startTime to now
         startTime = currentTime;
     }
 
     countdown = !countdown;
     updateTimerDisplay();
 }
+
 
 function updateTimerDisplay() {
     let currentTime = Date.now();
