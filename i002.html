@@ -851,81 +851,56 @@ function adjustHorizontalMargin(point) {
 }
 
 let timerInterval;
+let elapsedTime = 0; // Master variable for tracking elapsed time
 let countdown = false;
 let appointedMinutes = 10;
-let startTime; // Stores the timestamp when the timer starts
+let startTime;
 
 function toggleTimerMode() {
-    let currentTime = Date.now();
-
-    if (timerInterval) {
-        // Calculate the elapsed time in milliseconds
-        let elapsedTime = currentTime - startTime;
-
-        if (countdown) {
-            // Switching from countdown to stopwatch
-            // Adjust startTime for stopwatch based on elapsed countdown time
-            startTime = currentTime - ((appointedMinutes * 60 * 1000) - elapsedTime);
-        } else {
-            // Switching from stopwatch to countdown
-            // Adjust startTime for countdown based on elapsed stopwatch time
-            startTime = currentTime - Math.min(elapsedTime, appointedMinutes * 60 * 1000);
-        }
+    if (countdown) {
+        // Switch to stopwatch mode: remove appointed time from elapsed time
+        elapsedTime -= appointedMinutes * 60;
+    } else {
+        // Switch to countdown mode: add appointed time to elapsed time
+        elapsedTime += appointedMinutes * 60;
     }
-    // Toggle the countdown mode
     countdown = !countdown;
     updateTimerDisplay();
 }
 
-
-
 function updateTimerDisplay() {
-    let currentTime = Date.now();
-    let elapsedTime;
-
-    if (startTime) {
-        elapsedTime = Math.floor((currentTime - startTime) / 1000); // Convert milliseconds to seconds
-        if (countdown) {
-            elapsedTime = (appointedMinutes * 60) - elapsedTime; // Calculate remaining time for countdown
-        }
-    } else {
-        // If startTime is not set, show 0 or appointed time based on mode
-        elapsedTime = countdown ? appointedMinutes * 60 : 0;
-    }
-
-    let minutes = Math.abs(Math.floor(elapsedTime / 60));
-    let seconds = Math.abs(elapsedTime % 60);
+    let displayTime = countdown ? (appointedMinutes * 60 - elapsedTime) : elapsedTime;
+    let minutes = Math.floor(Math.abs(displayTime) / 60);
+    let seconds = Math.abs(displayTime % 60);
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    let timerText = 'Общо време: ';
-    if (countdown && elapsedTime < 0) {
-        timerText += '-';
-        document.getElementById('chronometer').classList.add('negative');
-    } else {
-        document.getElementById('chronometer').classList.remove('negative');
-    }
-    timerText += minutes + ':' + seconds;
-
+    let timerText = countdown && displayTime < 0 ? '-' : '';
+    timerText += 'Общо време: ' + minutes + ':' + seconds;
     document.getElementById('timer').textContent = timerText;
 }
 
-
 function startTimer() {
     if (timerInterval) return;
-    
-    startTime = Date.now(); // Record the start time
-    timerInterval = setInterval(updateTimerDisplay, 1000);
+    startTime = Date.now();
+    timerInterval = setInterval(function() {
+        let currentTime = Date.now();
+        let timeDelta = Math.floor((currentTime - startTime) / 1000);
+        elapsedTime += timeDelta;
+        startTime = currentTime;
+        updateTimerDisplay();
+    }, 1000);
 }
 
 function stopResetTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-    startTime = Date.now(); // Reset start time
+    elapsedTime = 0; // Reset elapsed time
     updateTimerDisplay();
 }
 
 // Initial update
 updateTimerDisplay();
+
 
 
     
