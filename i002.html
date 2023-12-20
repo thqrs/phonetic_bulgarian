@@ -303,15 +303,30 @@ button:hover {
     </div>
 
     <!-- New container for the audio controls -->
-    <div class="audio-controls">
-        <!-- Audio player section starts here -->
-        <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
-        <button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
-        <button onclick="stopAudio()">⏹️</button>
-        <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
-        <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
-        <!-- Audio player section ends here -->
-    </div>
+<div class="audio-controls">
+    <!-- Audio player section -->
+    <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
+    <button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
+    <button onclick="stopAudio()">⏹️</button>
+    <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+    <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+
+    <!-- Dropdown for playback speed -->
+    <label for="speedControl">Speed:</label>
+    <select id="speedControl" onchange="changePlaybackSpeed()">
+        <option value="1">1x</option>
+        <option value="0.9">0.9x</option>
+        <option value="0.8">0.8x</option>
+        <option value="0.7">0.7x</option>
+        <option value="0.6">0.6x</option>
+        <option value="0.5">0.5x</option>
+        <option value="0.4">0.4x</option>
+        <option value="0.3">0.3x</option>
+        <option value="0.2">0.2x</option>
+        <option value="0.1">0.1x</option>
+    </select>
+</div>
+
 
 </div>
 
@@ -443,7 +458,13 @@ function formatTime(time) {
     let secs = Math.floor(time % 60);
     return mins + ':' + (secs < 10 ? '0' : '') + secs;
 }
-
+    
+function changePlaybackSpeed() {
+    var audioPlayer = document.getElementById('audioPlayer');
+    var speed = document.getElementById('speedControl').value;
+    audioPlayer.playbackRate = parseFloat(speed);
+}
+    
  if (!localStorage.getItem('verticalMargin')) {
     localStorage.setItem('verticalMargin', '10px');
 }
