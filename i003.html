@@ -27,13 +27,16 @@
 
     /* Layout and Containers */
     .button-container {
-        position: sticky;
+        position: fixed; /* Keep it fixed at the top */
         top: 0;
+        left: 0;
+        right: 0; /* Stretch across the top */
         background-color: white;
         z-index: 1000;
         padding: 10px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
         gap: 10px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
@@ -163,10 +166,10 @@
 
     /* Chronometer Styles */
     .chronometer {
-        position: fixed;
+        position: fixed; /* Keep it fixed at the bottom */
         bottom: 0;
         left: 0;
-        width: 100%;
+        right: 0; /* Stretch across the bottom */
         background: #f0f0f0;
         padding: 10px;
         box-shadow: 0 -2px 5px rgba(0,0,0,0.2);
