@@ -35,9 +35,10 @@
         z-index: 1000;
         padding: 10px;
         display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        overflow-x: auto; /* Enable horizontal scrolling */
+        flex-wrap: wrap; /* Allow elements to wrap */
+        justify-content: center;
+        align-items: center;
+        gap: 10px; /* Space between rows */
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
@@ -73,8 +74,11 @@
 
     .top-buttons, .audio-controls {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
+        flex-wrap: nowrap; /* Prevent wrapping within these containers */
+        width: 100%; /* Full width to ensure each takes its own row */
+        gap: 5px; /* Space between buttons */
     }
 
     .file-selector-container {
