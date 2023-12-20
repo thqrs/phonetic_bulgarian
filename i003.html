@@ -27,27 +27,47 @@
 
     /* Layout and Containers */
     .button-container {
-        position: fixed; /* Keep it fixed at the top */
+        position: fixed;
         top: 0;
         left: 0;
-        right: 0; /* Stretch across the top */
+        right: 0;
         background-color: white;
         z-index: 1000;
         padding: 10px;
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap; /* Allow the buttons to wrap onto the next line */
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
+        flex-wrap: nowrap;
+        overflow-x: auto; /* Enable horizontal scrolling */
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
     .button-container button {
-        flex: 1 1 auto; /* Adjust button size */
-        margin: 5px; /* Add margin to each button */
-        /* ... other button styles ... */
+        flex: 0 0 auto; /* Prevent buttons from growing or shrinking */
+        margin: 5px;
+        background-color: #007bff;
+        color: white;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        /* Adjust width and padding-top as needed to maintain aspect ratio */
     }
+    
+    /* Example to maintain aspect ratio - adjust as needed */
+    .button-container button {
+        width: 60px; /* Fixed width */
+        padding-top: 60px; /* Equal to width for square aspect ratio */
+        box-sizing: border-box; /* Include padding and border in the width */
+        position: relative;
+    }
+    
+    .button-container button span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        /* Other text styles as needed */
+    }
+
 
 
 
@@ -257,7 +277,7 @@
 <div class="audio-controls">
     <!-- Audio player section -->
     <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
-    <button id="playPauseButton" onclick="togglePlayPause()">▶️⏸️</button>
+    <button id="playPauseButton" onclick="togglePlayPause()">▶️</button>
     <button onclick="stopAudio()">⏹️</button>
     <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
     <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
