@@ -846,39 +846,49 @@ function adjustHorizontalMargin(point) {
 }
 
 let timerInterval;
-let totalSeconds = 0;
 let countdown = false;
 let appointedMinutes = 10;
-let elapsedTime = 0; // New variable to track elapsed time
+let startTime; // Stores the timestamp when the timer starts
 
 function toggleTimerMode() {
-    if (countdown) {
-        // Switching from countdown to stopwatch
-        // Update elapsed time based on how much time was left in countdown
-        elapsedTime += (appointedMinutes * 60) - totalSeconds;
-    } else {
-        // Switching from stopwatch to countdown
-        if (elapsedTime > appointedMinutes * 60) {
-            // If elapsed time in stopwatch exceeds appointed time, start countdown from 0
-            totalSeconds = 0;
+    let currentTime = Date.now();
+    if (timerInterval) {
+        // Calculate the elapsed time in milliseconds
+        let elapsedTime = currentTime - startTime;
+
+        if (countdown) {
+            // Switching from countdown to stopwatch
+            // Convert elapsed time in milliseconds to seconds and update startTime
+            startTime = currentTime - elapsedTime;
         } else {
-            // Else, start countdown from the remaining time
-            totalSeconds = (appointedMinutes * 60) - elapsedTime;
+            // Switching from stopwatch to countdown
+            // Calculate the remaining time for countdown and update startTime
+            let countdownTime = appointedMinutes * 60 * 1000; // Convert minutes to milliseconds
+            startTime = currentTime - (countdownTime - elapsedTime);
         }
+    } else {
+        // If the timer is not running, reset startTime
+        startTime = currentTime;
     }
 
-    countdown = !countdown; // Toggle the countdown mode
+    countdown = !countdown;
     updateTimerDisplay();
 }
 
 function updateTimerDisplay() {
-    let displayTime = countdown ? totalSeconds : elapsedTime;
-    let minutes = Math.abs(Math.floor(displayTime / 60));
-    let seconds = Math.abs(displayTime % 60);
+    let currentTime = Date.now();
+    let elapsedTime = Math.floor((currentTime - startTime) / 1000); // Convert milliseconds to seconds
+
+    if (countdown) {
+        elapsedTime = (appointedMinutes * 60) - elapsedTime; // Calculate remaining time for countdown
+    }
+
+    let minutes = Math.abs(Math.floor(elapsedTime / 60));
+    let seconds = Math.abs(elapsedTime % 60);
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
     let timerText = 'Общо време: ';
-    if (countdown && displayTime < 0) {
+    if (countdown && elapsedTime < 0) {
         timerText += '-';
         document.getElementById('chronometer').classList.add('negative');
     } else {
@@ -889,30 +899,23 @@ function updateTimerDisplay() {
     document.getElementById('timer').textContent = timerText;
 }
 
+function startTimer() {
+    if (timerInterval) return;
+    
+    startTime = Date.now(); // Record the start time
+    timerInterval = setInterval(updateTimerDisplay, 1000);
+}
 
 function stopResetTimer() {
     clearInterval(timerInterval);
     timerInterval = null;
-    elapsedTime = countdown ? appointedMinutes * 60 : 0;
-    totalSeconds = countdown ? appointedMinutes * 60 : 0;
+    startTime = Date.now(); // Reset start time
     updateTimerDisplay();
-}
-
-function startTimer() {
-    if (timerInterval) return;
-
-    timerInterval = setInterval(function() {
-        if (countdown) {
-            totalSeconds--;
-        } else {
-            elapsedTime++;
-        }
-        updateTimerDisplay();
-    }, 1000);
 }
 
 // Initial update
 updateTimerDisplay();
+
 
     
 </script>
