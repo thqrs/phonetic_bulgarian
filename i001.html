@@ -847,13 +847,26 @@ let countdown = false; // New variable to track countdown mode
 let appointedMinutes = 10;
     
 function toggleTimerMode() {
-    countdown = !countdown; // Toggle the countdown mode
-    if (countdown) {
-        // Set a time limit for countdown (e.g., 10 minutes)
-        totalSeconds = 10 * 60;
+    if (timerInterval) {
+        // If the timer is running, calculate the remaining or elapsed time
+        if (countdown) {
+            // Switching from countdown to stopwatch mode
+            // Set totalSeconds to the negative of the remaining time
+            totalSeconds = -totalSeconds;
+        } else {
+            // Switching from stopwatch to countdown mode
+            // Set totalSeconds to countdown time minus elapsed time
+            totalSeconds = (appointedMinutes * 60) - totalSeconds;
+        }
+    } else {
+        // If the timer is not running, reset to the default state
+        totalSeconds = countdown ? 0 : appointedMinutes * 60;
     }
+
+    countdown = !countdown; // Toggle the countdown mode
     updateTimerDisplay();
 }
+
 function updateTimerDisplay() {
     let minutes = Math.abs(Math.floor(totalSeconds / 60));
     let seconds = Math.abs(totalSeconds % 60);
