@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transliterações</title>
     <style>
-        #content {
-    margin-top: 40px; /* Add enough top margin to push it below the buttons */
-}
 
     /* General Element Styles */
     h3 {
@@ -1027,6 +1024,18 @@ document.getElementById('showBoxButton').addEventListener('click', function() {
     var box = document.getElementById('boxContainer');
     box.style.display = box.style.display === 'none' ? 'block' : 'none';
 });
+    
+function adjustContentMargin() {
+    var buttonContainerHeight = document.querySelector('.button-container').offsetHeight;
+    var contentDiv = document.getElementById('content');
+    contentDiv.style.marginTop = buttonContainerHeight + 'px';
+}
+
+// Adjust margin on page load
+window.onload = adjustContentMargin;
+
+// Adjust margin on window resize
+window.onresize = adjustContentMargin;
 
     
 </script>
