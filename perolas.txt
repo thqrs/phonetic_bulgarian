@@ -13,7 +13,7 @@ A pergunta é:
 
 O que é que estes versículos nos ensinam sobre o papel de Jeová como Legislador?
 
-$$<hr style="height: 6px; border: none; border-radius: 6px; background: linear-gradient(90deg, rgba(13, 8, 96, 1) 0%, rgba(9, 9, 121, 1) 21%, rgba(6, 84, 170, 1) 51%, rgba(0, 255, 113, 1) 100%);">$$
+$$<hr>$$
 
 A próxima pergunta é:
 
