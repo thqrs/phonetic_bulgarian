@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Transliterações</title>
     <style>
 
     /* General Element Styles */
+
+    .material-icons {
+        font-size: 24px; /* Adjust the size as needed */
+        color: black; /* Change the color as desired */
+    }
 
     hr {
         border: none;
@@ -306,8 +312,11 @@
     <div class="audio-controls">
         <!-- Audio player section -->
         <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
-        <button id="playPauseButton" onclick="togglePlayPause()"><span>▶️</span></button>
-        <button onclick="stopAudio()"><span>⏹️</span></button>
+
+
+    <button id="playPauseButton" onclick="togglePlayPause()"><span class="material-icons">play_arrow</span></button>
+    <button onclick="stopAudio()"><span class="material-icons">stop</span></button>
+   
 
         
        <div class="audio-timeline">
@@ -345,26 +354,34 @@
 
 <div id="boxContainer" style="display: none;">
         <div class="top-buttons">
-        <button id="increaseMargin" onclick="adjustMargin(-1)"><span>⏫</span></button>
-        <button id="decreaseMargin" onclick="adjustMargin(1)"><span>⏬</span></button>
-        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)"><span>⏪</span></button>
-        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)"><span>⏩</span></button>
-        <button id="increaseFontSize" onclick="adjustFontSize(1.1)"><span>➕</span></button>
-        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)"><span>➖</span></button>
-        <button id="toggleDarkMode" onclick="toggleDarkMode()"><span>🔳</span></button>
+            
+        <button id="increaseMargin" onclick="adjustMargin(-1)"><span class="material-icons">expand_less</span></button>
+        <button id="decreaseMargin" onclick="adjustMargin(1)"><span class="material-icons">expand_more</span></button>
+        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)"><span class="material-icons">fast_rewind</span></button>
+        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)"><span class="material-icons">fast_forward</span></button>
+        <button id="increaseFontSize" onclick="adjustFontSize(1.1)"><span class="material-icons">add</span></button>
+        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)"><span class="material-icons">remove</span></button>
+        <button id="toggleDarkMode" onclick="toggleDarkMode()"><span class="material-icons">invert_colors</span></button>
+
+            
               </div>
                 <div class="clipboard-container">
                     <h3>Искам Да Използвам Текст, Написан От Мен:</h3>
                     <h4>Quero Usar Um Texto Escrito Por Mim:</h4>
                 <textarea id="pasteBox" rows="3" cols="40" placeholder="Въведете текста тук и натиснете ''Обработвай! (Escrever o texto aqui e carregar em ''Обработвай!'')"></textarea>
             </div><div>
-                <button id="processPastedContent" onclick="processPastedContent()"> Обработвай! ✔️</button>
+            <button id="processPastedContent" onclick="processPastedContent()">
+                Обработвай! <span class="material-icons">done</span>
+            </button>
             </div>
             
             <div id="extrabuttons"></div>
                 <h3>Искам Да Използвам Текст, Който Съм Копирал:</h3>
                     <h4>Quero Usar Um Texto Que Eu Copiei:</h4>
-            <button id="pasteFromClipboard" onclick="processClipboardContent()">Обработка На Копирания Текст! 📋⚙️</button>
+                <button id="pasteFromClipboard" onclick="processClipboardContent()">
+                Обработка На Копирания Текст! <span class="material-icons">content_paste</span><span class="material-icons">settings</span>
+            </button>
+
                 <!-- <button onclick="handleClipboard()">Fetch from Clipboard</button> -->
 
             
@@ -405,7 +422,10 @@
             </br>
                 Introduzir a cor para o fundo da página: '#FF0000', 'rgb(255,0,0)', ou 'white'</p>
             <input type="text" id="colorInput" placeholder="Introduzir cor do fundo: '#FF0000', 'rgb(255,0,0)', ou 'white'">
-            <button onclick="changeBackgroundColor()">🎨</button>
+                <button onclick="changeBackgroundColor()">
+                <span class="material-icons">palette</span>
+                </button>
+
             </div>
             
             <div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
@@ -415,21 +435,31 @@
             </div>
 </div>
 
-<!-- Chronometer Section -->
-<div id="chronometer" class="chronometer">
-    <span id="timer" onclick="toggleTimerMode()">време: 00:00</span>
-<br>
-     <button id="loadAllTransliterations" onclick="showAllTransliterations()"><span>💬</span></button>
-    <button id="clearAllTransliterations" onclick="clearAllTransliterations()"><span>❌</span></button>
-    
-    <button onclick="startTimer()">⏱️</button>
-    <button onclick="stopResetTimer()">🔄</button>
+        <!-- Chronometer Section -->
+        <div id="chronometer" class="chronometer">
+            <span id="timer" onclick="toggleTimerMode()">време: 00:00</span>
+        <br>
+        <button id="loadAllTransliterations" onclick="showAllTransliterations()">
+            <span class="material-icons">chat</span>
+        </button>
+        <button id="clearAllTransliterations" onclick="clearAllTransliterations()">
+            <span class="material-icons">clear</span>
+        </button>
+        
+        <button onclick="startTimer()">
+            <span class="material-icons">timer</span>
+        </button>
+        <button onclick="stopResetTimer()">
+            <span class="material-icons">sync</span>
+        </button>
         <label class="switch">
-        <input type="checkbox" id="modeToggle" onchange="toggleTimerMode()">
-        <span class="slider round"></span>
-    </label>
-    <button id="showBoxButton">⚙️</button>
-</div>
+            <input type="checkbox" id="modeToggle" onchange="toggleTimerMode()">
+            <span class="slider round"></span>
+        </label>
+        <button id="showBoxButton">
+            <span class="material-icons">settings</span>
+        </button>
+
 
 
  
@@ -455,18 +485,21 @@ audioPlayer.addEventListener('timeupdate', function() {
 let playPauseButton = document.getElementById('playPauseButton');
 
 function togglePlayPause() {
+    var playPauseIcon = document.getElementById('playPauseButton').querySelector('.material-icons');
     if (audioPlayer.paused || audioPlayer.ended) {
         audioPlayer.play();
-        playPauseButton.textContent = '⏸️'; // Change button to pause symbol
+        playPauseIcon.innerText = 'pause'; // Change icon to pause symbol
     } else {
         audioPlayer.pause();
-        playPauseButton.textContent = '▶️'; // Change button to play symbol
+        playPauseIcon.innerText = 'play_arrow'; // Change icon to play symbol
     }
 }
+
 function stopAudio() {
     audioPlayer.pause();
     audioPlayer.currentTime = 0;
-    playPauseButton.textContent = '▶️'; // Reset to play symbol
+    var playPauseIcon = document.getElementById('playPauseButton').querySelector('.material-icons');
+    playPauseIcon.innerText = 'play_arrow'; // Reset to play symbol
 }
 function updateAudioTime() {
     audioPlayer.currentTime = seekBar.value;
