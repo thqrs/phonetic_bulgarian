@@ -43,6 +43,16 @@
         gap: 10px; /* Space between rows */
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+        .close-box-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    color: white; /* Adjust color as needed */
+    font-size: 20px;
+    cursor: pointer;
+}
     
     .button-container button {
         position: relative; /* Needed for absolute positioning of child elements */
@@ -369,6 +379,8 @@
         <button id="increaseFontSize" onclick="adjustFontSize(1.1)"><span class="material-icons">add</span></button>
         <button id="decreaseFontSize" onclick="adjustFontSize(0.9)"><span class="material-icons">remove</span></button>
         <button id="toggleDarkMode" onclick="toggleDarkMode()"><span class="material-icons">invert_colors</span></button>
+        <button id="closeBoxButton" class="close-box-button">X</button>
+
 
             
               </div>
@@ -533,6 +545,23 @@ if (!localStorage.getItem('horizontalMargin')) {
 }
 // Call the function to load saved margins on page load
 loadMargins();
+
+    document.getElementById('closeBoxButton').addEventListener('click', function() {
+    document.getElementById('boxContainer').style.display = 'none';
+});
+    
+window.addEventListener('click', function(event) {
+    var box = document.getElementById('boxContainer');
+    if (event.target === box) {
+        box.style.display = 'none';
+    }
+});
+
+// Prevent clicks inside the box from closing it
+document.getElementById('boxContainer').addEventListener('click', function(event) {
+    event.stopPropagation();
+});
+
     
 function handleClipboard() {
     if (!navigator.clipboard) {
