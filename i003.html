@@ -45,20 +45,11 @@
     .button-container button {
         position: relative; /* Needed for absolute positioning of child elements */
         padding: 10px; /* Adjust padding as needed */        
-        flex: 0 0 auto; /* Prevent buttons from growing or shrinking */
         background-color: #007bff;
         color: white;
         border: 1px solid #ccc;
         border-radius: 5px;
-        padding: 10px;
-   
-        /* Adjust width and padding-top as needed to maintain aspect ratio */
-    }
-    
-    /* Example to maintain aspect ratio - adjust as needed */
-    .button-container button {
         box-sizing: border-box; /* Include padding and border in the width */
-        position: relative;
     }
     
    .button-container button span {
@@ -67,7 +58,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-
 
     .top-buttons, .audio-controls {
         display: flex;
