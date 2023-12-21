@@ -289,6 +289,16 @@
         padding: 20px;
         box-sizing: border-box;
     }
+.audio-timeline {
+    display: flex;
+    align-items: center; /* Vertical centering */
+    gap: 10px; /* Adjust as needed for spacing */
+}
+
+.timestamps {
+    display: flex;
+    align-items: center; /* Ensure timestamps are also centered */
+}
 
     </style>
 </head>
@@ -312,11 +322,17 @@
         <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
         <button id="playPauseButton" onclick="togglePlayPause()"><span>▶️</span></button>
         <button onclick="stopAudio()"><span>⏹️</span></button>
-        <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+
+        
+       <div class="audio-timeline">
+    <input id="seekBar" type="range" min="0" max="100" value="0" step="1" oninput="updateAudioTime()" onchange="updateAudioTime()"/>
+    <div class="timestamps">
         <span id="currentTime">0:00</span>/<span id="totalTime">0:00</span>
+    </div>
+</div>
         
         <!-- Dropdown for playback speed -->
-        <label for="speedControl"><span>🏃</span></label>
+        <label for="speedControl"><span></span></label>
         <select id="speedControl" onchange="changePlaybackSpeed()">
             <option value="1">1x</option>
             <option value="0.9">0.9x</option>
