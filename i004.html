@@ -47,8 +47,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    border: 1px;
-    background: white;
+    border: 0px;
     color: white; /* Adjust color as needed */
     font-size: 15px;
     cursor: pointer;
@@ -266,16 +265,17 @@
     [class^="word-box"] {
         font-family: Arial, sans-serif; /* Specify your desired font-family here */
         font-size: 16px; 
-        /* font-weight: bold; */
         background-color: rgba(220, 220, 220, 0.1); /* Light and subtle background */
-        padding: 0.2em 0.5em 2em 0.5em; /* Keep vertical padding for height */
+        padding: 0.2em 0.5em 2em 0.5em; /* top right bottom left */
+    
         border-radius: 2px; /* Less rounded corners */
-        border: 1px solid rgba(200, 200, 200, 0.3); /* Subtle border */
+        border-left: 1px solid rgba(200, 200, 200, 0.3); /* Left border */
+        border-right: 1px solid rgba(200, 200, 200, 0.3); /* Right border */
         margin: 0 -5px 0px 0; /* Adjust margin as needed */
         display: inline-block;
         position: relative;
         line-height: 1.6; /* Maintain existing line height */
-        color: #666; /* Lighter font color if needed */
+        color: #666; /* Lighter font color */
     }
 
 
