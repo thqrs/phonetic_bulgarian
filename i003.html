@@ -71,17 +71,22 @@
 
 .top-buttons, .audio-controls {
     display: flex;
-    justify-content: space-around; /* Adjust as per requirement */
-    align-items: center;
+    justify-content: stretch; /* Stretch buttons to fill the space */
+    align-items: stretch; /* Stretch buttons vertically */
     flex-wrap: nowrap;
     width: 100%;
+    height: auto; /* Adjust height based on content */
 }
 
 .top-buttons button, .audio-controls button {
     flex-grow: 1; /* Allows buttons to grow and take up available space */
     text-align: center; /* Center text inside the button */
-    margin: 0 5px; /* Optional: for spacing between buttons */
+    margin: 0; /* Remove margins to make buttons touch each other */
+    aspect-ratio: 1 / 1; /* Set width and height to be equal */
+    padding: 0; /* Adjust padding as needed */
+    box-sizing: border-box; /* Include padding and border in the width and height */
 }
+
 
     
 
