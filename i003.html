@@ -277,6 +277,18 @@
         transform: translateX(-50%);
         font-size: 1em;
     }
+    #boxContainer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 33%; /* One-third of the page height */
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        color: white;
+        overflow-y: auto; /* Add scroll for overflow */
+        padding: 20px;
+        box-sizing: border-box;
+    }
 
     </style>
 </head>
@@ -325,77 +337,74 @@
 </div>
 
 
-
-</br>
-</br>
-
-    <h3>Текст На Португалски За Четене:</h3>
-    <h4>Texto Em Português Para Ler:</h4>
 <div id="content"></div>
     
 
 
-    <div class="clipboard-container">
-        <h3>Искам Да Използвам Текст, Написан От Мен:</h3>
-        <h4>Quero Usar Um Texto Escrito Por Mim:</h4>
-    <textarea id="pasteBox" rows="3" cols="40" placeholder="Въведете текста тук и натиснете ''Обработвай! (Escrever o texto aqui e carregar em ''Обработвай!'')"></textarea>
-</div><div>
-    <button id="processPastedContent" onclick="processPastedContent()"> Обработвай! ✔️</button>
+<div id="boxContainer" style="display: none;">
+               
+            
+                <div class="clipboard-container">
+                    <h3>Искам Да Използвам Текст, Написан От Мен:</h3>
+                    <h4>Quero Usar Um Texto Escrito Por Mim:</h4>
+                <textarea id="pasteBox" rows="3" cols="40" placeholder="Въведете текста тук и натиснете ''Обработвай! (Escrever o texto aqui e carregar em ''Обработвай!'')"></textarea>
+            </div><div>
+                <button id="processPastedContent" onclick="processPastedContent()"> Обработвай! ✔️</button>
+            </div>
+            
+            <div id="extrabuttons"></div>
+                <h3>Искам Да Използвам Текст, Който Съм Копирал:</h3>
+                    <h4>Quero Usar Um Texto Que Eu Copiei:</h4>
+            <button id="pasteFromClipboard" onclick="processClipboardContent()">Обработка На Копирания Текст! 📋⚙️</button>
+                <!-- <button onclick="handleClipboard()">Fetch from Clipboard</button> -->
+            </div>
+            
+                
+                <div>
+                <h3>Думи, Които Бяха Автоматично Транслитерирани:</h3>
+                    <h4>Palavras Que Foram Transliteradas Automaticamente:</h4>
+                <textarea id="missingTransliterationsBox" rows="3" cols="40">placeholder="Palavras que não estão na base de dados aparecerão aqui..."></textarea>
+                    </div>
+                    <div>
+                <button onclick="copyMissingTransliterations()">Копирай</button>
+            </div>
+            
+            
+            <!-- Dropdown for file selection -->
+                <div>
+                <h3>"Изберете Един От Предефинираните Тестови Текстове:</h3>
+                    <h4>Selecionar Texto de Teste Predefinido:</h4>
+                </div>
+               
+            <div class="file-selector-container">
+                <select id="fileSelector" onchange="loadSelectedFile()">
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            
+            </div>
+                <div><h3>Разстояние На Маржовете:</h3>
+                    <h4>Espaçamento das Margens:</h4>
+                       <span id="verticalMarginDisplay">10px</span>   <!-- This is the initial vertical margin -->
+               <span id="horizontalMarginDisplay">5px</span>  <!-- This is the initial horizontal margin -->
+            
+            
+            </div><div>
+                <h3>Промяна На Фоновата Цвят:</h3>
+                   <h4> Modificar a Cor de Fundo:</h4>
+                <p>Въведете цвета за фона на страницата в хексадецимален формат: '#FF0000', RGB (Червено, Зелено, Синьо): 'rgb(255,0,0)', или на английски: 'white'.
+                    </br>
+            </br>
+                Introduzir a cor para o fundo da página: '#FF0000', 'rgb(255,0,0)', ou 'white'</p>
+            <input type="text" id="colorInput" placeholder="Introduzir cor do fundo: '#FF0000', 'rgb(255,0,0)', ou 'white'">
+            <button onclick="changeBackgroundColor()">🎨</button>
+            </div>
+            
+            <div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
+                <p>&copy; 2023 Tiago Henriques. Esta obra está licenciada com uma Licença <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribuição-NãoComercial 4.0 Internacional</a>.</p>
+                <p>Para perguntas, entre em contacto: resourceful.motion(at)gmail.com</p>
+                <img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="Creative Commons Atribuição-NãoComercial 4.0 Internacional">
+            </div>
 </div>
-
-<div id="extrabuttons"></div>
-    <h3>Искам Да Използвам Текст, Който Съм Копирал:</h3>
-        <h4>Quero Usar Um Texto Que Eu Copiei:</h4>
-<button id="pasteFromClipboard" onclick="processClipboardContent()">Обработка На Копирания Текст! 📋⚙️</button>
-    <!-- <button onclick="handleClipboard()">Fetch from Clipboard</button> -->
-</div>
-
-    
-    <div>
-    <h3>Думи, Които Бяха Автоматично Транслитерирани:</h3>
-        <h4>Palavras Que Foram Transliteradas Automaticamente:</h4>
-    <textarea id="missingTransliterationsBox" rows="3" cols="40">placeholder="Palavras que não estão na base de dados aparecerão aqui..."></textarea>
-        </div>
-        <div>
-    <button onclick="copyMissingTransliterations()">Копирай</button>
-</div>
-
-
-<!-- Dropdown for file selection -->
-    <div>
-    <h3>"Изберете Един От Предефинираните Тестови Текстове:</h3>
-        <h4>Selecionar Texto de Teste Predefinido:</h4>
-    </div>
-   
-<div class="file-selector-container">
-    <select id="fileSelector" onchange="loadSelectedFile()">
-        <!-- Options will be populated by JavaScript -->
-    </select>
-
-</div>
-    <div><h3>Разстояние На Маржовете:</h3>
-        <h4>Espaçamento das Margens:</h4>
-           <span id="verticalMarginDisplay">10px</span>   <!-- This is the initial vertical margin -->
-   <span id="horizontalMarginDisplay">5px</span>  <!-- This is the initial horizontal margin -->
-
-
-</div><div>
-    <h3>Промяна На Фоновата Цвят:</h3>
-       <h4> Modificar a Cor de Fundo:</h4>
-    <p>Въведете цвета за фона на страницата в хексадецимален формат: '#FF0000', RGB (Червено, Зелено, Синьо): 'rgb(255,0,0)', или на английски: 'white'.
-        </br>
-</br>
-    Introduzir a cor para o fundo da página: '#FF0000', 'rgb(255,0,0)', ou 'white'</p>
-<input type="text" id="colorInput" placeholder="Introduzir cor do fundo: '#FF0000', 'rgb(255,0,0)', ou 'white'">
-<button onclick="changeBackgroundColor()">🎨</button>
-</div>
-
-<div style="margin-top: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
-    <p>&copy; 2023 Tiago Henriques. Esta obra está licenciada com uma Licença <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Atribuição-NãoComercial 4.0 Internacional</a>.</p>
-    <p>Para perguntas, entre em contacto: resourceful.motion(at)gmail.com</p>
-    <img src="https://licensebuttons.net/l/by-nc/4.0/88x31.png" alt="Creative Commons Atribuição-NãoComercial 4.0 Internacional">
-</div>
-
 
 <!-- Chronometer Section -->
 <div id="chronometer" class="chronometer">
@@ -407,9 +416,12 @@
         <input type="checkbox" id="modeToggle" onchange="toggleTimerMode()">
         <span class="slider round"></span>
     </label>
+    <button id="showBoxButton">⚙️</button>
 </div>
 
-    
+
+ 
+
 <script>
 
     let audioPlayer = document.getElementById('audioPlayer');
@@ -991,7 +1003,10 @@ function stopResetTimer() {
 // Initial update
 updateTimerDisplay();
 
-
+document.getElementById('showBoxButton').addEventListener('click', function() {
+    var box = document.getElementById('boxContainer');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+});
 
     
 </script>
