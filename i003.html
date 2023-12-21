@@ -69,6 +69,21 @@
 
     }
 
+.top-buttons, .audio-controls {
+    display: flex;
+    justify-content: space-around; /* Adjust as per requirement */
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.top-buttons button, .audio-controls button {
+    flex-grow: 1; /* Allows buttons to grow and take up available space */
+    text-align: center; /* Center text inside the button */
+    margin: 0 5px; /* Optional: for spacing between buttons */
+}
+
+    
 
     .file-selector-container {
         background-color: white;
