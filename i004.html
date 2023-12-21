@@ -7,23 +7,12 @@
     <style>
 
     /* General Element Styles */
-    h3 {
-        margin-top: 40px;
-    }
 
     hr {
         border: none;
         height: 1px;
         background-color: #ddd;
         margin: 0px 0;
-    }
-
-    h3::before {
-        content: "";
-        display: block;
-        height: 1px;
-        background-color: #ddd;
-        margin-bottom: 30px;
     }
 
   /* Layout and Containers */
@@ -306,18 +295,6 @@
 <body>
 
 <div class="button-container">
-    <div class="top-buttons">
-        <button id="loadAllTransliterations" onclick="showAllTransliterations()"><span>💬</span></button>
-        <button id="clearAllTransliterations" onclick="clearAllTransliterations()"><span>❌</span></button>
-        <button id="increaseMargin" onclick="adjustMargin(-1)"><span>⏫</span></button>
-        <button id="decreaseMargin" onclick="adjustMargin(1)"><span>⏬</span></button>
-        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)"><span>⏪</span></button>
-        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)"><span>⏩</span></button>
-        <button id="increaseFontSize" onclick="adjustFontSize(1.1)"><span>➕</span></button>
-        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)"><span>➖</span></button>
-        <button id="toggleDarkMode" onclick="toggleDarkMode()"><span>🔳</span></button>
-    </div>
-
     <div class="audio-controls">
         <!-- Audio player section -->
         <audio id="audioPlayer" src="perolas.mp3" preload="metadata"></audio>
@@ -359,8 +336,17 @@
 
 
 <div id="boxContainer" style="display: none;">
-               
-            
+        <div class="top-buttons">
+        <button id="loadAllTransliterations" onclick="showAllTransliterations()"><span>💬</span></button>
+        <button id="clearAllTransliterations" onclick="clearAllTransliterations()"><span>❌</span></button>
+        <button id="increaseMargin" onclick="adjustMargin(-1)"><span>⏫</span></button>
+        <button id="decreaseMargin" onclick="adjustMargin(1)"><span>⏬</span></button>
+        <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)"><span>⏪</span></button>
+        <button id="increaseHorizontalMargin" onclick="adjustHorizontalMargin(1)"><span>⏩</span></button>
+        <button id="increaseFontSize" onclick="adjustFontSize(1.1)"><span>➕</span></button>
+        <button id="decreaseFontSize" onclick="adjustFontSize(0.9)"><span>➖</span></button>
+        <button id="toggleDarkMode" onclick="toggleDarkMode()"><span>🔳</span></button>
+              </div>
                 <div class="clipboard-container">
                     <h3>Искам Да Използвам Текст, Написан От Мен:</h3>
                     <h4>Quero Usar Um Texto Escrito Por Mim:</h4>
