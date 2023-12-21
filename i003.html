@@ -78,14 +78,24 @@
     height: auto; /* Adjust height based on content */
 }
 
+/* Base style for buttons */
 .top-buttons button, .audio-controls button {
-    flex-grow: 1; /* Allows buttons to grow and take up available space */
-    text-align: center; /* Center text inside the button */
-    margin: 0; /* Remove margins to make buttons touch each other */
-    aspect-ratio: 1 / 1; /* Set width and height to be equal */
-    padding: 0; /* Adjust padding as needed */
-    box-sizing: border-box; /* Include padding and border in the width and height */
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    aspect-ratio: 1 / 1;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+/* Media query for desktop screens */
+@media (min-width: 768px) {
+    .top-buttons button, .audio-controls button {
+        max-width: 100px; /* Maximum width for buttons on desktop */
+        max-height: 100px; /* Maximum height for buttons on desktop */
+    }
+}
+
 
 
     
