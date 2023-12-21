@@ -337,8 +337,6 @@
 
 <div id="boxContainer" style="display: none;">
         <div class="top-buttons">
-        <button id="loadAllTransliterations" onclick="showAllTransliterations()"><span>💬</span></button>
-        <button id="clearAllTransliterations" onclick="clearAllTransliterations()"><span>❌</span></button>
         <button id="increaseMargin" onclick="adjustMargin(-1)"><span>⏫</span></button>
         <button id="decreaseMargin" onclick="adjustMargin(1)"><span>⏬</span></button>
         <button id="decreaseHorizontalMargin" onclick="adjustHorizontalMargin(-1)"><span>⏪</span></button>
@@ -413,6 +411,9 @@
 <div id="chronometer" class="chronometer">
     <span id="timer" onclick="toggleTimerMode()">време: 00:00</span>
 <br>
+     <button id="loadAllTransliterations" onclick="showAllTransliterations()"><span>💬</span></button>
+    <button id="clearAllTransliterations" onclick="clearAllTransliterations()"><span>❌</span></button>
+    
     <button onclick="startTimer()">⏱️</button>
     <button onclick="stopResetTimer()">🔄</button>
         <label class="switch">
